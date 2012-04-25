@@ -5,9 +5,9 @@ using System.Text;
 
 namespace VidFilter.Model
 {
-    public abstract class File : IMergeable
+    public abstract class BaseFile : IMergeable
     {
-        public File()
+        public BaseFile()
         {
             CreationDateTime = ModifyDateTime = DateTime.Now;
         }
@@ -21,7 +21,7 @@ namespace VidFilter.Model
 
         public virtual void Merge(object newObject, bool IncludeId=false)
         {
-            File newFile = newObject as File;
+            BaseFile newFile = newObject as BaseFile;
             if (newFile == null)
             {
                 throw new NotImplementedException("Cannot update File record with non-File object");
@@ -39,7 +39,7 @@ namespace VidFilter.Model
 
         public override bool Equals(object obj)
         {
-            File file = obj as File;
+            BaseFile file = obj as BaseFile;
             if (file == null) return false;
 
             return this.Name == file.Name && this.Path == file.Path;
