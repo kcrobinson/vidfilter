@@ -47,10 +47,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VidFilter.Model\VidFilter.Model.csproj">
-      <Project>{C8ED8019-1FB9-44CC-BB9A-ED113E7AC632}</Project>
-      <Name>VidFilter.Model</Name>
-    </ProjectReference>
     <ProjectReference Include="..\VidFilter.Repository\VidFilter.Repository.csproj">
       <Project>{1E0A7A04-E6F9-4526-831A-5421553421D5}</Project>
       <Name>VidFilter.Repository</Name>
