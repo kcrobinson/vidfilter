@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using VidFilter.Repository;
 using VidFilter.Model;
-using IO = System.IO;
+using System.IO;
 
 namespace VidFilter.Console
 {
     public class Program
     {
-        public static readonly IDatabase Database = new RavenDB();
+        public static readonly IDatabase Database = DatabaseFactory.GetDatabase();
 
         static void Main(string[] args)
         {
@@ -151,12 +151,12 @@ namespace VidFilter.Console
 
         static void LoadFolder(string folderPath)
         {
-            IO.DirectoryInfo directory = new IO.DirectoryInfo(folderPath);
+            DirectoryInfo directory = new DirectoryInfo(folderPath);
             if (!directory.Exists)
             {
                 return;
             }
-            foreach (IO.FileInfo fileInfo in directory.EnumerateFiles())
+            foreach (FileInfo fileInfo in directory.EnumerateFiles())
             {
                 switch(fileInfo.Extension)
                 {
@@ -176,7 +176,7 @@ namespace VidFilter.Console
             }
         }
 
-        static void LoadMovie(IO.FileInfo fileInfo)
+        static void LoadMovie(FileInfo fileInfo)
         {
             Movie movie = new Movie();
             movie.CreationDateTime = fileInfo.CreationTime;
