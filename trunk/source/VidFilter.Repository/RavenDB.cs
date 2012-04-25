@@ -25,11 +25,31 @@ namespace VidFilter.Repository
             }
         }
 
+        public OperationStatus CheckConnection()
+        {
+            OperationStatus opStatus;
+            try
+            {
+                using (var session = DocumentStore.OpenSession())
+                {
+                    session.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                opStatus = OperationStatus.GetOperationStatusFromException("Failure while checking database connection", ex);
+            }
+            opStatus = new OperationStatus();
+            opStatus.IsSuccess = true;
+            opStatus.Message = "Success checking database connection";
+            return opStatus;
+        }
+
         public void Dispose()
         {
-            if (DocumentStore != null)
+            if (_DocumentStore != null)
             {
-                DocumentStore.Dispose();
+                _DocumentStore.Dispose();
             }
         }
 
