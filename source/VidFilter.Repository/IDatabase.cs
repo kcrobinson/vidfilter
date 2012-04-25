@@ -12,5 +12,6 @@ namespace VidFilter.Repository
         OperationStatus Insert<T>(params T[] records) where T : IMergeable;
         OperationStatus Delete<T>(params T[] records);
         OperationStatus Update<T>(params T[] records) where T : IMergeable;
+        OperationStatus CheckConnection();
     }
 }
