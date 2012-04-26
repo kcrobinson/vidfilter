@@ -7,11 +7,6 @@ namespace VidFilter.Model
 {
     public abstract class BaseFile : IMergeable
     {
-        public BaseFile()
-        {
-            CreationDateTime = ModifyDateTime = DateTime.Now;
-        }
-
         public string Id { get; set; }
         public string Name { get; set; }
         public string Path { get; set; }
