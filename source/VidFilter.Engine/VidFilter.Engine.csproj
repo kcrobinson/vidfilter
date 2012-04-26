@@ -42,8 +42,9 @@
   <ItemGroup>
     <Compile Include="Engine.cs" />
     <Compile Include="EngineFactory.cs" />
+    <Compile Include="EngineRequest.cs" />
     <Compile Include="IEngine.cs" />
-    <Compile Include="OperationStatus.cs" />
+    <Compile Include="EngineResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

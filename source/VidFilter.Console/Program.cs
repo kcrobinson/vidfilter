@@ -5,12 +5,14 @@ using System.Text;
 using VidFilter.Repository;
 using VidFilter.Model;
 using System.IO;
+using VidFilter.Engine;
 
 namespace VidFilter.Console
 {
     public class Program
     {
         public static readonly IDatabase Database = DatabaseFactory.GetDatabase();
+        public static readonly IEngine Engine = EngineFactory.GetEngine();
 
         static void Main(string[] args)
         {
@@ -44,11 +46,16 @@ namespace VidFilter.Console
                             PrintHelp();
                             break;
                         case "insert":
+                            WriteMessages("Insert not supported yet");
                             break;
                         case "delete":
+                            WriteMessages("Delete not supported yet");
                             break;
                         case "load":
                             opStatus = LoadFiles(split.Skip(1));
+                            break;
+                        case "process":
+                            EngineResult engineResult = ProcessMovie(split.Skip(1));
                             break;
                         case "quit":
                             quit = true;
@@ -195,11 +202,68 @@ namespace VidFilter.Console
             Database.Insert<Movie>(movie);
         }
 
+        static EngineResult ProcessMovie(IEnumerable<string> options)
+        {
+            EngineRequest request = new EngineRequest();
+            EngineResult result;
+
+            string inputFileName = Prompt("Movie file");
+            FileInfo inputfileInfo = new FileInfo(inputFileName);
+            if(!inputfileInfo.Exists)
+            {
+                result = new EngineResult();
+                result.IsSuccess = false;
+                result.Message = "Invalid input file";
+                return result;
+            }
+            request.InputFile = inputfileInfo;
+            if(inputfileInfo.Extension.Equals("yuv", StringComparison.OrdinalIgnoreCase))
+            {
+                request.InputFrameRate = PromptInt("Input Framerate");
+                request.InputWidth = PromptInt("Input Width");
+                request.InputHeight = PromptInt("Input Height");
+            }
+            request.OutputFrameRate = PromptInt("Output Framerate");
+            request.OutputWidth = PromptInt("Output Width");
+            request.OutputHeight = PromptInt("Output Height");
+
+            result = Engine.ProcessRequest(request);
+            return result;
+        }
+
         static string Prompt(string prompt = null)
         {
             System.Console.Write(prompt);
             System.Console.Write(" > ");
             return System.Console.ReadLine();
+        }
+
+        static int PromptInt(string prompt = null, int? minValid = null, int? maxValid = null)
+        {
+            string value = Prompt(prompt);
+            int parsed = 0;
+            bool success = false;
+            do
+            {
+                if (int.TryParse(value, out parsed))
+                {
+                    bool validMin = !minValid.HasValue || minValid.Value <= parsed;
+                    bool validMax = !maxValid.HasValue || maxValid.Value >= parsed;
+
+                    if (validMin && validMax)
+                    {
+                        success = true;
+                    }
+                }
+                else
+                {
+                    WriteMessagesInColor(ConsoleColor.Red, "Invalid value");
+                    value = Prompt(prompt);
+                }
+            }
+            while (success == false);
+            
+            return parsed;
         }
 
         static void dummyFill()

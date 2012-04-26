@@ -7,6 +7,6 @@ namespace VidFilter.Engine
 {
     public interface IEngine
     {
-        OperationStatus ProcessRequest();
+        EngineResult ProcessRequest(EngineRequest request);
     }
 }
