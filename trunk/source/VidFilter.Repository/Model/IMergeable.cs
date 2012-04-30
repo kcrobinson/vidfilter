@@ -8,6 +8,6 @@ namespace VidFilter.Model
     public interface IMergeable
     {
         string Id { get; }
-        void Merge(object newRecord, bool IncludeId=false);
+        void MergeFrom(IMergeable newRecord);
     }
 }

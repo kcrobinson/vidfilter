@@ -65,12 +65,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseFactory.cs" />
+    <Compile Include="GenericCrudOperations.cs" />
     <Compile Include="IDatabase.cs" />
     <Compile Include="Model\Colorspace.cs" />
     <Compile Include="Model\BaseFile.cs" />
     <Compile Include="Model\Image.cs" />
     <Compile Include="Model\IMergeable.cs" />
     <Compile Include="Model\Movie.cs" />
+    <Compile Include="Model\NormalizedMovie.cs" />
     <Compile Include="Model\OperationStatus.cs" />
     <Compile Include="Model\Resolution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

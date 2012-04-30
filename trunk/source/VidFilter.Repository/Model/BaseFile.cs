@@ -2,43 +2,106 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace VidFilter.Model
 {
-    public abstract class BaseFile : IMergeable
+    public abstract class BaseFile
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Path { get; set; }
-        public DateTime CreationDateTime { get; set; }
-        public DateTime ModifyDateTime { get; set; }
-        public decimal FileSizeInBytes { get; set; }
-
-        public virtual void Merge(object newObject, bool IncludeId=false)
+        protected BaseFile() { }
+        protected BaseFile(FileInfo fileInfo)
         {
-            BaseFile newFile = newObject as BaseFile;
-            if (newFile == null)
-            {
-                throw new NotImplementedException("Cannot update File record with non-File object");
-            }
-            if (IncludeId)
-            {
-                this.Id = newFile.Id;
-            }
-            this.Name = newFile.Name;
-            this.Path = newFile.Path;
-            this.CreationDateTime = newFile.CreationDateTime;
-            this.ModifyDateTime = newFile.ModifyDateTime;
-            this.FileSizeInBytes = newFile.FileSizeInBytes;
+            this._FileInfo = fileInfo;
         }
 
-        public override bool Equals(object obj)
-        {
-            BaseFile file = obj as BaseFile;
-            if (file == null) return false;
-
-            return this.Name == file.Name && this.Path == file.Path;
+        public string Id { 
+            get
+            {
+                if (_FileInfo == null)
+                {
+                    throw new Exception("BaseFile record does not have a FileInfo value. Cannot create record ID.");
+                }
+                return BaseFile.BaseFileId(_FileInfo);
+            } 
         }
+
+        public static string IdFromBaseFile(FileInfo fileInfo)
+        {
+            if (fileInfo == null)
+                return null;
+            return BaseFile.BaseFileId(fileInfo);
+        }
+
+        private static string BaseFileId(FileInfo fileInfo)
+        {
+            return "BaseFile/" + fileInfo.FullName.Replace('\\', '/');
+        }
+
+        protected FileInfo _FileInfo;
+        public FileInfo GetFileInfo() { return _FileInfo; }
+
+        public string FileName 
+        { 
+            get
+            {
+                if (_FileInfo == null) return null;
+                return _FileInfo.Name;
+            }
+        }
+
+        public string DirectoryPath
+        {
+            get
+            {
+                if (_FileInfo == null)
+                {
+                    return null;
+                }
+                return _FileInfo.DirectoryName;
+            }
+        }
+
+        public long SizeInBytes
+        {
+            get
+            {
+                if (_FileInfo == null)
+                {
+                    return 0;
+                }
+                return _FileInfo.Length;
+            }
+        }
+
+        public DateTime TimeCreation
+        {
+            get
+            {
+                if (_FileInfo == null)
+                {
+                    return default(DateTime);
+                }
+                return _FileInfo.CreationTime;
+            }
+        }
+
+        public DateTime TimeLastModified
+        {
+            get
+            {
+                if (_FileInfo == null)
+                {
+                    return default(DateTime);
+                }
+                return _FileInfo.LastWriteTime;
+            }
+        }
+
+        public virtual void MergeFrom(BaseFile newObject)
+        {
+            this._FileInfo = newObject.GetFileInfo();
+        }
+
         public override int GetHashCode()
         {
             return base.GetHashCode();

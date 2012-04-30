@@ -2,46 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace VidFilter.Model
 {
-    public class Movie : BaseFile, IMergeable
+    public class Movie : BaseFile
     {
-        public string ParentMovieId { get; set; }
-        public string RootMovieId { get; set; }
+        public Movie(FileInfo fileInfo) : base(fileInfo) { }
+
+        public FileInfo ParentMovie { get; set; }
         public int BitRate { get; set; }
         public int FrameRate { get; set; }
         public decimal PlayLength { get; set; }
-        public string SampleFrameId { get; set; }
-        public string ResolutionTheoreticalId { get; set; }
-        public string ResolutionActualId { get; set; }
-        public string ColorSpaceId { get; set; }
+        public FileInfo SampleFrame { get; set; }
+        public Resolution ResolutionTheoretical { get; set; }
+        public Resolution ResolutionActual { get; set; }
+        public Colorspace ColorSpace { get; set; }
 
-        public bool IsRootMovie
-        {
-            get
-            {
-                return this.ParentMovieId == null;
-            }
-        }
-
-        public virtual void Update(object newObject, bool IncludeId = false)
+        public virtual void Update(object newObject)
         {
             Movie newMovie = newObject as Movie;
             if (newMovie == null)
             {
                 throw new NotSupportedException("Cannot update Movie record with non-record object.");
             }
-            base.Merge(newMovie, IncludeId);
-            this.ParentMovieId = newMovie.ParentMovieId;
-            this.RootMovieId = newMovie.RootMovieId;
+            base.MergeFrom(newMovie);
             this.BitRate = newMovie.BitRate;
             this.FrameRate = newMovie.FrameRate;
             this.PlayLength = newMovie.PlayLength;
-            this.SampleFrameId = newMovie.SampleFrameId;
-            this.ResolutionTheoreticalId = newMovie.ResolutionTheoreticalId;
-            this.ResolutionActualId = newMovie.ResolutionActualId;
-            this.ColorSpaceId = newMovie.ColorSpaceId;
+            this.SampleFrame = newMovie.SampleFrame;
+            this.ResolutionTheoretical = newMovie.ResolutionTheoretical;
+            this.ResolutionActual = newMovie.ResolutionActual;
+            this.ColorSpace = newMovie.ColorSpace;
         }
     }
 }

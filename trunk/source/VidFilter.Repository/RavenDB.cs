@@ -32,7 +32,7 @@ namespace VidFilter.Repository
             {
                 using (var session = DocumentStore.OpenSession())
                 {
-                    session.SaveChanges();
+                    session.Query<object>().Where(a => a.Equals("dummyrequest")).ToList();
                 }
             }
             catch (Exception ex)
@@ -53,110 +53,71 @@ namespace VidFilter.Repository
             }
         }
 
-        #region Generic CRUD Operations
-
-        public IEnumerable<T> Query<T>(params string[] Ids)
+        public OperationStatus InsertMovie(Movie movie)
         {
-            T[] records;
-            using (var session = DocumentStore.OpenSession())
-            {
-                records = session.Load<T>(Ids);
-            }
-            return records;
-
-        }
-
-        public OperationStatus Insert<T>(params T[] records) where T : IMergeable
-        {
-            OperationStatus opStatus;
-            int numRecordsUpdated = 0;
+            OperationStatus opStatus = new OperationStatus();
 
             try
             {
                 using (var session = DocumentStore.OpenSession())
                 {
-                    foreach (T record in records)
+                    NormalizedMovie normMovie = NormalizeMovie(session, movie);
+
+                    NormalizedMovie recordLookup = session.Load<NormalizedMovie>(normMovie.Id);
+                    if (recordLookup != null)
                     {
-                        T recordLookup = default(T); // session.Query<T>().Where<T>(rec => rec.Equals(record)).SingleOrDefault();
-                        if (recordLookup != null)
-                        {
-                            record.Merge(recordLookup, true);
-                        }
-                        else
-                        {
-                            numRecordsUpdated++;
-                            session.Store(record);
-                        }
+                        opStatus.Message = "Movie record already existed. Record not updated.";
+                    }
+                    else
+                    {
+                        session.Store(normMovie);
+                        opStatus.NumRecordsAffected++;
+                        opStatus.Message = "Movie record successfully inserted.";
                     }
                     session.SaveChanges();
                 }
             }
             catch (Exception ex)
             {
-                opStatus = OperationStatus.GetOperationStatusFromException("Failure while adding Movie record", ex);
+                opStatus.HandleException("Failure while adding Movie record", ex);
                 return opStatus;
             }
 
-            opStatus = new OperationStatus();
             opStatus.IsSuccess = true;
-            opStatus.NumRecordsAffected = numRecordsUpdated;
-            opStatus.Message = numRecordsUpdated + " " + typeof(T) + " records added";
             return opStatus;
         }
 
-        public OperationStatus Delete<T>(params T[] records)
+        private NormalizedMovie NormalizeMovie(IDocumentSession session, Movie movie)
         {
-            OperationStatus opStatus;
-            try
+            NormalizedMovie normalizedMovie = new NormalizedMovie(movie.GetFileInfo());
+
+            if (movie.ColorSpace != null)
             {
-                using (var session = DocumentStore.OpenSession())
+                // Load or Insert colorspace
+            }
+            if (movie.ResolutionActual != null)
+            {
+                Resolution res1 = session.Load<Resolution>(movie.ResolutionActual.Id);
+                if (res1 != null)
                 {
-                    foreach (T record in records)
-                    {
-                        session.Delete<T>(record);
-                    }
-                    session.SaveChanges();
+                    normalizedMovie.ResolutionActualId = res1.Id;
+                }
+                else
+                {
+                    session.Store(movie.ResolutionActual);
+                    normalizedMovie.ResolutionActualId = movie.ResolutionActual.Id;
                 }
             }
-            catch (Exception ex)
+            if (movie.ParentMovie != null)
             {
-                opStatus = OperationStatus.GetOperationStatusFromException("Failure deleting record.", ex);
-                return opStatus;
-            }
-
-            opStatus = new OperationStatus();
-            opStatus.IsSuccess = true;
-            opStatus.Message = "Success deleting records";
-            opStatus.NumRecordsAffected = records.Count();
-            return opStatus;
-        }
-
-        public OperationStatus Update<T>(params T[] records) where T : IMergeable
-        {
-            OperationStatus opStatus;
-            try
-            {
-                using (var session = DocumentStore.OpenSession())
+                NormalizedMovie parentMovie = session.Load<NormalizedMovie>(BaseFile.IdFromBaseFile(movie.ParentMovie));
+                if (parentMovie != null)
                 {
-                    foreach(T newRecord in records)
-                    {
-                        T oldRecord = session.Load<T>(newRecord.Id);
-                        oldRecord.Merge(newRecord);
-                    }
-                    session.SaveChanges();
+                    normalizedMovie.ParentMovieId = parentMovie.Id;
                 }
             }
-            catch (Exception ex)
-            {
-                opStatus = OperationStatus.GetOperationStatusFromException("Failure updating record", ex);
-                return opStatus;
-            }
-            opStatus = new OperationStatus();
-            opStatus.NumRecordsAffected = records.Count();
-            opStatus.Message = "Success updating records";
-            opStatus.IsSuccess = true;
-            return opStatus;
+
+            return normalizedMovie;
         }
-        #endregion
     }
 }

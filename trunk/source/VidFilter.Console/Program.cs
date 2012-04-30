@@ -39,25 +39,34 @@ namespace VidFilter.Console
                 while (!quit)
                 {
                     string input = Prompt();
-                    string[] split = input.Split();
+                    string[] split = input.Split(new[]{" "}, StringSplitOptions.RemoveEmptyEntries);
                     switch(split[0].ToLower())
                     {
                         case "help":
+                        case "h":
                             PrintHelp();
                             break;
                         case "insert":
+                        case "i":
                             WriteMessages("Insert not supported yet");
                             break;
                         case "delete":
+                        case "d":
                             WriteMessages("Delete not supported yet");
                             break;
                         case "load":
+                        case "l":
                             opStatus = LoadFiles(split.Skip(1));
                             break;
                         case "process":
-                            EngineResult engineResult = ProcessMovie(split.Skip(1));
+                            opStatus = ProcessMovie(split.Skip(1));
+                            WriteOperationStatus(opStatus);
+                            break;
+                        case "dummy":
+                            dummyFill();
                             break;
                         case "quit":
+                        case "q":
                             quit = true;
                             break;
                         default:
@@ -185,12 +194,7 @@ namespace VidFilter.Console
 
         static void LoadMovie(FileInfo fileInfo)
         {
-            Movie movie = new Movie();
-            movie.CreationDateTime = fileInfo.CreationTime;
-            movie.ModifyDateTime = fileInfo.LastWriteTime;
-            movie.FileSizeInBytes = fileInfo.Length;
-            movie.Name = fileInfo.Name;
-            movie.Path = fileInfo.DirectoryName;
+            Movie movie = new Movie(fileInfo);
             //movie.BitRate
             //movie.ColorSpaceId
             //movie.FrameRate
@@ -199,23 +203,24 @@ namespace VidFilter.Console
             //movie.ResolutionTheoreticalId
             //movie.RootMovieId
             //movie.SampleFrameId
-            Database.Insert<Movie>(movie);
+            Database.InsertMovie(movie);
         }
 
-        static EngineResult ProcessMovie(IEnumerable<string> options)
+        static OperationStatus ProcessMovie(IEnumerable<string> options)
         {
             EngineRequest request = new EngineRequest();
             EngineResult result;
 
             string inputFileName = Prompt("Movie file");
             FileInfo inputfileInfo = new FileInfo(inputFileName);
-            if(!inputfileInfo.Exists)
-            {
-                result = new EngineResult();
-                result.IsSuccess = false;
-                result.Message = "Invalid input file";
-                return result;
-            }
+            // this logic should be in Engine
+            //if(!inputfileInfo.Exists)
+            //{
+            //    result = new EngineResult();
+            //    result.IsSuccess = false;
+            //    result.Message = "Invalid input file";
+            //    return result;
+            //}
             request.InputFile = inputfileInfo;
             if(inputfileInfo.Extension.Equals("yuv", StringComparison.OrdinalIgnoreCase))
             {
@@ -227,8 +232,30 @@ namespace VidFilter.Console
             request.OutputWidth = PromptInt("Output Width");
             request.OutputHeight = PromptInt("Output Height");
 
+            request.OutputCodec = "rawvideo";
+            request.OutputColorspace = "gray";
+
             result = Engine.ProcessRequest(request);
-            return result;
+
+            OperationStatus opStatus;
+            if (!result.IsSuccess)
+            {
+                opStatus = new OperationStatus();
+                opStatus.IsSuccess = false;
+                opStatus.Message = "Failure creating movie. Message: " + result.Message + "\r\n\r\nInternal message:\r\n" + result.StdError;
+                return opStatus;
+            }
+
+            Movie movie = new Movie(result.OutFile);
+            //movie.BitRate = 
+            //movie.ColorSpace = new Colorspace(){ Name = result.OutColorspace; }
+            movie.FrameRate = result.OutFramerate;
+            movie.ParentMovie = inputfileInfo;
+            //movie.PlayLength = 
+            movie.ResolutionActual = new Resolution() { PixelHeight = result.OutHeight, PixelWidth = result.OutWidth };
+            //movie.SampleFrame = result.OutImage;
+            opStatus = Database.InsertMovie(movie);
+            return opStatus;
         }
 
         static string Prompt(string prompt = null)
@@ -270,60 +297,53 @@ namespace VidFilter.Console
         {
             OperationStatus opStatus;
             WriteMessages("Adding colorspace");
-            Colorspace colorSpace = new Colorspace
-            {
-                Name = "yuv420p",
-                BitsPerPixel = 12,
-                IsMonochrome = false,
-                NumChannels = 3
-            };
-            opStatus = Database.Insert(colorSpace);
-            WriteOperationStatus(opStatus);
+            //Colorspace colorSpace = new Colorspace
+            //{
+            //    Name = "yuv420p",
+            //    BitsPerPixel = 12,
+            //    IsMonochrome = false,
+            //    NumChannels = 3
+            //};
+            //opStatus = Database.Insert(colorSpace);
+            //WriteOperationStatus(opStatus);
 
-            WriteMessages("Adding resolutions");
-            Resolution resolutionActual = new Resolution
-            {
-                PixelWidth = 352,
-                PixelHeight = 288
-            };
-            Resolution resolutionTheoretical = new Resolution
-            {
-                PixelWidth = 176,
-                PixelHeight = 144
-            };
-            opStatus = Database.Insert(resolutionActual, resolutionTheoretical);
-            WriteOperationStatus(opStatus);
+            //WriteMessages("Adding resolutions");
+            //Resolution resolutionActual = new Resolution
+            //{
+            //    PixelWidth = 352,
+            //    PixelHeight = 288
+            //};
+            //Resolution resolutionTheoretical = new Resolution
+            //{
+            //    PixelWidth = 176,
+            //    PixelHeight = 144
+            //};
+            //opStatus = Database.Insert(resolutionActual, resolutionTheoretical);
+            //WriteOperationStatus(opStatus);
 
-            WriteMessages("Adding Image");
-            Image image = new Image
-            {
-                Name = "newImage",
-                Path = @"c:/data",
-                ColorSpaceId = colorSpace.Id,
-                ResolutionId = resolutionActual.Id,
-                FileSizeInBytes = 256
-            };
-            opStatus = Database.Insert(image);
-            WriteOperationStatus(opStatus);
+            //WriteMessages("Adding Image");
+            //Image image = new Image
+            //{
+            //    FileInfo = new FileInfo(@"C:\Users\krobins\VidFilter\clips\out.mpeg"),
+            //    ColorSpaceId = colorSpace.Id,
+            //    ResolutionId = resolutionActual.Id
+            //};
+            //opStatus = Database.Insert(image);
+            //WriteOperationStatus(opStatus);
 
-            WriteMessages("Adding Movie");
-            Movie movie = new Movie
+            //WriteMessages("Adding Movie");
+            Movie movie = new Movie(new FileInfo(@"C:\Users\krobins\VidFilter\clips\BUS_OUT.avi"))
             {
-                Name = "newMovie",
-                Path = @"c:/data",
-                ColorSpaceId = colorSpace.Id,
-                ResolutionActualId = resolutionActual.Id,
-                ResolutionTheoreticalId = resolutionTheoretical.Id,
-                FileSizeInBytes = 1024,
+                // ColorSpaceId = colorSpace.Id,
+                // ResolutionActualId = resolutionActual.Id,
+                // ResolutionTheoreticalId = resolutionTheoretical.Id,
                 BitRate = 2000,
                 FrameRate = 30,
-                ParentMovieId = null,
-                RootMovieId = null,
                 PlayLength = 10.2m,
-                SampleFrameId = image.Id
+                // SampleFrameId = image.Id
             };
-            opStatus = Database.Insert(movie);
-            WriteOperationStatus(opStatus);
+            opStatus = Database.InsertMovie(movie);
+            //WriteOperationStatus(opStatus);
         }
     }
 }

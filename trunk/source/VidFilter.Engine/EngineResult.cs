@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace VidFilter.Engine
 {
@@ -9,7 +10,20 @@ namespace VidFilter.Engine
     {
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
-        public string OutPath { get; set; }
-        EngineRequest OriginalRequest { get; set; }
+        public string StdError { get; set; }
+        public string StdOutput { get; set; }
+        public string ExceptionMessage { get; set; }
+        public FileInfo OutFile { get; set; }
+        public int OutWidth { get; set; }
+        public int OutHeight { get; set; }
+        public int OutFramerate { get; set; }
+        public EngineRequest OriginalRequest { get; set; }
+
+        public void HandleException(string message, Exception ex)
+        {
+            IsSuccess = false;
+            Message = message;
+            ExceptionMessage = ex.Message;
+        }
     }
 }
