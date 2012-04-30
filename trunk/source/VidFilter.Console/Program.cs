@@ -9,6 +9,10 @@ using VidFilter.Engine;
 
 namespace VidFilter.Console
 {
+    /// <summary>
+    /// The Console Program is a command line interface to the engine and the repository.
+    /// The intention is to replace this with the WPF project once I've finished the repository and engine logic and can move on to developing the UI.
+    /// </summary>
     public class Program
     {
         public static readonly IDatabase Database = DatabaseFactory.GetDatabase();
