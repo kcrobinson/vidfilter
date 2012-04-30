@@ -20,6 +20,19 @@ namespace VidFilter.Model
         public ICollection<string> ExceptionMessages { get; set; }
         public ICollection<string> ExceptionStackTraces { get; set; }
 
+        public void HandleException(string message, Exception ex)
+        {
+            this.Message = message;
+
+            Exception curException = ex;
+            while (ex != null)
+            {
+                this.ExceptionMessages.Add(ex.Message);
+                this.ExceptionStackTraces.Add(ex.StackTrace);
+                ex = ex.InnerException;
+            }
+        }
+
         public static OperationStatus GetOperationStatusFromException(string message, Exception ex)
         {
             OperationStatus opStatus = new OperationStatus();

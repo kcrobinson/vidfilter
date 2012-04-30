@@ -9,10 +9,40 @@ namespace VidFilter.Engine
     public class EngineRequest
     {
         public FileInfo InputFile { get; set; }
-        public string OutputPath { get; set; }
 
-        public bool OverWriteOutput { get; set; }
-        
+        private string _OutputPath;
+        public string OutputPath
+        {
+            get
+            {
+                if(_OutputPath != null)
+                {
+                    return _OutputPath;
+                }
+                if(InputFile == null)
+                {
+                    return null;
+                }
+
+                StringBuilder sb = new StringBuilder(InputFile.DirectoryName + "\\");
+
+                sb.Append(InputFile.Name);
+                if (!string.IsNullOrWhiteSpace(OutputColorspace))
+                    sb.Append("_" + OutputColorspace);
+                if (OutputFrameRate > 0)
+                    sb.Append("_" + OutputFrameRate + "fps");
+                if (OutputWidth > 0 && OutputHeight > 0)
+                    sb.Append("_" + OutputWidth + "x" + OutputHeight);
+
+                sb.Append(".avi");
+                return sb.ToString();
+            }
+            set
+            {
+                _OutputPath = value;
+            }
+        }
+
         public int InputFrameRate { get; set; }
         public int InputWidth { get; set; }
         public int InputHeight { get; set; }

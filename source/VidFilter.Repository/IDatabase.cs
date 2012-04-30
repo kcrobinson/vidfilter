@@ -8,10 +8,12 @@ namespace VidFilter.Repository
 {
     public interface IDatabase : IDisposable
     {
-        IEnumerable<T> Query<T>(params string[] Ids);
-        OperationStatus Insert<T>(params T[] records) where T : IMergeable;
-        OperationStatus Delete<T>(params T[] records);
-        OperationStatus Update<T>(params T[] records) where T : IMergeable;
+        //IEnumerable<T> Query<T>(params string[] Ids);
+        //OperationStatus Insert<T>(params T[] records) where T : IMergeable;
+        //OperationStatus Delete<T>(params T[] records);
+        //OperationStatus Update<T>(params T[] records) where T : IMergeable;
+
+        OperationStatus InsertMovie(Movie movie);
         OperationStatus CheckConnection();
     }
 }
