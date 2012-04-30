@@ -25,6 +25,11 @@ namespace VidFilter.Repository
             }
         }
 
+        /// <summary>
+        /// Tries to query for a dummy result from the database.
+        /// </summary>
+        /// <returns>Information about the attempt. If successful, it can be infered that the 
+        /// database is up and running. Otherwise, it would be prudent to send an error message to the user.</returns>
         public OperationStatus CheckConnection()
         {
             OperationStatus opStatus;
@@ -45,6 +50,9 @@ namespace VidFilter.Repository
             return opStatus;
         }
 
+        /// <summary>
+        /// Implementation of IDisposable object. Safely disposes of connection to Raven Database implementation.
+        /// </summary>
         public void Dispose()
         {
             if (_DocumentStore != null)
@@ -91,6 +99,10 @@ namespace VidFilter.Repository
         {
             NormalizedMovie normalizedMovie = new NormalizedMovie(movie.GetFileInfo());
 
+            normalizedMovie.BitRate = movie.BitRate;
+            normalizedMovie.FrameRate = movie.FrameRate;
+            normalizedMovie.PlayLength = movie.PlayLength;
+
             if (movie.ColorSpace != null)
             {
                 // Load or Insert colorspace
@@ -118,6 +130,38 @@ namespace VidFilter.Repository
             }
 
             return normalizedMovie;
+        }
+    
+        public OperationStatus InsertOrUpdateColorspace(Colorspace colorspace)
+        {
+            OperationStatus opStatus = new OperationStatus();
+
+            try
+            {
+                using (var session = DocumentStore.OpenSession())
+                {
+                    Colorspace loadedRecord = session.Load<Colorspace>(colorspace.Id);
+                    if (loadedRecord != null)
+                    {
+                        loadedRecord.BitsPerPixel = colorspace.BitsPerPixel;
+                        loadedRecord.IsMonochrome = colorspace.IsMonochrome;
+                        loadedRecord.NumChannels = colorspace.NumChannels;
+                    }
+                    else
+                    {
+                        session.Store(colorspace);
+                    }
+                    session.SaveChanges();
+                    opStatus.IsSuccess = true;
+                    opStatus.NumRecordsAffected++;
+                }
+            }
+            catch (Exception ex)
+            {
+                opStatus.HandleException("Failure updating colorspace", ex);
+                return opStatus;
+            }
+            return opStatus;
         }
     }
 }
