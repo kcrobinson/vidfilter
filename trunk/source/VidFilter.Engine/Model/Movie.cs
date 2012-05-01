@@ -4,11 +4,19 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace VidFilter.Model
+namespace VidFilter.Engine
 {
     public class Movie : BaseFile
     {
         public Movie(FileInfo fileInfo) : base(fileInfo) { }
+
+        public Movie(NormalizedMovie normalizedMovie)
+        {
+            _FileInfo = normalizedMovie.GetFileInfo();
+            BitRate = normalizedMovie.BitRate;
+            FrameRate = normalizedMovie.FrameRate;
+            PlayLength = normalizedMovie.PlayLength;
+        }
 
         public FileInfo ParentMovie { get; set; }
         public int BitRate { get; set; }

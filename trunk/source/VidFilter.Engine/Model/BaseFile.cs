@@ -3,24 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Newtonsoft.Json;
 
-namespace VidFilter.Model
+namespace VidFilter.Engine
 {
     /// <summary>
     /// Abstract POCO wrapper for System.IO.FileInfo
     /// </summary>
     public abstract class BaseFile
     {
-        protected BaseFile() 
-        {
-            throw new Exception("Default constructor cannot be used. Use BaseFile(FileInfo) instead.");
-        }
+        protected BaseFile() { }
         protected BaseFile(FileInfo fileInfo)
         {
-            if (fileInfo == null || !fileInfo.Exists)
-            {
-                throw new ArgumentException("BaseFile constructor must have non-null fileInfo pointing to file that exists.");
-            }
             this._FileInfo = fileInfo;
         }
 
@@ -36,6 +30,22 @@ namespace VidFilter.Model
                 }
                 return BaseFile.BaseFileId(_FileInfo);
             } 
+        }
+
+        public string FullName
+        {
+            get
+            {
+                if (_FileInfo == null)
+                {
+                    return null;
+                }
+                return _FileInfo.FullName;
+            }
+            set
+            {
+                _FileInfo = new FileInfo(value);
+            }
         }
 
         /// <summary>
@@ -57,9 +67,11 @@ namespace VidFilter.Model
             return "BaseFile/" + fileInfo.FullName.Replace('\\', '/');
         }
 
-        protected FileInfo _FileInfo;
+        [JsonIgnore]
+        protected FileInfo _FileInfo { get; set; }
         public FileInfo GetFileInfo() { return _FileInfo; }
 
+        [JsonIgnore]
         /// <summary>
         /// Name of the file
         /// </summary>
@@ -72,6 +84,7 @@ namespace VidFilter.Model
             }
         }
 
+        [JsonIgnore]
         /// <summary>
         /// Full path of the directory which contains the file. Null
         /// </summary>
@@ -87,6 +100,7 @@ namespace VidFilter.Model
             }
         }
 
+        [JsonIgnore]
         /// <summary>
         /// File size
         /// </summary>
@@ -102,6 +116,7 @@ namespace VidFilter.Model
             }
         }
 
+        [JsonIgnore]
         /// <summary>
         /// System information about the file's creation time
         /// </summary>
@@ -116,7 +131,8 @@ namespace VidFilter.Model
                 return _FileInfo.CreationTime;
             }
         }
-        
+
+        [JsonIgnore]
         /// <summary>
         /// System information about the file's last write time
         /// </summary>

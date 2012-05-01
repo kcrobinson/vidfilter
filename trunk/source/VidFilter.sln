@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VidFilter", "VidFilter\VidFilter.csproj", "{EAAD1645-FDA2-4EDF-8D26-B9E5E0B0DED1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VidFilter.Repository", "VidFilter.Repository\VidFilter.Repository.csproj", "{1E0A7A04-E6F9-4526-831A-5421553421D5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VidFilter.Console", "VidFilter.Console\VidFilter.Console.csproj", "{D43DD4B2-AD88-4748-AF9F-EC60A44BC4C7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{BFD3DE9F-2BCB-4F5F-9261-E9DA2B4D43A5}"
@@ -35,16 +33,6 @@ Global
 		{EAAD1645-FDA2-4EDF-8D26-B9E5E0B0DED1}.Release|Mixed Platforms.Build.0 = Release|x86
 		{EAAD1645-FDA2-4EDF-8D26-B9E5E0B0DED1}.Release|x86.ActiveCfg = Release|x86
 		{EAAD1645-FDA2-4EDF-8D26-B9E5E0B0DED1}.Release|x86.Build.0 = Release|x86
-		{1E0A7A04-E6F9-4526-831A-5421553421D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1E0A7A04-E6F9-4526-831A-5421553421D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1E0A7A04-E6F9-4526-831A-5421553421D5}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{1E0A7A04-E6F9-4526-831A-5421553421D5}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{1E0A7A04-E6F9-4526-831A-5421553421D5}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1E0A7A04-E6F9-4526-831A-5421553421D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1E0A7A04-E6F9-4526-831A-5421553421D5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1E0A7A04-E6F9-4526-831A-5421553421D5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{1E0A7A04-E6F9-4526-831A-5421553421D5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{1E0A7A04-E6F9-4526-831A-5421553421D5}.Release|x86.ActiveCfg = Release|Any CPU
 		{D43DD4B2-AD88-4748-AF9F-EC60A44BC4C7}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{D43DD4B2-AD88-4748-AF9F-EC60A44BC4C7}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{D43DD4B2-AD88-4748-AF9F-EC60A44BC4C7}.Debug|Mixed Platforms.Build.0 = Debug|x86
