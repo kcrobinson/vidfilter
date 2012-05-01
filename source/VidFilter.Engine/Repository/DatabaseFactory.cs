@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace VidFilter.Repository
+namespace VidFilter.Engine
 {
     public class DatabaseFactory
     {

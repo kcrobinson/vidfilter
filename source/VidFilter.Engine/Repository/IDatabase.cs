@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using VidFilter.Model;
 
-namespace VidFilter.Repository
+namespace VidFilter.Engine
 {
     public interface IDatabase : IDisposable
     {
@@ -27,5 +26,7 @@ namespace VidFilter.Repository
         /// <param name="colorspace"></param>
         /// <returns></returns>
         OperationStatus InsertOrUpdateColorspace(Colorspace colorspace);
+
+        IEnumerable<Movie> QueryAllMovies();
     }
 }

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using VidFilter.Repository;
-using VidFilter.Model;
 using System.IO;
 using VidFilter.Engine;
 
@@ -256,7 +254,7 @@ namespace VidFilter.Console
             movie.FrameRate = result.OutFramerate;
             movie.ParentMovie = inputfileInfo;
             //movie.PlayLength = 
-            movie.ResolutionActual = new Resolution() { PixelHeight = result.OutHeight, PixelWidth = result.OutWidth };
+            movie.ResolutionActual = new Resolution(result.OutWidth, result.OutHeight);
             //movie.SampleFrame = result.OutImage;
             opStatus = Database.InsertMovie(movie);
             return opStatus;

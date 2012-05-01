@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using Raven.Client.Document;
 using Raven.Client;
-using VidFilter.Model;
 
-namespace VidFilter.Repository
+namespace VidFilter.Engine
 {
     public class RavenDB : IDatabase
     {
@@ -162,6 +161,32 @@ namespace VidFilter.Repository
                 return opStatus;
             }
             return opStatus;
+        }
+    
+        public IEnumerable<Movie> QueryAllMovies()
+        {
+            try
+            {
+                using (var session = DocumentStore.OpenSession())
+                {
+                    IList<NormalizedMovie> normalizedMovies = session.Query<NormalizedMovie>().ToList();
+                    IList<Movie> movies = new List<Movie>(normalizedMovies.Count);
+                    foreach(NormalizedMovie normalizedMovie in normalizedMovies)
+                    {
+                        Movie movie = new Movie(normalizedMovie);
+                        if(normalizedMovie.ColorSpaceId != null)
+                            movie.ColorSpace = session.Load<Colorspace>(normalizedMovie.ColorSpaceId);
+                        if(normalizedMovie.ResolutionActualId != null)
+                            movie.ResolutionActual = session.Load<Resolution>(normalizedMovie.ResolutionActualId);
+                        movies.Add(movie);
+                    }
+                    return movies;
+                }
+            }
+            catch
+            {
+                return new List<Movie>(0);
+            }
         }
     }
 }
