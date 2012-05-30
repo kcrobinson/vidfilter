@@ -24,18 +24,36 @@ namespace VidFilter.Engine
                     return null;
                 }
 
-                StringBuilder sb = new StringBuilder(InputFile.DirectoryName + "\\");
+                if (_OutputPath == null)
+                {
+                    // Some logic for creating an output file name if none is specified
+                    StringBuilder sb = new StringBuilder(InputFile.DirectoryName + "\\");
 
-                sb.Append(InputFile.Name);
-                if (!string.IsNullOrWhiteSpace(OutputColorspace))
-                    sb.Append("_" + OutputColorspace);
-                if (OutputFrameRate > 0)
-                    sb.Append("_" + OutputFrameRate + "fps");
-                if (OutputWidth > 0 && OutputHeight > 0)
-                    sb.Append("_" + OutputWidth + "x" + OutputHeight);
+                    string fileName;
+                    string extension;
+                    string[] fileNameSplit = InputFile.Name.Split('.');
+                    if (fileNameSplit.Count() < 2)
+                    {
+                        fileName = InputFile.Name;
+                        extension = ".avi";
+                    }
+                    else
+                    {
+                        fileName = string.Join(".", fileNameSplit.Take(fileNameSplit.Count() - 1));
+                        extension = "." + fileNameSplit.Last();
+                    }
+                    sb.Append(fileName);
+                    if (!string.IsNullOrWhiteSpace(OutputColorspace))
+                        sb.Append("_" + OutputColorspace);
+                    if (OutputFrameRate > 0)
+                        sb.Append("_" + OutputFrameRate + "fps");
+                    if (OutputWidth > 0 && OutputHeight > 0)
+                        sb.Append("_" + OutputWidth + "x" + OutputHeight);
 
-                sb.Append(".avi");
-                return sb.ToString();
+                    sb.Append(extension);
+                    _OutputPath = sb.ToString();
+                }
+                return _OutputPath;
             }
             set
             {
@@ -52,7 +70,6 @@ namespace VidFilter.Engine
         public int OutputFrameRate { get; set; }
         public int OutputWidth { get; set; }
         public int OutputHeight { get; set; }
-        public bool PadToOriginal { get; set; }
-
+        // public bool PadToOriginal { get; set; }
     }
 }

@@ -48,9 +48,6 @@
     <Reference Include="Raven.Client.Lightweight">
       <HintPath>..\packages\RavenDB.1.0.888\lib\net40\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Client.Lightweight.FSharp">
-      <HintPath>..\packages\RavenDB.1.0.888\lib\net40\Raven.Client.Lightweight.FSharp.dll</HintPath>
-    </Reference>
     <Reference Include="Raven.Client.MvcIntegration">
       <HintPath>..\packages\RavenDB.1.0.888\lib\net40\Raven.Client.MvcIntegration.dll</HintPath>
     </Reference>
@@ -71,11 +68,11 @@
     <Compile Include="EngineResult.cs" />
     <Compile Include="Model\BaseFile.cs" />
     <Compile Include="Model\Colorspace.cs" />
+    <Compile Include="Model\FriendlyName.cs" />
     <Compile Include="Model\Image.cs" />
     <Compile Include="Model\Movie.cs" />
-    <Compile Include="Model\NormalizedMovie.cs" />
     <Compile Include="Model\OperationStatus.cs" />
-    <Compile Include="Model\Resolution.cs" />
+    <Compile Include="Indexes\Movies_ByFriendlyName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\DatabaseFactory.cs" />
     <Compile Include="Repository\GenericCrudOperations.cs" />
