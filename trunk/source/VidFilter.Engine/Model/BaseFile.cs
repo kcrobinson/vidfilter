@@ -13,9 +13,22 @@ namespace VidFilter.Engine
     public abstract class BaseFile
     {
         protected BaseFile() { }
+        protected BaseFile(string filePath)
+        {
+            try
+            {
+                this.FileInfo = new FileInfo(filePath);
+                this.FileName = this.FileInfo.Name;
+            }
+            catch 
+            { 
+                // Major error case but there's not a whole lot that can be done at this level.
+            }
+        }
         protected BaseFile(FileInfo fileInfo)
         {
-            this._FileInfo = fileInfo;
+            this.FileInfo = fileInfo;
+            this.FileName = fileInfo.Name;
         }
 
         /// <summary>
@@ -24,11 +37,11 @@ namespace VidFilter.Engine
         public string Id { 
             get
             {
-                if (_FileInfo == null)
+                if (FileInfo == null)
                 {
-                    throw new Exception("BaseFile record does not have a FileInfo value. Cannot create record ID.");
+                    return null;
                 }
-                return BaseFile.BaseFileId(_FileInfo);
+                return BaseFile.BaseFileId(FileInfo);
             } 
         }
 
@@ -36,15 +49,11 @@ namespace VidFilter.Engine
         {
             get
             {
-                if (_FileInfo == null)
+                if (FileInfo == null)
                 {
                     return null;
                 }
-                return _FileInfo.FullName;
-            }
-            set
-            {
-                _FileInfo = new FileInfo(value);
+                return FileInfo.FullName;
             }
         }
 
@@ -68,21 +77,12 @@ namespace VidFilter.Engine
         }
 
         [JsonIgnore]
-        protected FileInfo _FileInfo { get; set; }
-        public FileInfo GetFileInfo() { return _FileInfo; }
+        public FileInfo FileInfo { get; set; }
 
-        [JsonIgnore]
         /// <summary>
         /// Name of the file
         /// </summary>
-        public string FileName 
-        { 
-            get
-            {
-                if (_FileInfo == null) return null;
-                return _FileInfo.Name;
-            }
-        }
+        public string FileName { get; set; }
 
         [JsonIgnore]
         /// <summary>
@@ -92,11 +92,11 @@ namespace VidFilter.Engine
         {
             get
             {
-                if (_FileInfo == null)
+                if (FileInfo == null)
                 {
                     return null;
                 }
-                return _FileInfo.DirectoryName;
+                return FileInfo.DirectoryName;
             }
         }
 
@@ -104,15 +104,15 @@ namespace VidFilter.Engine
         /// <summary>
         /// File size
         /// </summary>
-        public long SizeInBytes
+        public long FileLength
         {
             get
             {
-                if (_FileInfo == null)
+                if (FileInfo == null)
                 {
                     return 0;
                 }
-                return _FileInfo.Length;
+                return FileInfo.Length;
             }
         }
 
@@ -120,15 +120,15 @@ namespace VidFilter.Engine
         /// <summary>
         /// System information about the file's creation time
         /// </summary>
-        public DateTime TimeCreation
+        public DateTime FileCreationTime
         {
             get
             {
-                if (_FileInfo == null)
+                if (FileInfo == null)
                 {
                     return default(DateTime);
                 }
-                return _FileInfo.CreationTime;
+                return FileInfo.CreationTime;
             }
         }
 
@@ -136,15 +136,15 @@ namespace VidFilter.Engine
         /// <summary>
         /// System information about the file's last write time
         /// </summary>
-        public DateTime TimeLastModified
+        public DateTime FileModificationTime
         {
             get
             {
-                if (_FileInfo == null)
+                if (FileInfo == null)
                 {
                     return default(DateTime);
                 }
-                return _FileInfo.LastWriteTime;
+                return FileInfo.LastWriteTime;
             }
         }
     }

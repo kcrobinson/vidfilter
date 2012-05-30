@@ -15,12 +15,17 @@ namespace VidFilter.Engine
                 {
                     throw new Exception("Colorspace record does not have a Name value. Cannot create record ID.");
                 }
-                return "Colorspace/" + Name; 
+                return "Colorspace/" + Name;
             } 
         }
         public string Name { get; set; }
-        public bool IsMonochrome { get; set; }
+        public string CodeName { get; set; }
         public int NumChannels { get; set; }
         public int BitsPerPixel { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

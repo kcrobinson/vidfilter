@@ -125,15 +125,17 @@ namespace VidFilter.Console
                 return;
             }
             WriteMessagesInColor(ConsoleColor.Magenta, opStatus.Message, "Rows affected: " + opStatus.NumRecordsAffected);
-            if(opStatus.ExceptionMessages != null && opStatus.ExceptionMessages.Count > 0)
-            {
-                for(int i=0; i<opStatus.ExceptionMessages.Count; i++)
-                {
-                    WriteMessagesInColor(ConsoleColor.Red, opStatus.ExceptionMessages.ElementAt(i));
-                    WriteMessagesInColor(ConsoleColor.Yellow, opStatus.ExceptionStackTraces.ElementAt(i));
-                }
-                return;
-            }
+
+            //OperationStatus changed to Exception for ExceptionMessages and ExceptionStackTraces
+            //if(opStatus.ExceptionMessages != null && opStatus.ExceptionMessages.Count > 0)
+            //{
+            //    for(int i=0; i<opStatus.ExceptionMessages.Count; i++)
+            //    {
+            //        WriteMessagesInColor(ConsoleColor.Red, opStatus.ExceptionMessages.ElementAt(i));
+            //        WriteMessagesInColor(ConsoleColor.Yellow, opStatus.ExceptionStackTraces.ElementAt(i));
+            //    }
+            //    return;
+            //}
         }
 
         static void PrintHelp()
@@ -252,9 +254,9 @@ namespace VidFilter.Console
             //movie.BitRate = 
             //movie.ColorSpace = new Colorspace(){ Name = result.OutColorspace; }
             movie.FrameRate = result.OutFramerate;
-            movie.ParentMovie = inputfileInfo;
+            //movie.ParentMovie = inputfileInfo;
             //movie.PlayLength = 
-            movie.ResolutionActual = new Resolution(result.OutWidth, result.OutHeight);
+            //movie.ResolutionActual = new Resolution(result.OutWidth, result.OutHeight);
             //movie.SampleFrame = result.OutImage;
             opStatus = Database.InsertMovie(movie);
             return opStatus;

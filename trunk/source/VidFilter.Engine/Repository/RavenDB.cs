@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Raven.Client.Document;
 using Raven.Client;
+using Raven.Client.Linq;
+using Raven.Client.Indexes;
 
 namespace VidFilter.Engine
 {
@@ -19,6 +21,7 @@ namespace VidFilter.Engine
                 {
                     _DocumentStore = new DocumentStore { Url = ServerAddress };
                     _DocumentStore.Initialize();
+                    IndexCreation.CreateIndexes(typeof(Movies_ByFriendlyName).Assembly, _DocumentStore);
                 }
                 return _DocumentStore;
             }
@@ -68,16 +71,14 @@ namespace VidFilter.Engine
             {
                 using (var session = DocumentStore.OpenSession())
                 {
-                    NormalizedMovie normMovie = NormalizeMovie(session, movie);
-
-                    NormalizedMovie recordLookup = session.Load<NormalizedMovie>(normMovie.Id);
+                    Movie recordLookup = session.Load<Movie>(movie.Id);
                     if (recordLookup != null)
                     {
                         opStatus.Message = "Movie record already existed. Record not updated.";
                     }
                     else
                     {
-                        session.Store(normMovie);
+                        session.Store(movie);
                         opStatus.NumRecordsAffected++;
                         opStatus.Message = "Movie record successfully inserted.";
                     }
@@ -90,47 +91,11 @@ namespace VidFilter.Engine
                 return opStatus;
             }
 
+            opStatus.ResultingFriendlyName = new FriendlyName(movie.Id, movie.FileName);
             opStatus.IsSuccess = true;
             return opStatus;
         }
 
-        private NormalizedMovie NormalizeMovie(IDocumentSession session, Movie movie)
-        {
-            NormalizedMovie normalizedMovie = new NormalizedMovie(movie.GetFileInfo());
-
-            normalizedMovie.BitRate = movie.BitRate;
-            normalizedMovie.FrameRate = movie.FrameRate;
-            normalizedMovie.PlayLength = movie.PlayLength;
-
-            if (movie.ColorSpace != null)
-            {
-                // Load or Insert colorspace
-            }
-            if (movie.ResolutionActual != null)
-            {
-                Resolution res1 = session.Load<Resolution>(movie.ResolutionActual.Id);
-                if (res1 != null)
-                {
-                    normalizedMovie.ResolutionActualId = res1.Id;
-                }
-                else
-                {
-                    session.Store(movie.ResolutionActual);
-                    normalizedMovie.ResolutionActualId = movie.ResolutionActual.Id;
-                }
-            }
-            if (movie.ParentMovie != null)
-            {
-                NormalizedMovie parentMovie = session.Load<NormalizedMovie>(BaseFile.IdFromBaseFile(movie.ParentMovie));
-                if (parentMovie != null)
-                {
-                    normalizedMovie.ParentMovieId = parentMovie.Id;
-                }
-            }
-
-            return normalizedMovie;
-        }
-    
         public OperationStatus InsertOrUpdateColorspace(Colorspace colorspace)
         {
             OperationStatus opStatus = new OperationStatus();
@@ -142,8 +107,8 @@ namespace VidFilter.Engine
                     Colorspace loadedRecord = session.Load<Colorspace>(colorspace.Id);
                     if (loadedRecord != null)
                     {
+                        loadedRecord.CodeName = colorspace.CodeName;
                         loadedRecord.BitsPerPixel = colorspace.BitsPerPixel;
-                        loadedRecord.IsMonochrome = colorspace.IsMonochrome;
                         loadedRecord.NumChannels = colorspace.NumChannels;
                     }
                     else
@@ -163,29 +128,71 @@ namespace VidFilter.Engine
             return opStatus;
         }
     
-        public IEnumerable<Movie> QueryAllMovies()
+        public IEnumerable<FriendlyName> QueryAllMovies(bool allowException = false)
         {
             try
             {
                 using (var session = DocumentStore.OpenSession())
                 {
-                    IList<NormalizedMovie> normalizedMovies = session.Query<NormalizedMovie>().ToList();
-                    IList<Movie> movies = new List<Movie>(normalizedMovies.Count);
-                    foreach(NormalizedMovie normalizedMovie in normalizedMovies)
-                    {
-                        Movie movie = new Movie(normalizedMovie);
-                        if(normalizedMovie.ColorSpaceId != null)
-                            movie.ColorSpace = session.Load<Colorspace>(normalizedMovie.ColorSpaceId);
-                        if(normalizedMovie.ResolutionActualId != null)
-                            movie.ResolutionActual = session.Load<Resolution>(normalizedMovie.ResolutionActualId);
-                        movies.Add(movie);
-                    }
-                    return movies;
+                    return session.Query<Movie, Movies_ByFriendlyName>().As<FriendlyName>();
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                return new List<Movie>(0);
+                if (allowException) 
+                    throw ex;
+                return new List<FriendlyName>(0);
+            }
+        }
+
+        public IEnumerable<Colorspace> QueryAllColorspaces(bool allowException = false)
+        {
+            try
+            {
+                using (var session = DocumentStore.OpenSession())
+                {
+                    return session.Query<Colorspace>();
+                }
+            }
+            catch (Exception ex)
+            {
+                if (allowException)
+                    throw ex;
+                return new List<Colorspace>(0);
+            }
+        }
+
+        public Movie QueryMovie(string id, bool allowException = false)
+        {
+            try
+            {
+                using (var session = DocumentStore.OpenSession())
+                {
+                    return session.Load<Movie>(id);
+                }
+            }
+            catch (Exception ex)
+            {
+                if (allowException) 
+                    throw ex;
+                return null;
+            }
+        }
+
+        public Colorspace QueryColorspace(string id, bool allowException = false)
+        {
+            try
+            {
+                using (var session = DocumentStore.OpenSession())
+                {
+                    return session.Load<Colorspace>(id);
+                }
+            }
+            catch (Exception ex)
+            {
+                if (allowException)
+                    throw ex;
+                return null;
             }
         }
     }

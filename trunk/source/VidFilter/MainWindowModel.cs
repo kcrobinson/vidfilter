@@ -6,23 +6,23 @@ using System.Windows.Data;
 using System.ComponentModel;
 using VidFilter.Engine;
 using System.IO;
+using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace VidFilter
 {
-    class MainWindowModel
+    public class MainWindowModel : DependencyObject
     {
-        public ICollectionView Movies { get; private set; }
+        public ObservableCollection<FriendlyName> Movies { get; set; }
+
+        public ObservableCollection<Colorspace> Colorspaces { get; set; }
+
+        public Movie SelectedMovie { get; set; }
 
         public MainWindowModel()
         {
-            IDatabase database = DatabaseFactory.GetDatabase();
-            //IEnumerable<Movie> movies = database.QueryAllMovies();
-            IEnumerable<Movie> movies = new List<Movie>
-            {
-                new Movie(new FileInfo(@"C:\users\krobins\vidfilter\clips\bus.avi"))
-            };
-
-            Movies = CollectionViewSource.GetDefaultView(movies);
+            Movies = new ObservableCollection<FriendlyName>();
+            Colorspaces = new ObservableCollection<Colorspace>();
         }
     }
 }

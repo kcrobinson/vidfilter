@@ -10,9 +10,10 @@ namespace VidFilter.Engine
     {
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
+        public string ProcessArguments { get; set; }
         public string StdError { get; set; }
         public string StdOutput { get; set; }
-        public string ExceptionMessage { get; set; }
+        public Exception Exception { get; set; }
         public FileInfo OutFile { get; set; }
         public int OutWidth { get; set; }
         public int OutHeight { get; set; }
@@ -23,7 +24,7 @@ namespace VidFilter.Engine
         {
             IsSuccess = false;
             Message = message;
-            ExceptionMessage = ex.Message;
+            Exception = ex;
         }
     }
 }

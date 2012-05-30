@@ -27,6 +27,12 @@ namespace VidFilter.Engine
         /// <returns></returns>
         OperationStatus InsertOrUpdateColorspace(Colorspace colorspace);
 
-        IEnumerable<Movie> QueryAllMovies();
+        IEnumerable<FriendlyName> QueryAllMovies(bool allowException = false);
+
+        IEnumerable<Colorspace> QueryAllColorspaces(bool allowException = false);
+
+        Movie QueryMovie(string Id, bool allowException = false);
+
+        Colorspace QueryColorspace(string Id, bool allowException = false);
     }
 }

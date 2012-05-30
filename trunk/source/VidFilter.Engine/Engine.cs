@@ -35,7 +35,7 @@ namespace VidFilter.Engine
             startInfo.RedirectStandardInput = true;
             startInfo.RedirectStandardError = true;
             startInfo.RedirectStandardOutput = true;
-            startInfo.Arguments = ProcessArguments(request);
+            startInfo.Arguments = engResult.ProcessArguments = ProcessArguments(request);
 
             Process process = null;
             int exitCode;
