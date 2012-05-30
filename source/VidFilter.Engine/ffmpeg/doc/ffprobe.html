@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on April 24, 2012 by texi2html 1.82 -->
+<!-- Created on May 27, 2012 by texi2html 1.82 -->
 <!--
 texi2html was written by: 
             Lionel Cons <Lionel.Cons@cern.ch> (original author)
@@ -95,7 +95,7 @@ h3 {
 <ul class="toc">
   <li><a name="toc-Synopsis" href="#Synopsis">1. Synopsis</a></li>
   <li><a name="toc-Description" href="#Description">2. Description</a></li>
-  <li><a name="toc-Options-3" href="#Options-3">3. Options</a>
+  <li><a name="toc-Options-4" href="#Options-4">3. Options</a>
   <ul class="toc">
     <li><a name="toc-Stream-specifiers-1" href="#Stream-specifiers-1">3.1 Stream specifiers</a></li>
     <li><a name="toc-Generic-options" href="#Generic-options">3.2 Generic options</a></li>
@@ -113,90 +113,99 @@ h3 {
     <li><a name="toc-xml" href="#xml">4.5 xml</a></li>
   </ul></li>
   <li><a name="toc-Timecode" href="#Timecode">5. Timecode</a></li>
-  <li><a name="toc-Decoders" href="#Decoders">6. Decoders</a></li>
-  <li><a name="toc-Video-Decoders" href="#Video-Decoders">7. Video Decoders</a>
+  <li><a name="toc-Syntax" href="#Syntax">6. Syntax</a>
   <ul class="toc">
-    <li><a name="toc-rawvideo" href="#rawvideo">7.1 rawvideo</a>
+    <li><a name="toc-Date" href="#Date">6.1 Date</a></li>
+    <li><a name="toc-Time-duration" href="#Time-duration">6.2 Time duration</a></li>
+    <li><a name="toc-Video-size" href="#Video-size">6.3 Video size</a></li>
+    <li><a name="toc-Video-rate" href="#Video-rate">6.4 Video rate</a></li>
+    <li><a name="toc-Ratio" href="#Ratio">6.5 Ratio</a></li>
+    <li><a name="toc-Color" href="#Color">6.6 Color</a></li>
+  </ul></li>
+  <li><a name="toc-Decoders" href="#Decoders">7. Decoders</a></li>
+  <li><a name="toc-Video-Decoders" href="#Video-Decoders">8. Video Decoders</a>
+  <ul class="toc">
+    <li><a name="toc-rawvideo" href="#rawvideo">8.1 rawvideo</a>
     <ul class="toc">
-      <li><a name="toc-Options-2" href="#Options-2">7.1.1 Options</a></li>
+      <li><a name="toc-Options" href="#Options">8.1.1 Options</a></li>
     </ul>
 </li>
   </ul></li>
-  <li><a name="toc-Audio-Decoders" href="#Audio-Decoders">8. Audio Decoders</a>
+  <li><a name="toc-Audio-Decoders" href="#Audio-Decoders">9. Audio Decoders</a>
   <ul class="toc">
-    <li><a name="toc-ffwavesynth" href="#ffwavesynth">8.1 ffwavesynth</a></li>
+    <li><a name="toc-ffwavesynth" href="#ffwavesynth">9.1 ffwavesynth</a></li>
   </ul></li>
-  <li><a name="toc-Demuxers" href="#Demuxers">9. Demuxers</a>
+  <li><a name="toc-Demuxers" href="#Demuxers">10. Demuxers</a>
   <ul class="toc">
-    <li><a name="toc-image2" href="#image2">9.1 image2</a></li>
-    <li><a name="toc-applehttp" href="#applehttp">9.2 applehttp</a></li>
-    <li><a name="toc-sbg" href="#sbg">9.3 sbg</a></li>
+    <li><a name="toc-image2" href="#image2">10.1 image2</a></li>
+    <li><a name="toc-applehttp" href="#applehttp">10.2 applehttp</a></li>
+    <li><a name="toc-sbg" href="#sbg">10.3 sbg</a></li>
   </ul></li>
-  <li><a name="toc-Protocols" href="#Protocols">10. Protocols</a>
+  <li><a name="toc-Protocols" href="#Protocols">11. Protocols</a>
   <ul class="toc">
-    <li><a name="toc-bluray" href="#bluray">10.1 bluray</a></li>
-    <li><a name="toc-concat" href="#concat">10.2 concat</a></li>
-    <li><a name="toc-file" href="#file">10.3 file</a></li>
-    <li><a name="toc-gopher" href="#gopher">10.4 gopher</a></li>
-    <li><a name="toc-hls" href="#hls">10.5 hls</a></li>
-    <li><a name="toc-http" href="#http">10.6 http</a></li>
-    <li><a name="toc-mmst" href="#mmst">10.7 mmst</a></li>
-    <li><a name="toc-mmsh" href="#mmsh">10.8 mmsh</a></li>
-    <li><a name="toc-md5" href="#md5">10.9 md5</a></li>
-    <li><a name="toc-pipe" href="#pipe">10.10 pipe</a></li>
-    <li><a name="toc-rtmp" href="#rtmp">10.11 rtmp</a></li>
-    <li><a name="toc-rtmp_002c-rtmpe_002c-rtmps_002c-rtmpt_002c-rtmpte" href="#rtmp_002c-rtmpe_002c-rtmps_002c-rtmpt_002c-rtmpte">10.12 rtmp, rtmpe, rtmps, rtmpt, rtmpte</a></li>
-    <li><a name="toc-rtp" href="#rtp">10.13 rtp</a></li>
-    <li><a name="toc-rtsp" href="#rtsp">10.14 rtsp</a></li>
-    <li><a name="toc-sap" href="#sap">10.15 sap</a>
+    <li><a name="toc-bluray" href="#bluray">11.1 bluray</a></li>
+    <li><a name="toc-concat" href="#concat">11.2 concat</a></li>
+    <li><a name="toc-file" href="#file">11.3 file</a></li>
+    <li><a name="toc-gopher" href="#gopher">11.4 gopher</a></li>
+    <li><a name="toc-hls" href="#hls">11.5 hls</a></li>
+    <li><a name="toc-http" href="#http">11.6 http</a></li>
+    <li><a name="toc-mmst" href="#mmst">11.7 mmst</a></li>
+    <li><a name="toc-mmsh" href="#mmsh">11.8 mmsh</a></li>
+    <li><a name="toc-md5" href="#md5">11.9 md5</a></li>
+    <li><a name="toc-pipe" href="#pipe">11.10 pipe</a></li>
+    <li><a name="toc-rtmp" href="#rtmp">11.11 rtmp</a></li>
+    <li><a name="toc-rtmp_002c-rtmpe_002c-rtmps_002c-rtmpt_002c-rtmpte" href="#rtmp_002c-rtmpe_002c-rtmps_002c-rtmpt_002c-rtmpte">11.12 rtmp, rtmpe, rtmps, rtmpt, rtmpte</a></li>
+    <li><a name="toc-rtp" href="#rtp">11.13 rtp</a></li>
+    <li><a name="toc-rtsp" href="#rtsp">11.14 rtsp</a></li>
+    <li><a name="toc-sap" href="#sap">11.15 sap</a>
     <ul class="toc">
-      <li><a name="toc-Muxer" href="#Muxer">10.15.1 Muxer</a></li>
-      <li><a name="toc-Demuxer" href="#Demuxer">10.15.2 Demuxer</a></li>
+      <li><a name="toc-Muxer" href="#Muxer">11.15.1 Muxer</a></li>
+      <li><a name="toc-Demuxer" href="#Demuxer">11.15.2 Demuxer</a></li>
     </ul></li>
-    <li><a name="toc-tcp" href="#tcp">10.16 tcp</a></li>
-    <li><a name="toc-udp" href="#udp">10.17 udp</a></li>
+    <li><a name="toc-tcp" href="#tcp">11.16 tcp</a></li>
+    <li><a name="toc-udp" href="#udp">11.17 udp</a></li>
   </ul></li>
-  <li><a name="toc-Input-Devices" href="#Input-Devices">11. Input Devices</a>
+  <li><a name="toc-Input-Devices" href="#Input-Devices">12. Input Devices</a>
   <ul class="toc">
-    <li><a name="toc-alsa" href="#alsa">11.1 alsa</a></li>
-    <li><a name="toc-bktr" href="#bktr">11.2 bktr</a></li>
-    <li><a name="toc-dshow" href="#dshow">11.3 dshow</a>
+    <li><a name="toc-alsa" href="#alsa">12.1 alsa</a></li>
+    <li><a name="toc-bktr" href="#bktr">12.2 bktr</a></li>
+    <li><a name="toc-dshow" href="#dshow">12.3 dshow</a>
     <ul class="toc">
-      <li><a name="toc-Options-4" href="#Options-4">11.3.1 Options</a></li>
-      <li><a name="toc-Examples-1" href="#Examples-1">11.3.2 Examples</a></li>
+      <li><a name="toc-Options-2" href="#Options-2">12.3.1 Options</a></li>
+      <li><a name="toc-Examples-2" href="#Examples-2">12.3.2 Examples</a></li>
     </ul></li>
-    <li><a name="toc-dv1394" href="#dv1394">11.4 dv1394</a></li>
-    <li><a name="toc-fbdev" href="#fbdev">11.5 fbdev</a></li>
-    <li><a name="toc-jack" href="#jack">11.6 jack</a></li>
-    <li><a name="toc-lavfi" href="#lavfi">11.7 lavfi</a>
+    <li><a name="toc-dv1394" href="#dv1394">12.4 dv1394</a></li>
+    <li><a name="toc-fbdev" href="#fbdev">12.5 fbdev</a></li>
+    <li><a name="toc-jack" href="#jack">12.6 jack</a></li>
+    <li><a name="toc-lavfi" href="#lavfi">12.7 lavfi</a>
     <ul class="toc">
-      <li><a name="toc-Options" href="#Options">11.7.1 Options</a></li>
-      <li><a name="toc-Examples" href="#Examples">11.7.2 Examples</a></li>
+      <li><a name="toc-Options-1" href="#Options-1">12.7.1 Options</a></li>
+      <li><a name="toc-Examples" href="#Examples">12.7.2 Examples</a></li>
     </ul></li>
-    <li><a name="toc-libdc1394" href="#libdc1394">11.8 libdc1394</a></li>
-    <li><a name="toc-openal" href="#openal">11.9 openal</a>
+    <li><a name="toc-libdc1394" href="#libdc1394">12.8 libdc1394</a></li>
+    <li><a name="toc-openal" href="#openal">12.9 openal</a>
     <ul class="toc">
-      <li><a name="toc-Options-1" href="#Options-1">11.9.1 Options</a></li>
-      <li><a name="toc-Examples-2" href="#Examples-2">11.9.2 Examples</a></li>
+      <li><a name="toc-Options-3" href="#Options-3">12.9.1 Options</a></li>
+      <li><a name="toc-Examples-1" href="#Examples-1">12.9.2 Examples</a></li>
     </ul></li>
-    <li><a name="toc-oss" href="#oss">11.10 oss</a></li>
-    <li><a name="toc-pulse" href="#pulse">11.11 pulse</a>
+    <li><a name="toc-oss" href="#oss">12.10 oss</a></li>
+    <li><a name="toc-pulse" href="#pulse">12.11 pulse</a>
     <ul class="toc">
-      <li><a name="toc-server-AVOption" href="#server-AVOption">11.11.1 <var>server</var> AVOption</a></li>
-      <li><a name="toc-name-AVOption" href="#name-AVOption">11.11.2 <var>name</var> AVOption</a></li>
-      <li><a name="toc-stream_005fname-AVOption" href="#stream_005fname-AVOption">11.11.3 <var>stream_name</var> AVOption</a></li>
-      <li><a name="toc-sample_005frate-AVOption" href="#sample_005frate-AVOption">11.11.4 <var>sample_rate</var> AVOption</a></li>
-      <li><a name="toc-channels-AVOption" href="#channels-AVOption">11.11.5 <var>channels</var> AVOption</a></li>
-      <li><a name="toc-frame_005fsize-AVOption" href="#frame_005fsize-AVOption">11.11.6 <var>frame_size</var> AVOption</a></li>
-      <li><a name="toc-fragment_005fsize-AVOption" href="#fragment_005fsize-AVOption">11.11.7 <var>fragment_size</var> AVOption</a></li>
+      <li><a name="toc-server-AVOption" href="#server-AVOption">12.11.1 <var>server</var> AVOption</a></li>
+      <li><a name="toc-name-AVOption" href="#name-AVOption">12.11.2 <var>name</var> AVOption</a></li>
+      <li><a name="toc-stream_005fname-AVOption" href="#stream_005fname-AVOption">12.11.3 <var>stream_name</var> AVOption</a></li>
+      <li><a name="toc-sample_005frate-AVOption" href="#sample_005frate-AVOption">12.11.4 <var>sample_rate</var> AVOption</a></li>
+      <li><a name="toc-channels-AVOption" href="#channels-AVOption">12.11.5 <var>channels</var> AVOption</a></li>
+      <li><a name="toc-frame_005fsize-AVOption" href="#frame_005fsize-AVOption">12.11.6 <var>frame_size</var> AVOption</a></li>
+      <li><a name="toc-fragment_005fsize-AVOption" href="#fragment_005fsize-AVOption">12.11.7 <var>fragment_size</var> AVOption</a></li>
     </ul></li>
-    <li><a name="toc-sndio" href="#sndio">11.12 sndio</a></li>
-    <li><a name="toc-video4linux2" href="#video4linux2">11.13 video4linux2</a></li>
-    <li><a name="toc-vfwcap" href="#vfwcap">11.14 vfwcap</a></li>
-    <li><a name="toc-x11grab" href="#x11grab">11.15 x11grab</a>
+    <li><a name="toc-sndio" href="#sndio">12.12 sndio</a></li>
+    <li><a name="toc-video4linux2" href="#video4linux2">12.13 video4linux2</a></li>
+    <li><a name="toc-vfwcap" href="#vfwcap">12.14 vfwcap</a></li>
+    <li><a name="toc-x11grab" href="#x11grab">12.15 x11grab</a>
     <ul class="toc">
-      <li><a name="toc-follow_005fmouse-AVOption" href="#follow_005fmouse-AVOption">11.15.1 <var>follow_mouse</var> AVOption</a></li>
-      <li><a name="toc-show_005fregion-AVOption" href="#show_005fregion-AVOption">11.15.2 <var>show_region</var> AVOption</a></li>
+      <li><a name="toc-follow_005fmouse-AVOption" href="#follow_005fmouse-AVOption">12.15.1 <var>follow_mouse</var> AVOption</a></li>
+      <li><a name="toc-show_005fregion-AVOption" href="#show_005fregion-AVOption">12.15.2 <var>show_region</var> AVOption</a></li>
     </ul>
 </li>
   </ul>
@@ -242,8 +251,8 @@ writer, which is specified by the &lsquo;<samp>print_format</samp>&rsquo; option
 and printed in the corresponding &quot;FORMAT&quot; or &quot;STREAM&quot; section.
 </p>
 
-<a name="Options-3"></a>
-<h1 class="chapter"><a href="ffprobe.html#toc-Options-3">3. Options</a></h1>
+<a name="Options-4"></a>
+<h1 class="chapter"><a href="ffprobe.html#toc-Options-4">3. Options</a></h1>
 
 <p>All the numerical options, if not specified otherwise, accept in input
 a string representing a number, which may contain one of the
@@ -291,6 +300,9 @@ streams of this type.
 <dt> &lsquo;<samp>p:<var>program_id</var>[:<var>stream_index</var>]</samp>&rsquo;</dt>
 <dd><p>If <var>stream_index</var> is given, then matches stream number <var>stream_index</var> in
 program with id <var>program_id</var>. Otherwise matches all streams in this program.
+</p></dd>
+<dt> &lsquo;<samp>#<var>stream_id</var></samp>&rsquo;</dt>
+<dd><p>Matches the stream by format-specific ID.
 </p></dd>
 </dl>
 <a name="Generic-options"></a>
@@ -1735,6 +1747,12 @@ stream.
 name &quot;FORMAT&quot;.
 </p>
 </dd>
+<dt> &lsquo;<samp>-show_format_entry <var>name</var></samp>&rsquo;</dt>
+<dd><p>Like &lsquo;<samp>-show_format</samp>&rsquo;, but only prints the specified entry of the
+container format information, rather than all. This option may be given more
+than once, then all specified entries will be shown.
+</p>
+</dd>
 <dt> &lsquo;<samp>-show_packets</samp>&rsquo;</dt>
 <dd><p>Show information about each packet contained in the input multimedia
 stream.
@@ -1828,6 +1846,23 @@ keyN=valN
 <p>Metadata tags are printed as a line in the corresponding FORMAT or
 STREAM section, and are prefixed by the string &quot;TAG:&quot;.
 </p>
+<p>This writer accepts options as a list of <var>key</var>=<var>value</var> pairs,
+separated by &quot;:&quot;.
+</p>
+<p>A description of the accepted options follows.
+</p>
+<dl compact="compact">
+<dt> &lsquo;<samp>nokey, nk</samp>&rsquo;</dt>
+<dd><p>If set to 1 specify not to print the key of each field. Default value
+is 0.
+</p>
+</dd>
+<dt> &lsquo;<samp>noprint_wrappers, nw</samp>&rsquo;</dt>
+<dd><p>If set to 1 specify not to print the section header and footer.
+Default value is 0.
+</p></dd>
+</dl>
+
 <a name="compact"></a>
 <h2 class="section"><a href="ffprobe.html#toc-compact">4.2 compact</a></h2>
 <p>Compact format.
@@ -1919,6 +1954,10 @@ printed on a single line. Default value is 0.
 <p>The XML output is described in the XML schema description file
 &lsquo;<tt>ffprobe.xsd</tt>&rsquo; installed in the FFmpeg datadir.
 </p>
+<p>An updated version of the schema can be retrieved at the url
+<a href="http://www.ffmpeg.org/schema/ffprobe.xsd">http://www.ffmpeg.org/schema/ffprobe.xsd</a>, which redirects to the
+latest schema committed into the FFmpeg development source code tree.
+</p>
 <p>Note that the output issued will be compliant to the
 &lsquo;<tt>ffprobe.xsd</tt>&rsquo; schema only when no special global output options
 (&lsquo;<samp>unit</samp>&rsquo;, &lsquo;<samp>prefix</samp>&rsquo;, &lsquo;<samp>byte_binary_prefix</samp>&rsquo;,
@@ -1953,20 +1992,220 @@ This option automatically sets &lsquo;<samp>fully_qualified</samp>&rsquo; to 1.
 <p><code>ffprobe</code> supports Timecode extraction:
 </p>
 <ul>
-<li> MPEG1/2 timecode is extracted from the GOP, and is available in the video
+<li>
+MPEG1/2 timecode is extracted from the GOP, and is available in the video
 stream details (&lsquo;<samp>-show_streams</samp>&rsquo;, see <var>timecode</var>).
 
-</li><li> MOV timecode is extracted from tmcd track, so is available in the tmcd
+</li><li>
+MOV timecode is extracted from tmcd track, so is available in the tmcd
 stream metadata (&lsquo;<samp>-show_streams</samp>&rsquo;, see <var>TAG:timecode</var>).
 
-</li><li> DV and GXF timecodes are available in format metadata
+</li><li>
+DV and GXF timecodes are available in format metadata
 (&lsquo;<samp>-show_format</samp>&rsquo;, see <var>TAG:timecode</var>).
 
 </li></ul>
 
+<a name="Syntax"></a>
+<h1 class="chapter"><a href="ffprobe.html#toc-Syntax">6. Syntax</a></h1>
 
+<p>When evaluating specific formats, FFmpeg uses internal library parsing
+functions, shared by the tools. This section documents the syntax of
+some of these formats.
+</p>
+<p><a name="date-syntax"></a>
+</p><a name="Date"></a>
+<h2 class="section"><a href="ffprobe.html#toc-Date">6.1 Date</a></h2>
+
+<p>The accepted syntax is:
+</p><table><tr><td>&nbsp;</td><td><pre class="example">[(YYYY-MM-DD|YYYYMMDD)[T|t| ]]((HH:MM:SS[.m...]]])|(HHMMSS[.m...]]]))[Z]
+now
+</pre></td></tr></table>
+
+<p>If the value is &quot;now&quot; it takes the current time.
+</p>
+<p>Time is local time unless Z is appended, in which case it is
+interpreted as UTC.
+If the year-month-day part is not specified it takes the current
+year-month-day.
+</p>
+<p><a name="time-duration-syntax"></a>
+</p><a name="Time-duration"></a>
+<h2 class="section"><a href="ffprobe.html#toc-Time-duration">6.2 Time duration</a></h2>
+
+<p>The accepted syntax is:
+</p><table><tr><td>&nbsp;</td><td><pre class="example">[-]HH:MM:SS[.m...]
+[-]S+[.m...]
+</pre></td></tr></table>
+
+<p><var>HH</var> expresses the number of hours, <var>MM</var> the number a of minutes
+and <var>SS</var> the number of seconds.
+</p>
+<p><a name="video-size-syntax"></a>
+</p><a name="Video-size"></a>
+<h2 class="section"><a href="ffprobe.html#toc-Video-size">6.3 Video size</a></h2>
+<p>Specify the size of the sourced video, it may be a string of the form
+<var>width</var>x<var>height</var>, or the name of a size abbreviation.
+</p>
+<p>The following abbreviations are recognized:
+</p><dl compact="compact">
+<dt> &lsquo;<samp>sqcif</samp>&rsquo;</dt>
+<dd><p>128x96
+</p></dd>
+<dt> &lsquo;<samp>qcif</samp>&rsquo;</dt>
+<dd><p>176x144
+</p></dd>
+<dt> &lsquo;<samp>cif</samp>&rsquo;</dt>
+<dd><p>352x288
+</p></dd>
+<dt> &lsquo;<samp>4cif</samp>&rsquo;</dt>
+<dd><p>704x576
+</p></dd>
+<dt> &lsquo;<samp>16cif</samp>&rsquo;</dt>
+<dd><p>1408x1152
+</p></dd>
+<dt> &lsquo;<samp>qqvga</samp>&rsquo;</dt>
+<dd><p>160x120
+</p></dd>
+<dt> &lsquo;<samp>qvga</samp>&rsquo;</dt>
+<dd><p>320x240
+</p></dd>
+<dt> &lsquo;<samp>vga</samp>&rsquo;</dt>
+<dd><p>640x480
+</p></dd>
+<dt> &lsquo;<samp>svga</samp>&rsquo;</dt>
+<dd><p>800x600
+</p></dd>
+<dt> &lsquo;<samp>xga</samp>&rsquo;</dt>
+<dd><p>1024x768
+</p></dd>
+<dt> &lsquo;<samp>uxga</samp>&rsquo;</dt>
+<dd><p>1600x1200
+</p></dd>
+<dt> &lsquo;<samp>qxga</samp>&rsquo;</dt>
+<dd><p>2048x1536
+</p></dd>
+<dt> &lsquo;<samp>sxga</samp>&rsquo;</dt>
+<dd><p>1280x1024
+</p></dd>
+<dt> &lsquo;<samp>qsxga</samp>&rsquo;</dt>
+<dd><p>2560x2048
+</p></dd>
+<dt> &lsquo;<samp>hsxga</samp>&rsquo;</dt>
+<dd><p>5120x4096
+</p></dd>
+<dt> &lsquo;<samp>wvga</samp>&rsquo;</dt>
+<dd><p>852x480
+</p></dd>
+<dt> &lsquo;<samp>wxga</samp>&rsquo;</dt>
+<dd><p>1366x768
+</p></dd>
+<dt> &lsquo;<samp>wsxga</samp>&rsquo;</dt>
+<dd><p>1600x1024
+</p></dd>
+<dt> &lsquo;<samp>wuxga</samp>&rsquo;</dt>
+<dd><p>1920x1200
+</p></dd>
+<dt> &lsquo;<samp>woxga</samp>&rsquo;</dt>
+<dd><p>2560x1600
+</p></dd>
+<dt> &lsquo;<samp>wqsxga</samp>&rsquo;</dt>
+<dd><p>3200x2048
+</p></dd>
+<dt> &lsquo;<samp>wquxga</samp>&rsquo;</dt>
+<dd><p>3840x2400
+</p></dd>
+<dt> &lsquo;<samp>whsxga</samp>&rsquo;</dt>
+<dd><p>6400x4096
+</p></dd>
+<dt> &lsquo;<samp>whuxga</samp>&rsquo;</dt>
+<dd><p>7680x4800
+</p></dd>
+<dt> &lsquo;<samp>cga</samp>&rsquo;</dt>
+<dd><p>320x200
+</p></dd>
+<dt> &lsquo;<samp>ega</samp>&rsquo;</dt>
+<dd><p>640x350
+</p></dd>
+<dt> &lsquo;<samp>hd480</samp>&rsquo;</dt>
+<dd><p>852x480
+</p></dd>
+<dt> &lsquo;<samp>hd720</samp>&rsquo;</dt>
+<dd><p>1280x720
+</p></dd>
+<dt> &lsquo;<samp>hd1080</samp>&rsquo;</dt>
+<dd><p>1920x1080
+</p></dd>
+</dl>
+
+<p><a name="video-rate-syntax"></a>
+</p><a name="Video-rate"></a>
+<h2 class="section"><a href="ffprobe.html#toc-Video-rate">6.4 Video rate</a></h2>
+
+<p>Specify the frame rate of a video, expressed as the number of frames
+generated per second. It has to be a string in the format
+<var>frame_rate_num</var>/<var>frame_rate_den</var>, an integer number, a float
+number or a valid video frame rate abbreviation.
+</p>
+<p>The following abbreviations are recognized:
+</p><dl compact="compact">
+<dt> &lsquo;<samp>ntsc</samp>&rsquo;</dt>
+<dd><p>30000/1001
+</p></dd>
+<dt> &lsquo;<samp>pal</samp>&rsquo;</dt>
+<dd><p>25/1
+</p></dd>
+<dt> &lsquo;<samp>qntsc</samp>&rsquo;</dt>
+<dd><p>30000/1
+</p></dd>
+<dt> &lsquo;<samp>qpal</samp>&rsquo;</dt>
+<dd><p>25/1
+</p></dd>
+<dt> &lsquo;<samp>sntsc</samp>&rsquo;</dt>
+<dd><p>30000/1
+</p></dd>
+<dt> &lsquo;<samp>spal</samp>&rsquo;</dt>
+<dd><p>25/1
+</p></dd>
+<dt> &lsquo;<samp>film</samp>&rsquo;</dt>
+<dd><p>24/1
+</p></dd>
+<dt> &lsquo;<samp>ntsc-film</samp>&rsquo;</dt>
+<dd><p>24000/1
+</p></dd>
+</dl>
+
+<p><a name="ratio-syntax"></a>
+</p><a name="Ratio"></a>
+<h2 class="section"><a href="ffprobe.html#toc-Ratio">6.5 Ratio</a></h2>
+
+<p>A ratio can be expressed as an expression, or in the form
+<var>numerator</var>:<var>denominator</var>.
+</p>
+<p>Note that a ratio with infinite (1/0) or negative value is
+considered valid, so you should check on the returned value if you
+want to exclude those values.
+</p>
+<p>The undefined value can be expressed using the &quot;0:0&quot; string.
+</p>
+<p><a name="color-syntax"></a>
+</p><a name="Color"></a>
+<h2 class="section"><a href="ffprobe.html#toc-Color">6.6 Color</a></h2>
+
+<p>It can be the name of a color (case insensitive match) or a
+[0x|#]RRGGBB[AA] sequence, possibly followed by &quot;&quot; and a string
+representing the alpha component.
+</p>
+<p>The alpha component may be a string composed by &quot;0x&quot; followed by an
+hexadecimal number or a decimal number between 0.0 and 1.0, which
+represents the opacity value (0x00/0.0 means completely transparent,
+0xff/1.0 completely opaque).
+If the alpha component is not specified then 0xff is assumed.
+</p>
+<p>The string &quot;random&quot; will result in a random color.
+</p>
 <a name="Decoders"></a>
-<h1 class="chapter"><a href="ffprobe.html#toc-Decoders">6. Decoders</a></h1>
+<h1 class="chapter"><a href="ffprobe.html#toc-Decoders">7. Decoders</a></h1>
 
 <p>Decoders are configured elements in FFmpeg which allow the decoding of
 multimedia streams.
@@ -1986,20 +2225,20 @@ enabled decoders.
 </p>
 
 <a name="Video-Decoders"></a>
-<h1 class="chapter"><a href="ffprobe.html#toc-Video-Decoders">7. Video Decoders</a></h1>
+<h1 class="chapter"><a href="ffprobe.html#toc-Video-Decoders">8. Video Decoders</a></h1>
 
 <p>A description of some of the currently available video decoders
 follows.
 </p>
 <a name="rawvideo"></a>
-<h2 class="section"><a href="ffprobe.html#toc-rawvideo">7.1 rawvideo</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-rawvideo">8.1 rawvideo</a></h2>
 
 <p>Raw video decoder.
 </p>
 <p>This decoder decodes rawvideo streams.
 </p>
-<a name="Options-2"></a>
-<h3 class="subsection"><a href="ffprobe.html#toc-Options-2">7.1.1 Options</a></h3>
+<a name="Options"></a>
+<h3 class="subsection"><a href="ffprobe.html#toc-Options">8.1.1 Options</a></h3>
 
 <dl compact="compact">
 <dt> &lsquo;<samp>top <var>top_field_first</var></samp>&rsquo;</dt>
@@ -2021,10 +2260,10 @@ follows.
 
 
 <a name="Audio-Decoders"></a>
-<h1 class="chapter"><a href="ffprobe.html#toc-Audio-Decoders">8. Audio Decoders</a></h1>
+<h1 class="chapter"><a href="ffprobe.html#toc-Audio-Decoders">9. Audio Decoders</a></h1>
 
 <a name="ffwavesynth"></a>
-<h2 class="section"><a href="ffprobe.html#toc-ffwavesynth">8.1 ffwavesynth</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-ffwavesynth">9.1 ffwavesynth</a></h2>
 
 <p>Internal wave synthetizer.
 </p>
@@ -2033,7 +2272,7 @@ use is purely internal and the format of the data it accepts is not publicly
 documented.
 </p>
 <a name="Demuxers"></a>
-<h1 class="chapter"><a href="ffprobe.html#toc-Demuxers">9. Demuxers</a></h1>
+<h1 class="chapter"><a href="ffprobe.html#toc-Demuxers">10. Demuxers</a></h1>
 
 <p>Demuxers are configured elements in FFmpeg which allow to read the
 multimedia streams from a particular type of file.
@@ -2053,7 +2292,7 @@ enabled demuxers.
 <p>The description of some of the currently available demuxers follows.
 </p>
 <a name="image2"></a>
-<h2 class="section"><a href="ffprobe.html#toc-image2">9.1 image2</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-image2">10.1 image2</a></h2>
 
 <p>Image file demuxer.
 </p>
@@ -2098,7 +2337,7 @@ second:
 </pre></td></tr></table>
 
 <a name="applehttp"></a>
-<h2 class="section"><a href="ffprobe.html#toc-applehttp">9.2 applehttp</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-applehttp">10.2 applehttp</a></h2>
 
 <p>Apple HTTP Live Streaming demuxer.
 </p>
@@ -2110,7 +2349,7 @@ The total bitrate of the variant that the stream belongs to is
 available in a metadata key named &quot;variant_bitrate&quot;.
 </p>
 <a name="sbg"></a>
-<h2 class="section"><a href="ffprobe.html#toc-sbg">9.3 sbg</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-sbg">10.3 sbg</a></h2>
 
 <p>SBaGen script demuxer.
 </p>
@@ -2140,7 +2379,7 @@ timestamps up to the sound controller&rsquo;s clock accuracy, but if the user
 somehow pauses the playback or seeks, all times will be shifted accordingly.
 </p>
 <a name="Protocols"></a>
-<h1 class="chapter"><a href="ffprobe.html#toc-Protocols">10. Protocols</a></h1>
+<h1 class="chapter"><a href="ffprobe.html#toc-Protocols">11. Protocols</a></h1>
 
 <p>Protocols are configured elements in FFmpeg which allow to access
 resources which require the use of a particular protocol.
@@ -2161,7 +2400,7 @@ supported protocols.
 <p>A description of the currently available protocols follows.
 </p>
 <a name="bluray"></a>
-<h2 class="section"><a href="ffprobe.html#toc-bluray">10.1 bluray</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-bluray">11.1 bluray</a></h2>
 
 <p>Read BluRay playlist.
 </p>
@@ -2192,7 +2431,7 @@ supported protocols.
 </pre></td></tr></table>
 
 <a name="concat"></a>
-<h2 class="section"><a href="ffprobe.html#toc-concat">10.2 concat</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-concat">11.2 concat</a></h2>
 
 <p>Physical concatenation protocol.
 </p>
@@ -2217,7 +2456,7 @@ command:
 many shells.
 </p>
 <a name="file"></a>
-<h2 class="section"><a href="ffprobe.html#toc-file">10.3 file</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-file">11.3 file</a></h2>
 
 <p>File access protocol.
 </p>
@@ -2233,12 +2472,12 @@ specified with the name &quot;FILE.mpeg&quot; is interpreted as the URL
 &quot;file:FILE.mpeg&quot;.
 </p>
 <a name="gopher"></a>
-<h2 class="section"><a href="ffprobe.html#toc-gopher">10.4 gopher</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-gopher">11.4 gopher</a></h2>
 
 <p>Gopher protocol.
 </p>
 <a name="hls"></a>
-<h2 class="section"><a href="ffprobe.html#toc-hls">10.5 hls</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-hls">11.5 hls</a></h2>
 
 <p>Read Apple HTTP Live Streaming compliant segmented stream as
 a uniform one. The M3U8 playlists describing the segments can be
@@ -2258,17 +2497,17 @@ To use the hls demuxer instead, simply use the direct URLs to the
 m3u8 files.
 </p>
 <a name="http"></a>
-<h2 class="section"><a href="ffprobe.html#toc-http">10.6 http</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-http">11.6 http</a></h2>
 
 <p>HTTP (Hyper Text Transfer Protocol).
 </p>
 <a name="mmst"></a>
-<h2 class="section"><a href="ffprobe.html#toc-mmst">10.7 mmst</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-mmst">11.7 mmst</a></h2>
 
 <p>MMS (Microsoft Media Server) protocol over TCP.
 </p>
 <a name="mmsh"></a>
-<h2 class="section"><a href="ffprobe.html#toc-mmsh">10.8 mmsh</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-mmsh">11.8 mmsh</a></h2>
 
 <p>MMS (Microsoft Media Server) protocol over HTTP.
 </p>
@@ -2277,7 +2516,7 @@ m3u8 files.
 </pre></td></tr></table>
 
 <a name="md5"></a>
-<h2 class="section"><a href="ffprobe.html#toc-md5">10.9 md5</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-md5">11.9 md5</a></h2>
 
 <p>MD5 output protocol.
 </p>
@@ -2297,7 +2536,7 @@ ffmpeg -i input.flv -f avi -y md5:
 be seekable, so they will fail with the MD5 output protocol.
 </p>
 <a name="pipe"></a>
-<h2 class="section"><a href="ffprobe.html#toc-pipe">10.10 pipe</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-pipe">11.10 pipe</a></h2>
 
 <p>UNIX pipe access protocol.
 </p>
@@ -2328,7 +2567,7 @@ ffmpeg -i test.wav -f avi pipe: | cat &gt; test.avi
 be seekable, so they will fail with the pipe output protocol.
 </p>
 <a name="rtmp"></a>
-<h2 class="section"><a href="ffprobe.html#toc-rtmp">10.11 rtmp</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-rtmp">11.11 rtmp</a></h2>
 
 <p>Real-Time Messaging Protocol.
 </p>
@@ -2336,7 +2575,7 @@ be seekable, so they will fail with the pipe output protocol.
 content across a TCP/IP network.
 </p>
 <p>The required syntax is:
-</p><table><tr><td>&nbsp;</td><td><pre class="example">rtmp://<var>server</var>[:<var>port</var>][/<var>app</var>][/<var>playpath</var>]
+</p><table><tr><td>&nbsp;</td><td><pre class="example">rtmp://<var>server</var>[:<var>port</var>][/<var>app</var>][/<var>instance</var>][/<var>playpath</var>]
 </pre></td></tr></table>
 
 <p>The accepted parameters are:
@@ -2368,7 +2607,7 @@ application specified in <var>app</var>, may be prefixed by &quot;mp4:&quot;.
 </pre></td></tr></table>
 
 <a name="rtmp_002c-rtmpe_002c-rtmps_002c-rtmpt_002c-rtmpte"></a>
-<h2 class="section"><a href="ffprobe.html#toc-rtmp_002c-rtmpe_002c-rtmps_002c-rtmpt_002c-rtmpte">10.12 rtmp, rtmpe, rtmps, rtmpt, rtmpte</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-rtmp_002c-rtmpe_002c-rtmps_002c-rtmpt_002c-rtmpte">11.12 rtmp, rtmpe, rtmps, rtmpt, rtmpte</a></h2>
 
 <p>Real-Time Messaging Protocol and its variants supported through
 librtmp.
@@ -2406,12 +2645,12 @@ meaning as specified for the RTMP native protocol.
 </pre></td></tr></table>
 
 <a name="rtp"></a>
-<h2 class="section"><a href="ffprobe.html#toc-rtp">10.13 rtp</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-rtp">11.13 rtp</a></h2>
 
 <p>Real-Time Protocol.
 </p>
 <a name="rtsp"></a>
-<h2 class="section"><a href="ffprobe.html#toc-rtsp">10.14 rtsp</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-rtsp">11.14 rtsp</a></h2>
 
 <p>RTSP is not technically a protocol handler in libavformat, it is a demuxer
 and muxer. The demuxer supports both normal RTSP (with data transferred
@@ -2492,7 +2731,7 @@ on the fly by pressing <code>v</code> and <code>a</code>.
 </pre></td></tr></table>
 
 <a name="sap"></a>
-<h2 class="section"><a href="ffprobe.html#toc-sap">10.15 sap</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-sap">11.15 sap</a></h2>
 
 <p>Session Announcement Protocol (RFC 2974). This is not technically a
 protocol handler in libavformat, it is a muxer and demuxer.
@@ -2500,7 +2739,7 @@ It is used for signalling of RTP streams, by announcing the SDP for the
 streams regularly on a separate port.
 </p>
 <a name="Muxer"></a>
-<h3 class="subsection"><a href="ffprobe.html#toc-Muxer">10.15.1 Muxer</a></h3>
+<h3 class="subsection"><a href="ffprobe.html#toc-Muxer">11.15.1 Muxer</a></h3>
 
 <p>The syntax for a SAP url given to the muxer is:
 </p><table><tr><td>&nbsp;</td><td><pre class="example">sap://<var>destination</var>[:<var>port</var>][?<var>options</var>]
@@ -2557,7 +2796,7 @@ on unique ports.
 </pre></td></tr></table>
 
 <a name="Demuxer"></a>
-<h3 class="subsection"><a href="ffprobe.html#toc-Demuxer">10.15.2 Demuxer</a></h3>
+<h3 class="subsection"><a href="ffprobe.html#toc-Demuxer">11.15.2 Demuxer</a></h3>
 
 <p>The syntax for a SAP url given to the demuxer is:
 </p><table><tr><td>&nbsp;</td><td><pre class="example">sap://[<var>address</var>][:<var>port</var>]
@@ -2583,7 +2822,7 @@ Once an announcement is received, it tries to receive that particular stream.
 </pre></td></tr></table>
 
 <a name="tcp"></a>
-<h2 class="section"><a href="ffprobe.html#toc-tcp">10.16 tcp</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-tcp">11.16 tcp</a></h2>
 
 <p>Trasmission Control Protocol.
 </p>
@@ -2603,7 +2842,7 @@ ffplay tcp://<var>hostname</var>:<var>port</var>
 </dl>
 
 <a name="udp"></a>
-<h2 class="section"><a href="ffprobe.html#toc-udp">10.17 udp</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-udp">11.17 udp</a></h2>
 
 <p>User Datagram Protocol.
 </p>
@@ -2669,7 +2908,7 @@ the specified peer address/port.
 </pre></td></tr></table>
 
 <a name="Input-Devices"></a>
-<h1 class="chapter"><a href="ffprobe.html#toc-Input-Devices">11. Input Devices</a></h1>
+<h1 class="chapter"><a href="ffprobe.html#toc-Input-Devices">12. Input Devices</a></h1>
 
 <p>Input devices are configured elements in FFmpeg which allow to access
 the data coming from a multimedia device attached to your system.
@@ -2689,7 +2928,7 @@ supported input devices (amongst the demuxers).
 <p>A description of the currently available input devices follows.
 </p>
 <a name="alsa"></a>
-<h2 class="section"><a href="ffprobe.html#toc-alsa">11.1 alsa</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-alsa">12.1 alsa</a></h2>
 
 <p>ALSA (Advanced Linux Sound Architecture) input device.
 </p>
@@ -2721,12 +2960,12 @@ card id 0, you may run the command:
 <a href="http://www.alsa-project.org/alsa-doc/alsa-lib/pcm.html">http://www.alsa-project.org/alsa-doc/alsa-lib/pcm.html</a>
 </p>
 <a name="bktr"></a>
-<h2 class="section"><a href="ffprobe.html#toc-bktr">11.2 bktr</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-bktr">12.2 bktr</a></h2>
 
 <p>BSD video input device.
 </p>
 <a name="dshow"></a>
-<h2 class="section"><a href="ffprobe.html#toc-dshow">11.3 dshow</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-dshow">12.3 dshow</a></h2>
 
 <p>Windows DirectShow input device.
 </p>
@@ -2744,8 +2983,8 @@ opened on the same input, which should improve synchronism between them.
 <p>where <var>TYPE</var> can be either <var>audio</var> or <var>video</var>,
 and <var>NAME</var> is the device&rsquo;s name.
 </p>
-<a name="Options-4"></a>
-<h3 class="subsection"><a href="ffprobe.html#toc-Options-4">11.3.1 Options</a></h3>
+<a name="Options-2"></a>
+<h3 class="subsection"><a href="ffprobe.html#toc-Options-2">12.3.1 Options</a></h3>
 
 <p>If no options are specified, the device&rsquo;s defaults are used.
 If the device does not support the requested options, it will
@@ -2793,8 +3032,8 @@ defaults to 0).
 </dd>
 </dl>
 
-<a name="Examples-1"></a>
-<h3 class="subsection"><a href="ffprobe.html#toc-Examples-1">11.3.2 Examples</a></h3>
+<a name="Examples-2"></a>
+<h3 class="subsection"><a href="ffprobe.html#toc-Examples-2">12.3.2 Examples</a></h3>
 
 <ul>
 <li>
@@ -2825,12 +3064,12 @@ Print the list of supported options in selected device and exit:
 </li></ul>
 
 <a name="dv1394"></a>
-<h2 class="section"><a href="ffprobe.html#toc-dv1394">11.4 dv1394</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-dv1394">12.4 dv1394</a></h2>
 
 <p>Linux DV 1394 input device.
 </p>
 <a name="fbdev"></a>
-<h2 class="section"><a href="ffprobe.html#toc-fbdev">11.5 fbdev</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-fbdev">12.5 fbdev</a></h2>
 
 <p>Linux framebuffer input device.
 </p>
@@ -2854,7 +3093,7 @@ Documentation/fb/framebuffer.txt included in the Linux source tree.
 <p>See also <a href="http://linux-fbdev.sourceforge.net/">http://linux-fbdev.sourceforge.net/</a>, and fbset(1).
 </p>
 <a name="jack"></a>
-<h2 class="section"><a href="ffprobe.html#toc-jack">11.6 jack</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-jack">12.6 jack</a></h2>
 
 <p>JACK input device.
 </p>
@@ -2903,7 +3142,7 @@ $ jack_connect metro:120_bpm ffmpeg:input_1
 <a href="http://jackaudio.org/">http://jackaudio.org/</a>
 </p>
 <a name="lavfi"></a>
-<h2 class="section"><a href="ffprobe.html#toc-lavfi">11.7 lavfi</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-lavfi">12.7 lavfi</a></h2>
 
 <p>Libavfilter input virtual device.
 </p>
@@ -2915,8 +3154,8 @@ corresponding stream which is mapped to the generated output. Currently
 only video data is supported. The filtergraph is specified through the
 option &lsquo;<samp>graph</samp>&rsquo;.
 </p>
-<a name="Options"></a>
-<h3 class="subsection"><a href="ffprobe.html#toc-Options">11.7.1 Options</a></h3>
+<a name="Options-1"></a>
+<h3 class="subsection"><a href="ffprobe.html#toc-Options-1">12.7.1 Options</a></h3>
 
 <dl compact="compact">
 <dt> &lsquo;<samp>graph</samp>&rsquo;</dt>
@@ -2933,7 +3172,7 @@ device.
 </dl>
 
 <a name="Examples"></a>
-<h3 class="subsection"><a href="ffprobe.html#toc-Examples">11.7.2 Examples</a></h3>
+<h3 class="subsection"><a href="ffprobe.html#toc-Examples">12.7.2 Examples</a></h3>
 
 <ul>
 <li>
@@ -2967,12 +3206,12 @@ Read an audio stream and a video stream and play it back with
 </li></ul>
 
 <a name="libdc1394"></a>
-<h2 class="section"><a href="ffprobe.html#toc-libdc1394">11.8 libdc1394</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-libdc1394">12.8 libdc1394</a></h2>
 
 <p>IIDC1394 input device, based on libdc1394 and libraw1394.
 </p>
 <a name="openal"></a>
-<h2 class="section"><a href="ffprobe.html#toc-openal">11.9 openal</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-openal">12.9 openal</a></h2>
 
 <p>The OpenAL input device provides audio capture on all systems with a
 working OpenAL 1.1 implementation.
@@ -3015,8 +3254,8 @@ filename. If the empty string is provided, the device will
 automatically select the default device. You can get the list of the
 supported devices by using the option <var>list_devices</var>.
 </p>
-<a name="Options-1"></a>
-<h3 class="subsection"><a href="ffprobe.html#toc-Options-1">11.9.1 Options</a></h3>
+<a name="Options-3"></a>
+<h3 class="subsection"><a href="ffprobe.html#toc-Options-3">12.9.1 Options</a></h3>
 
 <dl compact="compact">
 <dt> &lsquo;<samp>channels</samp>&rsquo;</dt>
@@ -3043,8 +3282,8 @@ Defaults to &lsquo;<samp>false</samp>&rsquo;.
 </dd>
 </dl>
 
-<a name="Examples-2"></a>
-<h3 class="subsection"><a href="ffprobe.html#toc-Examples-2">11.9.2 Examples</a></h3>
+<a name="Examples-1"></a>
+<h3 class="subsection"><a href="ffprobe.html#toc-Examples-1">12.9.2 Examples</a></h3>
 
 <p>Print the list of OpenAL supported devices and exit:
 </p><table><tr><td>&nbsp;</td><td><pre class="example">$ ffmpeg -list_devices true -f openal -i dummy out.ogg
@@ -3066,7 +3305,7 @@ within the same <code>ffmpeg</code> command:
 try the latest OpenAL Soft if the above does not work.
 </p>
 <a name="oss"></a>
-<h2 class="section"><a href="ffprobe.html#toc-oss">11.10 oss</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-oss">12.10 oss</a></h2>
 
 <p>Open Sound System input device.
 </p>
@@ -3083,7 +3322,7 @@ command:
 <a href="http://manuals.opensound.com/usersguide/dsp.html">http://manuals.opensound.com/usersguide/dsp.html</a>
 </p>
 <a name="pulse"></a>
-<h2 class="section"><a href="ffprobe.html#toc-pulse">11.11 pulse</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-pulse">12.11 pulse</a></h2>
 
 <p>pulseaudio input device.
 </p>
@@ -3100,7 +3339,7 @@ the command <code>pactl list sources</code>.
 </pre></td></tr></table>
 
 <a name="server-AVOption"></a>
-<h3 class="subsection"><a href="ffprobe.html#toc-server-AVOption">11.11.1 <var>server</var> AVOption</a></h3>
+<h3 class="subsection"><a href="ffprobe.html#toc-server-AVOption">12.11.1 <var>server</var> AVOption</a></h3>
 
 <p>The syntax is:
 </p><table><tr><td>&nbsp;</td><td><pre class="example">-server <var>server name</var>
@@ -3109,7 +3348,7 @@ the command <code>pactl list sources</code>.
 <p>Connects to a specific server.
 </p>
 <a name="name-AVOption"></a>
-<h3 class="subsection"><a href="ffprobe.html#toc-name-AVOption">11.11.2 <var>name</var> AVOption</a></h3>
+<h3 class="subsection"><a href="ffprobe.html#toc-name-AVOption">12.11.2 <var>name</var> AVOption</a></h3>
 
 <p>The syntax is:
 </p><table><tr><td>&nbsp;</td><td><pre class="example">-name <var>application name</var>
@@ -3119,7 +3358,7 @@ the command <code>pactl list sources</code>.
 by default it is the LIBAVFORMAT_IDENT string
 </p>
 <a name="stream_005fname-AVOption"></a>
-<h3 class="subsection"><a href="ffprobe.html#toc-stream_005fname-AVOption">11.11.3 <var>stream_name</var> AVOption</a></h3>
+<h3 class="subsection"><a href="ffprobe.html#toc-stream_005fname-AVOption">12.11.3 <var>stream_name</var> AVOption</a></h3>
 
 <p>The syntax is:
 </p><table><tr><td>&nbsp;</td><td><pre class="example">-stream_name <var>stream name</var>
@@ -3129,7 +3368,7 @@ by default it is the LIBAVFORMAT_IDENT string
 by default it is &quot;record&quot;
 </p>
 <a name="sample_005frate-AVOption"></a>
-<h3 class="subsection"><a href="ffprobe.html#toc-sample_005frate-AVOption">11.11.4 <var>sample_rate</var> AVOption</a></h3>
+<h3 class="subsection"><a href="ffprobe.html#toc-sample_005frate-AVOption">12.11.4 <var>sample_rate</var> AVOption</a></h3>
 
 <p>The syntax is:
 </p><table><tr><td>&nbsp;</td><td><pre class="example">-sample_rate <var>samplerate</var>
@@ -3138,7 +3377,7 @@ by default it is &quot;record&quot;
 <p>Specify the samplerate in Hz, by default 48kHz is used.
 </p>
 <a name="channels-AVOption"></a>
-<h3 class="subsection"><a href="ffprobe.html#toc-channels-AVOption">11.11.5 <var>channels</var> AVOption</a></h3>
+<h3 class="subsection"><a href="ffprobe.html#toc-channels-AVOption">12.11.5 <var>channels</var> AVOption</a></h3>
 
 <p>The syntax is:
 </p><table><tr><td>&nbsp;</td><td><pre class="example">-channels <var>N</var>
@@ -3147,7 +3386,7 @@ by default it is &quot;record&quot;
 <p>Specify the channels in use, by default 2 (stereo) is set.
 </p>
 <a name="frame_005fsize-AVOption"></a>
-<h3 class="subsection"><a href="ffprobe.html#toc-frame_005fsize-AVOption">11.11.6 <var>frame_size</var> AVOption</a></h3>
+<h3 class="subsection"><a href="ffprobe.html#toc-frame_005fsize-AVOption">12.11.6 <var>frame_size</var> AVOption</a></h3>
 
 <p>The syntax is:
 </p><table><tr><td>&nbsp;</td><td><pre class="example">-frame_size <var>bytes</var>
@@ -3156,7 +3395,7 @@ by default it is &quot;record&quot;
 <p>Specify the number of byte per frame, by default it is set to 1024.
 </p>
 <a name="fragment_005fsize-AVOption"></a>
-<h3 class="subsection"><a href="ffprobe.html#toc-fragment_005fsize-AVOption">11.11.7 <var>fragment_size</var> AVOption</a></h3>
+<h3 class="subsection"><a href="ffprobe.html#toc-fragment_005fsize-AVOption">12.11.7 <var>fragment_size</var> AVOption</a></h3>
 
 <p>The syntax is:
 </p><table><tr><td>&nbsp;</td><td><pre class="example">-fragment_size <var>bytes</var>
@@ -3166,7 +3405,7 @@ by default it is &quot;record&quot;
 audio latency. By default it is unset.
 </p>
 <a name="sndio"></a>
-<h2 class="section"><a href="ffprobe.html#toc-sndio">11.12 sndio</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-sndio">12.12 sndio</a></h2>
 
 <p>sndio input device.
 </p>
@@ -3183,7 +3422,7 @@ command:
 </pre></td></tr></table>
 
 <a name="video4linux2"></a>
-<h2 class="section"><a href="ffprobe.html#toc-video4linux2">11.13 video4linux2</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-video4linux2">12.13 video4linux2</a></h2>
 
 <p>Video4Linux2 input video device.
 </p>
@@ -3220,7 +3459,7 @@ ffmpeg -f video4linux2 -input_format mjpeg -i /dev/video0 out.mpeg
 &quot;video4linux2&quot;.
 </p>
 <a name="vfwcap"></a>
-<h2 class="section"><a href="ffprobe.html#toc-vfwcap">11.14 vfwcap</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-vfwcap">12.14 vfwcap</a></h2>
 
 <p>VfW (Video for Windows) capture input device.
 </p>
@@ -3229,7 +3468,7 @@ ffmpeg -f video4linux2 -input_format mjpeg -i /dev/video0 out.mpeg
 other filename will be interpreted as device number 0.
 </p>
 <a name="x11grab"></a>
-<h2 class="section"><a href="ffprobe.html#toc-x11grab">11.15 x11grab</a></h2>
+<h2 class="section"><a href="ffprobe.html#toc-x11grab">12.15 x11grab</a></h2>
 
 <p>X11 video input device.
 </p>
@@ -3261,7 +3500,7 @@ ffmpeg -f x11grab -r 25 -s cif -i :0.0+10,20 out.mpg
 </pre></td></tr></table>
 
 <a name="follow_005fmouse-AVOption"></a>
-<h3 class="subsection"><a href="ffprobe.html#toc-follow_005fmouse-AVOption">11.15.1 <var>follow_mouse</var> AVOption</a></h3>
+<h3 class="subsection"><a href="ffprobe.html#toc-follow_005fmouse-AVOption">12.15.1 <var>follow_mouse</var> AVOption</a></h3>
 
 <p>The syntax is:
 </p><table><tr><td>&nbsp;</td><td><pre class="example">-follow_mouse centered|<var>PIXELS</var>
@@ -3280,7 +3519,7 @@ ffmpeg -f x11grab -follow_mouse 100 -r 25 -s cif -i :0.0 out.mpg
 </pre></td></tr></table>
 
 <a name="show_005fregion-AVOption"></a>
-<h3 class="subsection"><a href="ffprobe.html#toc-show_005fregion-AVOption">11.15.2 <var>show_region</var> AVOption</a></h3>
+<h3 class="subsection"><a href="ffprobe.html#toc-show_005fregion-AVOption">12.15.2 <var>show_region</var> AVOption</a></h3>
 
 <p>The syntax is:
 </p><table><tr><td>&nbsp;</td><td><pre class="example">-show_region 1
@@ -3302,7 +3541,7 @@ ffmpeg -f x11grab -follow_mouse centered -show_region 1  -r 25 -s cif -i :0.0 ou
 <div id="footer">
 <p>
  <font size="-1">
-  This document was generated by <em>Kyle Schwarz</em> on <em>April 24, 2012</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
+  This document was generated by <em>Kyle Schwarz</em> on <em>May 27, 2012</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
  </font>
  <br>
 </div></div>

@@ -1,17 +1,17 @@
-This is a FFmpeg Win32 Shared build by Kyle Schwarz.
+This is a FFmpeg Win64 Shared build by Kyle Schwarz.
 
 Zeranoe's FFmpeg Builds Home Page: <http://ffmpeg.zeranoe.com/builds/>
 
-This build was compiled on: Apr 24 2012 00:57:29
+This build was compiled on: May 27 2012 13:27:29
 
-FFmpeg version: 2012-04-24 git-3bbf3f7
-    libavutil      51. 47.100 / 51. 47.100
-    libavcodec     54. 15.100 / 54. 15.100
-    libavformat    54.  3.100 / 54.  3.100
-    libavdevice    53.  4.100 / 53.  4.100
-    libavfilter     2. 72.100 /  2. 72.100
+FFmpeg version: 2012-05-27 git-9c27f29
+    libavutil      51. 55.100 / 51. 55.100
+    libavcodec     54. 23.100 / 54. 23.100
+    libavformat    54.  6.101 / 54.  6.101
+    libavdevice    54.  0.100 / 54.  0.100
+    libavfilter     2. 77.100 /  2. 77.100
     libswscale      2.  1.100 /  2.  1.100
-    libswresample   0. 11.100 /  0. 11.100
+    libswresample   0. 15.100 /  0. 15.100
     libpostproc    52.  0.100 / 52.  0.100
 
 This FFmpeg was configured with:
@@ -57,7 +57,7 @@ This build was compiled with these external libraries:
     libgsm 1.0.13-3: <http://libgsm.sourcearchive.com/>
     Theora 1.1.1: <http://www.theora.org/>
     Vorbis 1.3.2: <http://www.vorbis.com/>
-    libvpx 1.0.0: <http://www.webmproject.org/>
+    libvpx 1.1.0: <http://www.webmproject.org/>
     NUT 20110326-git-5e471c2: <git://git.ffmpeg.org/nut>
     OpenCORE AMR 0.1.2: <http://sourceforge.net/projects/opencore-amr/>
     OpenJPEG 1.5.0: <http://www.openjpeg.org/>
@@ -67,7 +67,7 @@ This build was compiled with these external libraries:
     Ut Video 10.2.4: <http://umezawa.dyndns.info/archive/utvideo/>
     VisualOn AAC 0.1.2: <http://sourceforge.net/projects/opencore-amr/>
     VisualOn AMR-WB 0.1.2: <http://sourceforge.net/projects/opencore-amr/>
-    x264 20120119-git-da19765: <http://www.videolan.org/developers/x264.html>
+    x264 20120508-git-999b753: <http://www.videolan.org/developers/x264.html>
     XAVS svn-55: <http://xavs.sourceforge.net/>
     Xvid 1.3.2: <http://www.xvid.org/>
     zlib 1.2.6: <http://zlib.net/>

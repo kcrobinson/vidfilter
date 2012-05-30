@@ -22,6 +22,7 @@ namespace VidFilter.Engine
         private const string cropFormat = "crop={0}:{1}:{2}:{3}";
         private const string padFormat = "pad={0}:{1}:{2}:{3}";
 
+        #region Process Methods
         public EngineResult ProcessRequest(EngineRequest request)
         {
             EngineResult engResult = new EngineResult()
@@ -29,13 +30,13 @@ namespace VidFilter.Engine
                 OriginalRequest = request
             };
 
-            ProcessStartInfo startInfo = new ProcessStartInfo("ffmpeg.exe");
+            ProcessStartInfo startInfo = new ProcessStartInfo(@"C:\Users\krobins\VidFilter\trunk\source\VidFilter.Engine\ffmpeg\bin\ffmpeg.exe");
             startInfo.CreateNoWindow = true;
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardInput = true;
             startInfo.RedirectStandardError = true;
             startInfo.RedirectStandardOutput = true;
-            startInfo.Arguments = engResult.ProcessArguments = ProcessArguments(request);
+            startInfo.Arguments = engResult.ProcessArguments = GetProcessArguments(request);
 
             Process process = null;
             int exitCode;
@@ -103,17 +104,17 @@ namespace VidFilter.Engine
             return engResult;
         }
 
-        private string ProcessArguments(EngineRequest request)
+        private string GetProcessArguments(EngineRequest request)
         {
             List<string> argumentList = new List<string>();
 
-            argumentList.Add(ProcessArgument(framerateFormat, IntGreaterThanZero, request.InputFrameRate));
-            argumentList.Add(ProcessArgument(sizeFormat, IntGreaterThanZero, request.InputWidth, request.InputHeight));
-            argumentList.Add(ProcessArgument(inputVideoFormat, ObjectNotNull, request.InputFile.FullName));
-            argumentList.Add(ProcessArgument(colorspaceFormat, ObjectNotNull, request.OutputColorspace));
-            argumentList.Add(ProcessArgument(codecFormat, ObjectNotNull, request.OutputCodec));
-            argumentList.Add(ProcessArgument(framerateFormat, IntGreaterThanZero, request.OutputFrameRate));
-            argumentList.Add(ProcessArgument(sizeFormat, IntGreaterThanZero, request.OutputWidth, request.OutputHeight));
+            argumentList.Add(GetProcessArgument(framerateFormat, IntGreaterThanZero, request.InputFrameRate));
+            argumentList.Add(GetProcessArgument(sizeFormat, IntGreaterThanZero, request.InputWidth, request.InputHeight));
+            argumentList.Add(GetProcessArgument(inputVideoFormat, ObjectNotNull, request.InputFile.FullName));
+            argumentList.Add(GetProcessArgument(colorspaceFormat, ObjectNotNull, request.OutputColorspace));
+            argumentList.Add(GetProcessArgument(codecFormat, ObjectNotNull, request.OutputCodec));
+            argumentList.Add(GetProcessArgument(framerateFormat, IntGreaterThanZero, request.OutputFrameRate));
+            argumentList.Add(GetProcessArgument(sizeFormat, IntGreaterThanZero, request.OutputWidth, request.OutputHeight));
 
             argumentList.Add(overwriteFlag);
 
@@ -123,7 +124,7 @@ namespace VidFilter.Engine
             return string.Join(" ", argumentList);
         }
 
-        private string ProcessArgument(string argumentFormat, AddArgumentCondition addArgument, params object[] values)
+        private string GetProcessArgument(string argumentFormat, AddArgumentCondition addArgument, params object[] values)
         {
             if (addArgument(values))
             {
@@ -132,8 +133,10 @@ namespace VidFilter.Engine
             return null;
         }
 
+        #endregion
+
         #region AddArgumentConditions
-        
+
         private delegate bool AddArgumentCondition(object[] values);
 
         private bool IntGreaterThanZero(object[] values)
@@ -157,7 +160,73 @@ namespace VidFilter.Engine
             return true;
         }
         #endregion
-        
 
+        #region Probe Methods
+
+        public ProbeResult ProbeVideoFile(ProbeRequest request)
+        {
+            ProbeResult result = new ProbeResult()
+            {
+                OriginalRequest = request
+            };
+
+            ProcessStartInfo startInfo = new ProcessStartInfo(@"C:\Users\krobins\VidFilter\trunk\source\VidFilter.Engine\ffmpeg\bin\ffprobe.exe");
+            startInfo.CreateNoWindow = true;
+            startInfo.UseShellExecute = false;
+            startInfo.RedirectStandardError = true;
+            startInfo.Arguments = result.ProcessArguments = GetProbeArguments(request);
+
+            Process process = null;
+            int exitCode;
+            string stdError;
+            try
+            {
+                process = Process.Start(startInfo);
+                DateTime startTime = DateTime.Now;
+                TimeSpan timeout = new TimeSpan(0, 0, 10);
+                while (!process.HasExited && DateTime.Now - startTime < timeout) { }
+                if (!process.HasExited)
+                {
+                    process.Kill();
+                    throw new Exception("Engine timeout");
+                }
+                stdError = process.StandardError.ReadToEnd();
+                exitCode = process.ExitCode;
+            }
+            catch (Exception ex)
+            {
+                // We'll see if any exception are actually ever thrown here before deciding what would need to be done with them
+                throw ex;
+            }
+            finally
+            {
+                if (process != null)
+                    process.Dispose();
+            }
+
+            var lines = stdError.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).Where(l => l.Trim().StartsWith("Stream #"));
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(',');
+                result.Colorspace = parts[1].Trim();
+                string[] resolution = parts[2].Trim().Split('x');
+                result.ResolutionWidth = int.Parse(resolution[0]);
+                result.ResolutionHeight = int.Parse(resolution[1]);
+                string[] framerate = parts[3].Trim().Split();
+                result.FrameRate = int.Parse(framerate[0]);
+            }
+
+            return result;
+        }
+
+        private string GetProbeArguments(ProbeRequest request)
+        {
+            List<string> argumentList = new List<string>();
+            argumentList.Add("-print_format json");
+            argumentList.Add(request.FilePath);
+            return string.Join(" ", argumentList);
+        }
+
+        #endregion
     }
 }

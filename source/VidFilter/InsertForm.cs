@@ -19,7 +19,11 @@ namespace VidFilter
         public InsertForm()
         {
             InitializeComponent();
-            RefreshAvailableColorspaces();
+            try
+            {
+                RefreshAvailableColorspaces();
+            }
+            catch { }
         }
 
         private void RefreshAvailableColorspaces()
@@ -34,7 +38,16 @@ namespace VidFilter
 
         private void FileLoadButton_Click(object sender, EventArgs e)
         {
-            // Disabled Button until information loader can be written
+            ProbeRequest request = new ProbeRequest()
+            {
+                FilePath = FilePathTextBox.Text
+            };
+            ProbeResult result = App.Engine.ProbeVideoFile(request);
+
+            FrameRateTextBox.Text = result.FrameRate > 0 ? result.FrameRate.ToString() : string.Empty;
+            ResolutionWidthTextBox.Text = result.ResolutionWidth > 0 ? result.ResolutionWidth.ToString() : string.Empty;
+            ResolutionHeightTextBox.Text = result.ResolutionHeight > 0 ? result.ResolutionHeight.ToString() : string.Empty;
+            MovieColorspaceComboBox.SelectedText = result.Colorspace;
         }
 
         private void InsertMovieButton_Click(object sender, EventArgs e)

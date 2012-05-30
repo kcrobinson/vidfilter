@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on April 24, 2012 by texi2html 1.82 -->
+<!-- Created on May 27, 2012 by texi2html 1.82 -->
 <!--
 texi2html was written by: 
             Lionel Cons <Lionel.Cons@cern.ch> (original author)
@@ -136,12 +136,12 @@ to configure.
 <h2 class="section"><a href="platform.html#toc-BSD">1.1 BSD</a></h2>
 
 <p>BSD make will not build FFmpeg, you need to install and use GNU Make
-(&lsquo;<tt>gmake</tt>&rsquo;).
+(<code>gmake</code>).
 </p>
 <a name="g_t_0028Open_0029Solaris"></a>
 <h2 class="section"><a href="platform.html#toc-_0028Open_0029Solaris">1.2 (Open)Solaris</a></h2>
 
-<p>GNU Make is required to build FFmpeg, so you have to invoke (&lsquo;<tt>gmake</tt>&rsquo;),
+<p>GNU Make is required to build FFmpeg, so you have to invoke (<code>gmake</code>),
 standard Solaris Make will not work. When building with a non-c99 front-end
 (gcc, generic suncc) add either <code>--extra-libs=/usr/lib/values-xpg6.o</code>
 or <code>--extra-libs=/usr/lib/64/values-xpg6.o</code> to the configure options
@@ -203,7 +203,7 @@ section and the FAQ.
 </p>
 <p>FFmpeg does not build out-of-the-box with the packages the automated MinGW
 installer provides. It also requires coreutils to be installed and many other
-packages updated to the latest version. The minimum version for some packages
+packages updated to the latest version. The minimum versions for some packages
 are listed below:
 </p>
 <ul>
@@ -222,14 +222,11 @@ a GCC bug (see <a href="http://gcc.gnu.org/bugzilla/show_bug.cgi?id=37216">http:
 <li> Building natively using MSYS can be sped up by disabling implicit rules
 in the Makefile by calling <code>make -r</code> instead of plain <code>make</code>. This
 speed up is close to non-existent for normal one-off builds and is only
-noticeable when running make for a second time (for example in
+noticeable when running make for a second time (for example during
 <code>make install</code>).
 
 </li><li> In order to compile FFplay, you must have the MinGW development library
-of <a href="http://www.libsdl.org/">SDL</a>.
-Edit the &lsquo;<tt>bin/sdl-config</tt>&rsquo; script so that it points to the correct prefix
-where SDL was installed. Verify that &lsquo;<tt>sdl-config</tt>&rsquo; can be launched from
-the MSYS command line.
+of <a href="http://www.libsdl.org/">SDL</a> and <code>pkg-config</code> installed.
 
 </li><li> By using <code>./configure --enable-shared</code> when configuring FFmpeg,
 you can build the FFmpeg libraries (e.g. libavutil, libavcodec,
@@ -255,7 +252,7 @@ you might have to modify the procedures slightly.
 <a name="Using-static-libraries"></a>
 <h3 class="subsection"><a href="platform.html#toc-Using-static-libraries">4.2.1 Using static libraries</a></h3>
 
-<p>Assuming you have just built and installed FFmpeg in &lsquo;<tt>/usr/local</tt>&rsquo;.
+<p>Assuming you have just built and installed FFmpeg in &lsquo;<tt>/usr/local</tt>&rsquo;:
 </p>
 <ol>
 <li> Create a new console application (&quot;File / New / Project&quot;) and then
@@ -384,7 +381,7 @@ This issue is reported upstream at
 (which is enabled by default in Release mode), follow these steps:
 </p>
 <ol>
-<li> Open &lsquo;<tt>Visual Studio 2005 Command Prompt</tt>&rsquo;.
+<li> Open <em>Visual Studio 2005 Command Prompt</em>.
 
 <p>Alternatively, in a normal command line prompt, call &lsquo;<tt>vcvars32.bat</tt>&rsquo;
 which sets up the environment variables for the Visual C++ tools
@@ -394,16 +391,13 @@ which sets up the environment variables for the Visual C++ tools
 </li><li> Enter the &lsquo;<tt>bin</tt>&rsquo; directory where the created LIB and DLL files
 are stored.
 
-</li><li> Generate new import libraries with &lsquo;<tt>lib.exe</tt>&rsquo;:
+</li><li> Generate new import libraries with <code>lib.exe</code>:
 
-<table><tr><td>&nbsp;</td><td><pre class="example">lib /machine:i386 /def:..\lib\avcodec-53.def  /out:avcodec.lib
-lib /machine:i386 /def:..\lib\avdevice-53.def /out:avdevice.lib
-lib /machine:i386 /def:..\lib\avfilter-2.def  /out:avfilter.lib
-lib /machine:i386 /def:..\lib\avformat-53.def /out:avformat.lib
-lib /machine:i386 /def:..\lib\avutil-51.def   /out:avutil.lib
-lib /machine:i386 /def:..\lib\swscale-2.def   /out:swscale.lib
+<table><tr><td>&nbsp;</td><td><pre class="example">lib /machine:i386 /def:..\lib\foo-version.def  /out:foo.lib
 </pre></td></tr></table>
 
+<p>Replace <code>foo-version</code> and <code>foo</code> with the respective library names.
+</p>
 </li></ol>
 
 <p><a name="Cross-compilation-for-Windows-with-Linux"></a>
@@ -443,8 +437,8 @@ following &quot;Devel&quot; ones:
 
 <p>to make a static build.
 </p>
-<p>The current <code>gcc4-core</code> package is buggy and needs this flag to build
-shared libraries:
+<p>To build shared libraries add a special compiler flag to work around current
+<code>gcc4-core</code> package bugs in addition to the normal configure flags:
 </p>
 <table><tr><td>&nbsp;</td><td><pre class="example">./configure --enable-shared --disable-static --extra-cflags=-fno-reorder-functions
 </pre></td></tr></table>
@@ -461,11 +455,8 @@ shared libraries:
 libschroedinger1.0-devel, speex-devel, libtheora-devel, libxvidcore-devel
 </pre></td></tr></table>
 
-<p>The recommendation for libnut and x264 is to build them from source by
-yourself, as they evolve too quickly for Cygwin Ports to be up to date.
-</p>
-<p>Cygwin 1.7.x has IPv6 support. You can add IPv6 to Cygwin 1.5.x by means
-of the <code>libgetaddrinfo-devel</code> package, available at Cygwin Ports.
+<p>The recommendation for x264 is to build it from source, as it evolves too
+quickly for Cygwin Ports to be up to date.
 </p>
 <a name="Crosscompilation-for-Windows-under-Cygwin"></a>
 <h2 class="section"><a href="platform.html#toc-Crosscompilation-for-Windows-under-Cygwin">4.5 Crosscompilation for Windows under Cygwin</a></h2>
@@ -490,7 +481,7 @@ of the <code>libgetaddrinfo-devel</code> package, available at Cygwin Ports.
 <div id="footer">
 <p>
  <font size="-1">
-  This document was generated by <em>Kyle Schwarz</em> on <em>April 24, 2012</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
+  This document was generated by <em>Kyle Schwarz</em> on <em>May 27, 2012</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
  </font>
  <br>
 </div></div>
