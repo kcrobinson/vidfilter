@@ -14,5 +14,7 @@ namespace VidFilter.Engine
         /// <returns>Response object contains information about the execution of the method. This includes a link
         /// to the resulting movie file, if it exists, and any error messages or exceptions caused as a result of execution.</returns>
         EngineResult ProcessRequest(EngineRequest request);
+
+        ProbeResult ProbeVideoFile(ProbeRequest request);
     }
 }

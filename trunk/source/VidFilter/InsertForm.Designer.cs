@@ -47,6 +47,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.InsertControl = new System.Windows.Forms.TabControl();
             this.InsertMovieTabPage = new System.Windows.Forms.TabPage();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.MovieColorspaceComboBox = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.InsertColorspaceTabPage = new System.Windows.Forms.TabPage();
             this.InsertColorspaceButton = new System.Windows.Forms.Button();
             this.ColorsapceBitsPerPixelTextBox = new System.Windows.Forms.TextBox();
@@ -57,16 +60,13 @@
             this.label7 = new System.Windows.Forms.Label();
             this.ColorspaceChannelCountTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.label11 = new System.Windows.Forms.Label();
-            this.MovieColorspaceComboBox = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.InsertControl.SuspendLayout();
             this.InsertMovieTabPage.SuspendLayout();
-            this.InsertColorspaceTabPage.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.InsertColorspaceTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // FilePathTextBox
@@ -87,7 +87,6 @@
             // 
             // FileLoadButton
             // 
-            this.FileLoadButton.Enabled = false;
             this.FileLoadButton.Location = new System.Drawing.Point(435, 9);
             this.FileLoadButton.Name = "FileLoadButton";
             this.FileLoadButton.Size = new System.Drawing.Size(75, 23);
@@ -251,6 +250,33 @@
             this.InsertMovieTabPage.Text = "Insert Movie";
             this.InsertMovieTabPage.UseVisualStyleBackColor = true;
             // 
+            // panel4
+            // 
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.MovieColorspaceComboBox);
+            this.panel4.Controls.Add(this.label11);
+            this.panel4.Location = new System.Drawing.Point(259, 37);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(170, 79);
+            this.panel4.TabIndex = 6;
+            // 
+            // MovieColorspaceComboBox
+            // 
+            this.MovieColorspaceComboBox.FormattingEnabled = true;
+            this.MovieColorspaceComboBox.Location = new System.Drawing.Point(6, 30);
+            this.MovieColorspaceComboBox.Name = "MovieColorspaceComboBox";
+            this.MovieColorspaceComboBox.Size = new System.Drawing.Size(121, 24);
+            this.MovieColorspaceComboBox.TabIndex = 4;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(3, 9);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(79, 17);
+            this.label11.TabIndex = 3;
+            this.label11.Text = "Colorspace";
+            // 
             // InsertColorspaceTabPage
             // 
             this.InsertColorspaceTabPage.Controls.Add(this.InsertColorspaceButton);
@@ -344,33 +370,6 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Name";
             // 
-            // panel4
-            // 
-            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel4.Controls.Add(this.MovieColorspaceComboBox);
-            this.panel4.Controls.Add(this.label11);
-            this.panel4.Location = new System.Drawing.Point(259, 37);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(170, 79);
-            this.panel4.TabIndex = 6;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(3, 9);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(79, 17);
-            this.label11.TabIndex = 3;
-            this.label11.Text = "Colorspace";
-            // 
-            // MovieColorspaceComboBox
-            // 
-            this.MovieColorspaceComboBox.FormattingEnabled = true;
-            this.MovieColorspaceComboBox.Location = new System.Drawing.Point(6, 30);
-            this.MovieColorspaceComboBox.Name = "MovieColorspaceComboBox";
-            this.MovieColorspaceComboBox.Size = new System.Drawing.Size(121, 24);
-            this.MovieColorspaceComboBox.TabIndex = 4;
-            // 
             // InsertForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -390,10 +389,10 @@
             this.InsertControl.ResumeLayout(false);
             this.InsertMovieTabPage.ResumeLayout(false);
             this.InsertMovieTabPage.PerformLayout();
-            this.InsertColorspaceTabPage.ResumeLayout(false);
-            this.InsertColorspaceTabPage.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            this.InsertColorspaceTabPage.ResumeLayout(false);
+            this.InsertColorspaceTabPage.PerformLayout();
             this.ResumeLayout(false);
 
         }
