@@ -14,6 +14,8 @@ namespace VidFilter.Engine
         /// <returns>Information about the execution of the method.</returns>
         OperationStatus InsertMovie(Movie movie);
 
+        OperationStatus InsertImage(Image image);
+
         /// <summary>
         /// Attempts to ascertain if the database is reachable.
         /// </summary>
