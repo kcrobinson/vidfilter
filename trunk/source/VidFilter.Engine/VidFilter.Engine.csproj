@@ -66,6 +66,8 @@
     <Compile Include="EngineRequest.cs" />
     <Compile Include="IEngine.cs" />
     <Compile Include="EngineResult.cs" />
+    <Compile Include="ImageRequest.cs" />
+    <Compile Include="ImageResult.cs" />
     <Compile Include="Model\BaseFile.cs" />
     <Compile Include="Model\Colorspace.cs" />
     <Compile Include="Model\FriendlyName.cs" />

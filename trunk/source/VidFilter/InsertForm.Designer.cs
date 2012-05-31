@@ -42,7 +42,7 @@
             this.ResolutionWidthTextBox = new System.Windows.Forms.TextBox();
             this.InsertMovieButton = new System.Windows.Forms.Button();
             this.CloseFormButton = new System.Windows.Forms.Button();
-            this.InsertStatusTextBox = new System.Windows.Forms.TextBox();
+            this.StatusTextBox = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.InsertControl = new System.Windows.Forms.TabControl();
@@ -60,6 +60,14 @@
             this.label7 = new System.Windows.Forms.Label();
             this.ColorspaceChannelCountTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.PlayLengthTextBox = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.label13 = new System.Windows.Forms.Label();
+            this.BitrateTextBox = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -67,13 +75,15 @@
             this.InsertMovieTabPage.SuspendLayout();
             this.panel4.SuspendLayout();
             this.InsertColorspaceTabPage.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.panel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // FilePathTextBox
             // 
             this.FilePathTextBox.Location = new System.Drawing.Point(85, 9);
             this.FilePathTextBox.Name = "FilePathTextBox";
-            this.FilePathTextBox.Size = new System.Drawing.Size(344, 22);
+            this.FilePathTextBox.Size = new System.Drawing.Size(222, 22);
             this.FilePathTextBox.TabIndex = 0;
             // 
             // FilePathLabel
@@ -87,7 +97,7 @@
             // 
             // FileLoadButton
             // 
-            this.FileLoadButton.Location = new System.Drawing.Point(435, 9);
+            this.FileLoadButton.Location = new System.Drawing.Point(339, 6);
             this.FileLoadButton.Name = "FileLoadButton";
             this.FileLoadButton.Size = new System.Drawing.Size(75, 23);
             this.FileLoadButton.TabIndex = 2;
@@ -177,7 +187,7 @@
             // 
             // InsertMovieButton
             // 
-            this.InsertMovieButton.Location = new System.Drawing.Point(439, 93);
+            this.InsertMovieButton.Location = new System.Drawing.Point(339, 179);
             this.InsertMovieButton.Name = "InsertMovieButton";
             this.InsertMovieButton.Size = new System.Drawing.Size(75, 23);
             this.InsertMovieButton.TabIndex = 7;
@@ -187,7 +197,7 @@
             // 
             // CloseFormButton
             // 
-            this.CloseFormButton.Location = new System.Drawing.Point(455, 282);
+            this.CloseFormButton.Location = new System.Drawing.Point(355, 335);
             this.CloseFormButton.Name = "CloseFormButton";
             this.CloseFormButton.Size = new System.Drawing.Size(75, 23);
             this.CloseFormButton.TabIndex = 8;
@@ -195,23 +205,23 @@
             this.CloseFormButton.UseVisualStyleBackColor = true;
             this.CloseFormButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
-            // InsertStatusTextBox
+            // StatusTextBox
             // 
-            this.InsertStatusTextBox.Location = new System.Drawing.Point(3, 24);
-            this.InsertStatusTextBox.Multiline = true;
-            this.InsertStatusTextBox.Name = "InsertStatusTextBox";
-            this.InsertStatusTextBox.ReadOnly = true;
-            this.InsertStatusTextBox.Size = new System.Drawing.Size(517, 73);
-            this.InsertStatusTextBox.TabIndex = 9;
+            this.StatusTextBox.Location = new System.Drawing.Point(3, 24);
+            this.StatusTextBox.Multiline = true;
+            this.StatusTextBox.Name = "StatusTextBox";
+            this.StatusTextBox.ReadOnly = true;
+            this.StatusTextBox.Size = new System.Drawing.Size(416, 45);
+            this.StatusTextBox.TabIndex = 9;
             // 
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel3.Controls.Add(this.label5);
-            this.panel3.Controls.Add(this.InsertStatusTextBox);
-            this.panel3.Location = new System.Drawing.Point(12, 175);
+            this.panel3.Controls.Add(this.StatusTextBox);
+            this.panel3.Location = new System.Drawing.Point(16, 259);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(525, 101);
+            this.panel3.Size = new System.Drawing.Size(424, 70);
             this.panel3.TabIndex = 10;
             // 
             // label5
@@ -219,9 +229,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(7, 4);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(87, 17);
+            this.label5.Size = new System.Drawing.Size(48, 17);
             this.label5.TabIndex = 10;
-            this.label5.Text = "Insert Status";
+            this.label5.Text = "Status";
             // 
             // InsertControl
             // 
@@ -230,11 +240,13 @@
             this.InsertControl.Location = new System.Drawing.Point(12, 12);
             this.InsertControl.Name = "InsertControl";
             this.InsertControl.SelectedIndex = 0;
-            this.InsertControl.Size = new System.Drawing.Size(525, 157);
+            this.InsertControl.Size = new System.Drawing.Size(428, 241);
             this.InsertControl.TabIndex = 11;
             // 
             // InsertMovieTabPage
             // 
+            this.InsertMovieTabPage.Controls.Add(this.panel6);
+            this.InsertMovieTabPage.Controls.Add(this.panel5);
             this.InsertMovieTabPage.Controls.Add(this.panel4);
             this.InsertMovieTabPage.Controls.Add(this.FilePathLabel);
             this.InsertMovieTabPage.Controls.Add(this.FilePathTextBox);
@@ -245,7 +257,7 @@
             this.InsertMovieTabPage.Location = new System.Drawing.Point(4, 25);
             this.InsertMovieTabPage.Name = "InsertMovieTabPage";
             this.InsertMovieTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.InsertMovieTabPage.Size = new System.Drawing.Size(517, 128);
+            this.InsertMovieTabPage.Size = new System.Drawing.Size(420, 212);
             this.InsertMovieTabPage.TabIndex = 0;
             this.InsertMovieTabPage.Text = "Insert Movie";
             this.InsertMovieTabPage.UseVisualStyleBackColor = true;
@@ -257,7 +269,7 @@
             this.panel4.Controls.Add(this.label11);
             this.panel4.Location = new System.Drawing.Point(259, 37);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(170, 79);
+            this.panel4.Size = new System.Drawing.Size(150, 79);
             this.panel4.TabIndex = 6;
             // 
             // MovieColorspaceComboBox
@@ -370,11 +382,83 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Name";
             // 
+            // panel5
+            // 
+            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.label12);
+            this.panel5.Controls.Add(this.PlayLengthTextBox);
+            this.panel5.Controls.Add(this.label10);
+            this.panel5.Location = new System.Drawing.Point(9, 123);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(153, 79);
+            this.panel5.TabIndex = 8;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(4, 13);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(83, 17);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "Play Length";
+            // 
+            // PlayLengthTextBox
+            // 
+            this.PlayLengthTextBox.Location = new System.Drawing.Point(7, 33);
+            this.PlayLengthTextBox.Name = "PlayLengthTextBox";
+            this.PlayLengthTextBox.Size = new System.Drawing.Size(79, 22);
+            this.PlayLengthTextBox.TabIndex = 5;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(92, 36);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(61, 17);
+            this.label12.TabIndex = 6;
+            this.label12.Text = "seconds";
+            // 
+            // panel6
+            // 
+            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel6.Controls.Add(this.label13);
+            this.panel6.Controls.Add(this.BitrateTextBox);
+            this.panel6.Controls.Add(this.label14);
+            this.panel6.Location = new System.Drawing.Point(168, 123);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(153, 79);
+            this.panel6.TabIndex = 9;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(92, 36);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(34, 17);
+            this.label13.TabIndex = 6;
+            this.label13.Text = "kb/s";
+            // 
+            // BitrateTextBox
+            // 
+            this.BitrateTextBox.Location = new System.Drawing.Point(7, 33);
+            this.BitrateTextBox.Name = "BitrateTextBox";
+            this.BitrateTextBox.Size = new System.Drawing.Size(79, 22);
+            this.BitrateTextBox.TabIndex = 5;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(4, 13);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(49, 17);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "Bitrate";
+            // 
             // InsertForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(570, 312);
+            this.ClientSize = new System.Drawing.Size(453, 372);
             this.Controls.Add(this.InsertControl);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.CloseFormButton);
@@ -393,6 +477,10 @@
             this.panel4.PerformLayout();
             this.InsertColorspaceTabPage.ResumeLayout(false);
             this.InsertColorspaceTabPage.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -413,7 +501,7 @@
         private System.Windows.Forms.TextBox ResolutionWidthTextBox;
         private System.Windows.Forms.Button InsertMovieButton;
         private System.Windows.Forms.Button CloseFormButton;
-        private System.Windows.Forms.TextBox InsertStatusTextBox;
+        private System.Windows.Forms.TextBox StatusTextBox;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TabControl InsertControl;
@@ -431,5 +519,13 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.ComboBox MovieColorspaceComboBox;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox BitrateTextBox;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox PlayLengthTextBox;
+        private System.Windows.Forms.Label label10;
     }
 }

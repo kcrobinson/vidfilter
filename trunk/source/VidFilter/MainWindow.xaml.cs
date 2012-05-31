@@ -148,8 +148,15 @@ namespace VidFilter
             EngineRequest engineRequest = new EngineRequest()
             {
                 InputFile = movie.FileInfo,
+                InputFrameRate = movie.FrameRate,
+                InputHeight = movie.ResolutionHeight,
+                InputWidth = movie.ResolutionWidth,
+                OutputFrameRate = IntTryParse(MovieFrameRateChangeText),
+                OutputHeight = IntTryParse(MovieResolutionHeightChangeText),
+                OutputWidth = IntTryParse(MovieResolutionWidthChangeText),
+                // OutputPath = string.IsNullOrWhiteSpace()
                 OutputCodec = "rawvideo",
-                OutputColorspace = "gray",
+                // OutputColorspace = MovieColorspaceChange.SelectedItem.ToString(),
             };
             EngineResult engineResult = App.Engine.ProcessRequest(engineRequest);
             if (!engineResult.IsSuccess)
@@ -168,14 +175,55 @@ namespace VidFilter
                 return;
             }
             AddProcessMessageLine("Process succeeded.");
+
+            AddProcessMessageLine("Probing process result");
+            ProbeRequest probeRequest = new ProbeRequest()
+            {
+                FilePath = engineResult.OutFile.FullName
+            };
+            ProbeResult probeResult = App.Engine.ProbeVideoFile(probeRequest);
+            if (!probeResult.IsSuccess)
+            {
+                AddProcessMessageLine("Failure: " + probeResult.ErrorMessage);
+                return;
+            }
             Movie newMovie = new Movie(engineResult.OutFile);
-            newMovie.FrameRate = engineResult.OutFramerate;
-            newMovie.ResolutionHeight = engineResult.OutHeight;
-            newMovie.ResolutionWidth = engineResult.OutWidth;
+            newMovie.FrameRate = probeResult.FrameRate;
+            newMovie.ResolutionHeight = probeResult.ResolutionHeight;
+            newMovie.ResolutionWidth = probeResult.ResolutionWidth;
+            // newMovie.ColorSpaceId = probeResult.Colorspace;
+            newMovie.BitRate = probeResult.BitRate;
+            newMovie.PlayLength = probeResult.PlayLength;
             newMovie.ParentMovieId = movie.Id;
 
+            ImageRequest imageRequest = new ImageRequest()
+            {
+                MovieLength = probeResult.PlayLength,
+                MoviePath = newMovie.FullName
+            };
+            ImageResult imageResult = App.Engine.CreateImage(imageRequest);
+            if (!imageResult.IsSuccess)
+            {
+                AddProcessMessageLine(imageResult.ErrorMessage);
+                return;
+            }
+            Engine.Image image = new Engine.Image(imageResult.OutFile)
+            {
+                //ColorSpaceId = 
+                ResolutionHeight = probeResult.ResolutionHeight,
+                ResolutionWidth = probeResult.ResolutionWidth
+            };
             AddProcessMessageLine();
+            InsertImageToDatabase(image);
+            newMovie.SampleFrameId = image.Id;
             InsertMovieToDatabase(newMovie);
+        }
+
+        private int IntTryParse(TextBox textBox)
+        {
+            int value = 0;
+            int.TryParse(textBox.Text, out value);
+            return value;
         }
 
         private void InsertRecordButton_Click(object sender, RoutedEventArgs e)
@@ -281,6 +329,26 @@ namespace VidFilter
             }
             AddProcessMessageLine("Success");
             MainModel.Movies.Add(status.ResultingFriendlyName);
+        }
+
+        private void InsertImageToDatabase(VidFilter.Engine.Image image)
+        {
+            AddProcessMessageLine("Inserting image in database");
+            OperationStatus status = App.Database.InsertImage(image);
+            if (!status.IsSuccess)
+            {
+                if (status.Exception != null)
+                {
+                    AddProcessMessageFromException("Exception thrown while inserting image", status.Exception);
+                }
+                else
+                {
+                    AddProcessMessageLine("Failure inserting image");
+                    AddProcessMessageLine("Message: " + status.Message);
+                }
+                return;
+            }
+            AddProcessMessageLine("Success");
         }
 
         private void AddProcessMessageLine(string text=null)

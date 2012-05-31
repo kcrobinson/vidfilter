@@ -16,5 +16,7 @@ namespace VidFilter.Engine
         EngineResult ProcessRequest(EngineRequest request);
 
         ProbeResult ProbeVideoFile(ProbeRequest request);
+
+        ImageResult CreateImage(ImageRequest request);
     }
 }

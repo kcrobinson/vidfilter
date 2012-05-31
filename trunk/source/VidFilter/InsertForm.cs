@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -38,42 +37,80 @@ namespace VidFilter
 
         private void FileLoadButton_Click(object sender, EventArgs e)
         {
+            StatusTextBox.Text = string.Empty;
+
             ProbeRequest request = new ProbeRequest()
             {
                 FilePath = FilePathTextBox.Text
             };
             ProbeResult result = App.Engine.ProbeVideoFile(request);
 
-            FrameRateTextBox.Text = result.FrameRate > 0 ? result.FrameRate.ToString() : string.Empty;
-            ResolutionWidthTextBox.Text = result.ResolutionWidth > 0 ? result.ResolutionWidth.ToString() : string.Empty;
-            ResolutionHeightTextBox.Text = result.ResolutionHeight > 0 ? result.ResolutionHeight.ToString() : string.Empty;
+            if (!result.IsSuccess)
+            {
+                StatusTextBox.Text = "Error loading file\r\n" + result.ErrorMessage;
+                return;
+            }
+
+            FrameRateTextBox.Text = result.FrameRate.ToString();
+            ResolutionWidthTextBox.Text = result.ResolutionWidth.ToString();
+            ResolutionHeightTextBox.Text = result.ResolutionHeight.ToString();
             MovieColorspaceComboBox.SelectedText = result.Colorspace;
+            PlayLengthTextBox.Text = result.PlayLength.ToString("F2");
+            BitrateTextBox.Text = result.BitRate.ToString();
         }
 
         private void InsertMovieButton_Click(object sender, EventArgs e)
         {
+            StatusTextBox.Text = string.Empty;
+
             Movie movie = new Movie(FilePathTextBox.Text);
             movie.FrameRate = IntTryParse(FrameRateTextBox);
             movie.ResolutionWidth = IntTryParse(ResolutionWidthTextBox);
             movie.ResolutionHeight = IntTryParse(ResolutionHeightTextBox);
+            movie.BitRate = IntTryParse(BitrateTextBox);
+            movie.PlayLength = DecimalTryParse(PlayLengthTextBox);
             Colorspace colorspace = MovieColorspaceComboBox.SelectedItem as Colorspace;
             if (colorspace != null)
             {
                 movie.ColorSpaceId = colorspace.Id;
             }
 
-            OperationStatus status = App.Database.InsertMovie(movie);
+            ImageRequest imageRequest = new ImageRequest()
+            {
+                MoviePath = movie.FullName,
+                MovieLength = movie.PlayLength
+            };
+            ImageResult imageResult = App.Engine.CreateImage(imageRequest);
+            if (!imageResult.IsSuccess)
+            {
+                StatusTextBox.Text += "Error creating image: " + imageResult.ErrorMessage;
+            }
+            Image image = new Image(imageResult.OutFile)
+            {
+                ColorSpaceId = movie.ColorSpaceId,
+                ResolutionHeight = movie.ResolutionHeight,
+                ResolutionWidth = movie.ResolutionWidth
+            };
+            OperationStatus status = App.Database.InsertImage(image);
+            if (!status.IsSuccess)
+            {
+                StatusTextBox.Text += "Error inserting image to database: " + status.Message;
+                return;
+            }
+            movie.SampleFrameId = image.Id;
+
+            status = App.Database.InsertMovie(movie);
             if (status.IsSuccess)
             {
-                InsertStatusTextBox.Text = "Success adding movie";
+                StatusTextBox.Text = "Success adding movie";
                 ClearAllFields();
             }
             else
             {
-                InsertStatusTextBox.Text = status.Message;
+                StatusTextBox.Text = status.Message;
                 if (status.Exception != null)
                 {
-                    InsertStatusTextBox.Text += "\r\n" + status.Exception.Message;
+                    StatusTextBox.Text += "\r\n" + status.Exception.Message;
                 }
             }
         }
@@ -91,6 +128,8 @@ namespace VidFilter
             ResolutionWidthTextBox.Text = string.Empty;
             FrameRateTextBox.Text = string.Empty;
             MovieColorspaceComboBox.SelectedIndex = 0;
+            BitrateTextBox.Text = string.Empty;
+            PlayLengthTextBox.Text = string.Empty;
         }
 
         private void InsertColorpsaceButton_Click(object sender, EventArgs e)
@@ -104,15 +143,15 @@ namespace VidFilter
             OperationStatus status = App.Database.InsertOrUpdateColorspace(colorspace);
             if (status.IsSuccess)
             {
-                InsertStatusTextBox.Text = "Success adding colorspace";
+                StatusTextBox.Text = "Success adding colorspace";
                 ClearAllFields();
             }
             else
             {
-                InsertStatusTextBox.Text = status.Message;
+                StatusTextBox.Text = status.Message;
                 if (status.Exception != null)
                 {
-                    InsertStatusTextBox.Text += "\r\n" + status.Exception.Message;
+                    StatusTextBox.Text += "\r\n" + status.Exception.Message;
                 }
             }
             RefreshAvailableColorspaces();
@@ -122,6 +161,13 @@ namespace VidFilter
         {
             int value = 0;
             int.TryParse(textbox.Text, out value);
+            return value;
+        }
+
+        private decimal DecimalTryParse(TextBox textbox)
+        {
+            decimal value = 0;
+            decimal.TryParse(textbox.Text, out value);
             return value;
         }
     }

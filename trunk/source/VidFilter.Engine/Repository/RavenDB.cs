@@ -96,6 +96,37 @@ namespace VidFilter.Engine
             return opStatus;
         }
 
+        public OperationStatus InsertImage(Image image)
+        {
+            OperationStatus opStatus = new OperationStatus();
+
+            try
+            {
+                using (var session = DocumentStore.OpenSession())
+                {
+                    Image recordLookup = session.Load<Image>(image.Id);
+                    if (recordLookup != null)
+                    {
+                        opStatus.Message = "Image record already existed. Record not updated.";
+                    }
+                    else
+                    {
+                        session.Store(image);
+                        opStatus.NumRecordsAffected++;
+                    }
+                    session.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                opStatus.HandleException("Failure while adding Image record", ex);
+                return opStatus;
+            }
+
+            opStatus.IsSuccess = true;
+            return opStatus;
+        }
+
         public OperationStatus InsertOrUpdateColorspace(Colorspace colorspace)
         {
             OperationStatus opStatus = new OperationStatus();
