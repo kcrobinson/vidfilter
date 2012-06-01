@@ -17,7 +17,7 @@ namespace VidFilter
 
         public ObservableCollection<Colorspace> Colorspaces { get; set; }
 
-        public Movie SelectedMovie { get; set; }
+        public DenormalizedMovie Selected { get; set; }
 
         public MainWindowModel()
         {

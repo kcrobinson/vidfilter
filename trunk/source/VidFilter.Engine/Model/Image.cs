@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace VidFilter.Engine
 {
     public class Image : BaseFile
     {
-        public Image(string filePath) : base(filePath) { }
+        [JsonConstructor]
+        public Image(string FullName) : base(FullName) { }
+
         public Image(FileInfo fileInfo) : base(fileInfo) { }
 
         public int ResolutionWidth { get; set; }

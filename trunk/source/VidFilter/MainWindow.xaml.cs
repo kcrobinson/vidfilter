@@ -59,47 +59,40 @@ namespace VidFilter
 
             try
             {
-                MainModel.SelectedMovie = App.Database.QueryMovie(movieItem.Id, allowException: Debug);
+                MainModel.Selected = App.Database.QueryMovie(movieItem.Id, allowException: Debug);
             }
             catch (Exception ex)
             {
                 AddProcessMessageFromException("Failure getting movie from database", ex);
                 return;
             }
-            if (MainModel.SelectedMovie == null)
+            if (MainModel.Selected == null)
             {
                 return;
             }
 
-            Colorspace colorspace = null;
-            try
-            {
-                string colorspaceId = MainModel.SelectedMovie.ColorSpaceId;
-                if (!string.IsNullOrWhiteSpace(colorspaceId))
-                {
-                    colorspace = App.Database.QueryColorspace(MainModel.SelectedMovie.ColorSpaceId, allowException: Debug);
-                }
-            }
-            catch (Exception ex)
-            {
-                AddProcessMessageFromException("Failure getting colorspace from database", ex);
-            }
-
             MovieDataGrid.Visibility = System.Windows.Visibility.Visible;
-            MovieFileNameValue.Content = MainModel.SelectedMovie.FileName;
-            MovieFullPathValue.Content = MainModel.SelectedMovie.FullName;
-            MovieFrameRateValue.Content = MainModel.SelectedMovie.FormattedFramerate;
-            MovieResolutionValue.Content = MainModel.SelectedMovie.FormattedResolution;
-            MovieColorspaceValue.Content = colorspace;
+            MovieFileNameValue.Content = MainModel.Selected.Movie.FileName;
+            MovieFullPathValue.Content = MainModel.Selected.Movie.FullName;
+            MovieFrameRateValue.Content = MainModel.Selected.Movie.FormattedFramerate;
+            MovieResolutionValue.Content = MainModel.Selected.Movie.FormattedResolution;
+            MovieColorspaceValue.Content = MainModel.Selected.Colorspace;
 
-            string fullPath = MainModel.SelectedMovie.DirectoryPath;
+            BitmapImage src = new BitmapImage();
+            src.BeginInit();
+            src.UriSource = new Uri(MainModel.Selected.Image.FullName, UriKind.Absolute);
+            src.EndInit();
+            SampleFrameImage.Source = src;
+            SampleFrameImage.Stretch = Stretch.None;
+
+            string fullPath = MainModel.Selected.Movie.DirectoryPath;
             if (!string.IsNullOrWhiteSpace(fullPath))
             {
                 FileInfo fileInfo = new FileInfo(fullPath);
                 MovieFullPathChange.Text = fileInfo.DirectoryName;
             }
 
-            int frameRate = MainModel.SelectedMovie.FrameRate;
+            int frameRate = MainModel.Selected.Movie.FrameRate;
             if (frameRate > 0)
             {
                 MovieFrameRateChangeSlider.Maximum = frameRate;
@@ -108,8 +101,8 @@ namespace VidFilter
                 MovieFrameRateChangeSlider.Value = MovieFrameRateChangeSlider.Maximum;
             }
 
-            int width = MainModel.SelectedMovie.ResolutionWidth;
-            int height = MainModel.SelectedMovie.ResolutionHeight;
+            int width = MainModel.Selected.Movie.ResolutionWidth;
+            int height = MainModel.Selected.Movie.ResolutionHeight;
             if (width > 0 && height > 0)
             {
                 int gcd = 1;
@@ -137,10 +130,10 @@ namespace VidFilter
                 return;
             }
 
-            Movie movie = App.Database.QueryMovie(movieItem.Id);
+            Movie movie = MainModel.Selected != null ? MainModel.Selected.Movie : null;
             if (movie == null)
             {
-                AddProcessMessageLine("Failure finding movie in database. Cannot continue.");
+                AddProcessMessageLine("No movie selected");
                 return;
             }
 
@@ -148,9 +141,9 @@ namespace VidFilter
             EngineRequest engineRequest = new EngineRequest()
             {
                 InputFile = movie.FileInfo,
-                InputFrameRate = movie.FrameRate,
-                InputHeight = movie.ResolutionHeight,
-                InputWidth = movie.ResolutionWidth,
+                // InputFrameRate = movie.FrameRate,
+                // InputHeight = movie.ResolutionHeight,
+                // InputWidth = movie.ResolutionWidth,
                 OutputFrameRate = IntTryParse(MovieFrameRateChangeText),
                 OutputHeight = IntTryParse(MovieResolutionHeightChangeText),
                 OutputWidth = IntTryParse(MovieResolutionWidthChangeText),
@@ -272,8 +265,8 @@ namespace VidFilter
         {
             int value = (int)MovieResolutionChangeSlider.Value;
             int gcd = (int)MovieResolutionGCD.Content;
-            MovieResolutionWidthChangeText.Text = (MainModel.SelectedMovie.ResolutionWidth * value / gcd).ToString();
-            MovieResolutionHeightChangeText.Text = (MainModel.SelectedMovie.ResolutionHeight * value / gcd).ToString();
+            MovieResolutionWidthChangeText.Text = (MainModel.Selected.Movie.ResolutionWidth * value / gcd).ToString();
+            MovieResolutionHeightChangeText.Text = (MainModel.Selected.Movie.ResolutionHeight * value / gcd).ToString();
         }
 
         private void MovieResolutionWidthChangeText_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -283,7 +276,7 @@ namespace VidFilter
             if (newValue != 0)
             {
                 int gcd = (int)MovieResolutionGCD.Content;
-                double estimate = newValue * gcd / MainModel.SelectedMovie.ResolutionWidth;
+                double estimate = newValue * gcd / MainModel.Selected.Movie.ResolutionWidth;
                 MovieResolutionChangeSlider.Value = Math.Round(estimate);
             }
             else
@@ -299,7 +292,7 @@ namespace VidFilter
             if (newValue != 0)
             {
                 int gcd = (int)MovieResolutionGCD.Content;
-                double estimate = newValue * gcd / MainModel.SelectedMovie.ResolutionHeight;
+                double estimate = newValue * gcd / MainModel.Selected.Movie.ResolutionHeight;
                 MovieResolutionChangeSlider.Value = Math.Round(estimate);
             }
             else

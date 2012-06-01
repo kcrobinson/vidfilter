@@ -68,13 +68,15 @@
     <Compile Include="EngineResult.cs" />
     <Compile Include="ImageRequest.cs" />
     <Compile Include="ImageResult.cs" />
+    <Compile Include="Indexes\DenormalizedMovie_ByMovie.cs" />
     <Compile Include="Model\BaseFile.cs" />
     <Compile Include="Model\Colorspace.cs" />
+    <Compile Include="Model\DenormalizedMovie.cs" />
     <Compile Include="Model\FriendlyName.cs" />
     <Compile Include="Model\Image.cs" />
     <Compile Include="Model\Movie.cs" />
     <Compile Include="Model\OperationStatus.cs" />
-    <Compile Include="Indexes\Movies_ByFriendlyName.cs" />
+    <Compile Include="Indexes\Movies_AsFriendlyName.cs" />
     <Compile Include="ProbeRequest.cs" />
     <Compile Include="ProbeResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

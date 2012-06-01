@@ -33,8 +33,6 @@ namespace VidFilter.Engine
 
         IEnumerable<Colorspace> QueryAllColorspaces(bool allowException = false);
 
-        Movie QueryMovie(string Id, bool allowException = false);
-
-        Colorspace QueryColorspace(string Id, bool allowException = false);
+        DenormalizedMovie QueryMovie(string Id, bool allowException = false);
     }
 }
