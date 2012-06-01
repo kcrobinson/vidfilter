@@ -83,13 +83,15 @@
                         <ComboBox Grid.Row="4" Grid.Column="2" Name="MovieColorspaceChange" Margin="3,3,3,3" MinWidth="100" ItemsSource="{Binding Colorspaces,Source={StaticResource model}}" HorizontalAlignment="Left" VerticalAlignment="Top" TabIndex="7" />
                     </Grid>
                     <GridSplitter HorizontalAlignment="Stretch" Grid.Row="1" Height="5" Background="Gray" ResizeBehavior="PreviousAndNext"/>
-                    <TextBox Margin="5,5,5,5" Name="ProcessStatusTextBox" MinHeight="98" VerticalAlignment="Stretch" IsReadOnly="True" Grid.Row="2"/>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Right" Grid.Row="2">
+                        <Border HorizontalAlignment="Stretch" BorderThickness="2" Width="315">
+                            <Image Name="SampleFrameImage"/>
+                        </Border>
+                        <Button Name="ProcessButton" Content="Process" Click="ProcessButton_Click" TabIndex="8" HorizontalAlignment="Right"/>
+                    </StackPanel>
                 </Grid>
             </Grid>
         </Border>
-        <StackPanel Orientation="Horizontal" Name="BottomButtonStackPanel" Grid.Row="2" HorizontalAlignment="Right">
-            <Button Name="ProcessButton" Content="Process" Click="ProcessButton_Click" TabIndex="8" />
-        </StackPanel>
-        
+        <TextBox Margin="5,5,5,5" Name="ProcessStatusTextBox" MinHeight="98" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True" Grid.Row="2"/>
     </Grid>
 </Window>

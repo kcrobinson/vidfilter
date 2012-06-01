@@ -21,7 +21,7 @@ namespace VidFilter.Engine
                 {
                     _DocumentStore = new DocumentStore { Url = ServerAddress };
                     _DocumentStore.Initialize();
-                    IndexCreation.CreateIndexes(typeof(Movies_ByFriendlyName).Assembly, _DocumentStore);
+                    IndexCreation.CreateIndexes(typeof(Movies_AsFriendlyName).Assembly, _DocumentStore);
                 }
                 return _DocumentStore;
             }
@@ -165,7 +165,7 @@ namespace VidFilter.Engine
             {
                 using (var session = DocumentStore.OpenSession())
                 {
-                    return session.Query<Movie, Movies_ByFriendlyName>().As<FriendlyName>();
+                    return session.Query<Movie, Movies_AsFriendlyName>().As<FriendlyName>();
                 }
             }
             catch(Exception ex)
@@ -193,13 +193,13 @@ namespace VidFilter.Engine
             }
         }
 
-        public Movie QueryMovie(string id, bool allowException = false)
+        public DenormalizedMovie QueryMovie(string id, bool allowException = false)
         {
             try
             {
                 using (var session = DocumentStore.OpenSession())
                 {
-                    return session.Load<Movie>(id);
+                    return session.Query<Movie, DenormalizedMovie_ByMovie>().Where(m => m.Id == id).As<DenormalizedMovie>().SingleOrDefault();
                 }
             }
             catch (Exception ex)
