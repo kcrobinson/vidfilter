@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using VidFilter.Repository.Model;
 
-namespace VidFilter.Engine
+namespace VidFilter.Repository.Model
 {
     public class OperationStatus
     {

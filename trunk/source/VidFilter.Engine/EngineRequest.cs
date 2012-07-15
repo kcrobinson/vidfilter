@@ -8,7 +8,22 @@ namespace VidFilter.Engine
 {
     public class EngineRequest
     {
-        public FileInfo InputFile { get; set; }
+        public string InputFileName { get; set; }
+        public string InputDirectory { get; set; }
+
+        private string _InputPath;
+        public string InputPath
+        {
+            get
+            {
+                if (_InputPath == null)
+                {
+                    // TODO: validation
+                    _InputPath = String.Join("\\", InputDirectory, InputFileName);
+                }
+                return _InputPath;
+            }
+        }
 
         private string _OutputPath;
         public string OutputPath
@@ -19,22 +34,18 @@ namespace VidFilter.Engine
                 {
                     return _OutputPath;
                 }
-                if(InputFile == null)
-                {
-                    return null;
-                }
 
                 if (_OutputPath == null)
                 {
                     // Some logic for creating an output file name if none is specified
-                    StringBuilder sb = new StringBuilder(InputFile.DirectoryName + "\\");
+                    StringBuilder sb = new StringBuilder(InputDirectory + "\\");
 
                     string fileName;
                     string extension;
-                    string[] fileNameSplit = InputFile.Name.Split('.');
+                    string[] fileNameSplit = InputFileName.Split('.');
                     if (fileNameSplit.Count() < 2)
                     {
-                        fileName = InputFile.Name;
+                        fileName = InputFileName;
                         extension = ".avi";
                     }
                     else

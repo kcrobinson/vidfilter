@@ -6,22 +6,81 @@ using Raven.Client.Document;
 using Raven.Client;
 using Raven.Client.Linq;
 using Raven.Client.Indexes;
+using Raven.Client.Embedded;
+using Raven.Storage.Esent;
+using VidFilter.Repository.Indexes;
+using VidFilter.Repository.Model;
 
-namespace VidFilter.Engine
+namespace VidFilter.Repository
 {
     public class RavenDB : IDatabase
     {
-        private static readonly string ServerAddress = "http://localhost:8080";
+        public RavenDB(params KeyValuePair<string, object>[] options)
+        {
+            if (options == null)
+                throw new ArgumentNullException("options");
 
-        private static IDocumentStore _DocumentStore;
+            _ConnectionPath = null;
+            _DatabaseType = null;
+
+            foreach(KeyValuePair<string, object> option in options)
+            {
+                switch (option.Key.ToLower())
+                {
+                    case "connectionpath":
+                        ParseOptionString(option.Value, "ConnectionPath", ref _ConnectionPath);
+                        break;
+                    case "databasetype":
+                        ParseOptionString(option.Value, "DatabaseType", ref _DatabaseType);
+                        break;
+                }
+            }
+
+            if (_ConnectionPath == null)
+            {
+                throw new ArgumentException("ConnectionPath not specified");
+            }
+            if (_DatabaseType == null)
+            {
+                throw new ArgumentException("DatabaseType not specified");
+            }
+        }
+
+        private string _ConnectionPath;
+        private string _DatabaseType;
+
+        private void ParseOptionString(object value, string paramName, ref string param)
+        {
+            if (param != null)
+            {
+                throw new ArgumentException(string.Format("{0} option specified more than once", paramName));
+            }
+            var val = value as string;
+            if (val == null)
+            {
+                throw new ArgumentException(String.Format("Invalid {0} value. Null or not string.", paramName));
+            }
+            param = val;
+        }
+
+        private IDocumentStore _DocumentStore;
         private IDocumentStore DocumentStore { 
             get
             {
                 if (_DocumentStore == null)
                 {
-                    _DocumentStore = new DocumentStore { Url = ServerAddress };
+                    switch(_DatabaseType.ToLower())
+                    {
+                        case "hosted":
+                            _DocumentStore = new DocumentStore { Url = _ConnectionPath };
+                            break;
+                        case "embedded":
+                            _DocumentStore = new EmbeddableDocumentStore { DataDirectory = _ConnectionPath, UseEmbeddedHttpServer = true };
+                            break;
+                    }
                     _DocumentStore.Initialize();
                     IndexCreation.CreateIndexes(typeof(Movies_AsFriendlyName).Assembly, _DocumentStore);
+                    IndexCreation.CreateIndexes(typeof(DenormalizedMovie_ByMovie).Assembly, _DocumentStore);
                 }
                 return _DocumentStore;
             }
@@ -225,6 +284,26 @@ namespace VidFilter.Engine
                     throw ex;
                 return null;
             }
+        }
+
+        public OperationStatus DeleteMovie(string Id)
+        {
+            OperationStatus status = new OperationStatus();
+            try
+            {
+                using (var session = DocumentStore.OpenSession())
+                {
+                    var movie = session.Load<Movie>(Id);
+                    session.Delete<Movie>(movie);
+                    session.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                return OperationStatus.GetOperationStatusFromException("Failure deleting movie", ex);
+            }
+            status.IsSuccess = true;
+            return status;
         }
     }
 }

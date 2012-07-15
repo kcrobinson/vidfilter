@@ -110,7 +110,7 @@ namespace VidFilter.Engine
 
             argumentList.Add(GetProcessArgument(framerateFormat, IntGreaterThanZero, request.InputFrameRate));
             argumentList.Add(GetProcessArgument(sizeFormat, IntGreaterThanZero, request.InputWidth, request.InputHeight));
-            argumentList.Add(GetProcessArgument(inputVideoFormat, ObjectNotNull, request.InputFile.FullName));
+            argumentList.Add(GetProcessArgument(inputVideoFormat, ObjectNotNull, request.InputPath));
             argumentList.Add(GetProcessArgument(colorspaceFormat, ObjectNotNull, request.OutputColorspace));
             argumentList.Add(GetProcessArgument(codecFormat, ObjectNotNull, request.OutputCodec));
             argumentList.Add(GetProcessArgument(framerateFormat, IntGreaterThanZero, request.OutputFrameRate));

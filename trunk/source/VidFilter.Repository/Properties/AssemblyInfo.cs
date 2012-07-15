@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("VidFilter.Console")]
+[assembly: AssemblyTitle("VidFilter.Repository")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Infospace")]
-[assembly: AssemblyProduct("VidFilter.Console")]
+[assembly: AssemblyProduct("VidFilter.Repository")]
 [assembly: AssemblyCopyright("Copyright © Infospace 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("960607e1-84c7-4f81-a4bf-bda02e0bc95f")]
+[assembly: Guid("d1c682f9-2543-4cf2-9052-f03160c23e06")]
 
 // Version information for an assembly consists of the following four values:
 //
