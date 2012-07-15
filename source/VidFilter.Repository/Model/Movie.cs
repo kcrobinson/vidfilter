@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace VidFilter.Engine
+namespace VidFilter.Repository.Model
 {
     public class Movie : BaseFile
     {
@@ -22,23 +22,5 @@ namespace VidFilter.Engine
         public int ResolutionWidth { get; set; }
         public int ResolutionHeight { get; set; }
         public string ColorSpaceId { get; set; }
-
-        [JsonIgnore]
-        public string FormattedResolution
-        {
-            get
-            {
-                return ResolutionWidth + "x" + ResolutionHeight;
-            }
-        }
-
-        [JsonIgnore]
-        public string FormattedFramerate
-        {
-            get
-            {
-                return FrameRate + " FPS";
-            }
-        }
     }
 }

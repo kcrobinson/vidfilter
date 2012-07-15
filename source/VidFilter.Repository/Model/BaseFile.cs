@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace VidFilter.Engine
+namespace VidFilter.Repository.Model
 {
     /// <summary>
     /// Abstract POCO wrapper for System.IO.FileInfo
@@ -84,9 +84,8 @@ namespace VidFilter.Engine
         /// </summary>
         public string FileName { get; set; }
 
-        [JsonIgnore]
         /// <summary>
-        /// Full path of the directory which contains the file. Null
+        /// Full path of the directory which contains the file.
         /// </summary>
         public string DirectoryPath
         {

@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace VidFilter.Engine
+namespace VidFilter.Repository.Model
 {
     public class Image : BaseFile
     {

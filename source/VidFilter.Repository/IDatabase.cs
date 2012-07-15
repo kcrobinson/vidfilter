@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using VidFilter.Repository.Model;
 
-namespace VidFilter.Engine
+namespace VidFilter.Repository
 {
     public interface IDatabase : IDisposable
     {
@@ -34,5 +35,7 @@ namespace VidFilter.Engine
         IEnumerable<Colorspace> QueryAllColorspaces(bool allowException = false);
 
         DenormalizedMovie QueryMovie(string Id, bool allowException = false);
+
+        OperationStatus DeleteMovie(string Id);
     }
 }

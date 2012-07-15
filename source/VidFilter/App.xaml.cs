@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Windows;
+using VidFilter.Repository;
 using VidFilter.Engine;
 
 namespace VidFilter
@@ -13,7 +14,46 @@ namespace VidFilter
     /// </summary>
     public partial class App : Application
     {
-        public static readonly IDatabase Database = DatabaseFactory.GetDatabase();
+        public App()
+        {
+            string databaseType = ConfigurationManager.AppSettings["DatabaseType"];
+            if (databaseType == null)
+            {
+                throw new Exception("Did not specify DatabaseType in configuration");
+            }
+            switch(databaseType.ToLower())
+            {
+                case "hosted":
+                    Database = DatabaseFactory.GetDatabase(HostedDatabaseOptions);
+                    break;
+                case "embedded":
+                    Database = DatabaseFactory.GetDatabase(EmbeddedDatabaseOptions);
+                    break;
+                default:
+                    throw new Exception(String.Format("Unrecognized value for DatabaseType in configuration: '{0}'", databaseType));
+            }
+        }
+
+        private static readonly KeyValuePair<string, object> DatabaseTypeOption = 
+            new KeyValuePair<string, object>("DatabaseType", ConfigurationManager.AppSettings["DatabaseType"]);
+        private static readonly KeyValuePair<string, object> HostedConnectionPath = 
+            new KeyValuePair<string, object>("ConnectionPath", ConfigurationManager.AppSettings["HostedConnectionPath"]);
+        private static readonly KeyValuePair<string, object> EmbeddedConnectionPath = 
+            new KeyValuePair<string, object>("ConnectionPath", ConfigurationManager.AppSettings["EmbeddedConnectionPath"]);
+
+        private static readonly KeyValuePair<string, object>[] HostedDatabaseOptions = new []
+        {
+            DatabaseTypeOption,
+            HostedConnectionPath
+        };
+
+        private static readonly KeyValuePair<string, object>[] EmbeddedDatabaseOptions = new[]
+        {
+            DatabaseTypeOption,
+            EmbeddedConnectionPath
+        };
+
+        public static IDatabase Database;
         public static readonly IEngine Engine = EngineFactory.GetEngine();
     }
 }
