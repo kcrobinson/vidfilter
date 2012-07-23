@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Colorspaces xmlns="http://www.vidfilter.com/colorspace">
+    <Colorspace Name="testname" CodeName="codename" NumChannels="3" BitsPerPixel="8"/>
+</Colorspaces>

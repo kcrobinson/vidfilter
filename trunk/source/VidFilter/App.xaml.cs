@@ -32,6 +32,12 @@ namespace VidFilter
                 default:
                     throw new Exception(String.Format("Unrecognized value for DatabaseType in configuration: '{0}'", databaseType));
             }
+
+            var errorMessages = Colorspaces.Load(ColorspaceFilePath);
+            if (errorMessages.Any())
+            {
+                throw new Exception("Error loading Colorspaces file\r\n" + String.Join("\r\n", errorMessages));
+            }
         }
 
         private static readonly KeyValuePair<string, object> DatabaseTypeOption = 
@@ -40,6 +46,8 @@ namespace VidFilter
             new KeyValuePair<string, object>("ConnectionPath", ConfigurationManager.AppSettings["HostedConnectionPath"]);
         private static readonly KeyValuePair<string, object> EmbeddedConnectionPath = 
             new KeyValuePair<string, object>("ConnectionPath", ConfigurationManager.AppSettings["EmbeddedConnectionPath"]);
+        
+        private static readonly string ColorspaceFilePath = ConfigurationManager.AppSettings["ColorspaceFilePath"];
 
         private static readonly KeyValuePair<string, object>[] HostedDatabaseOptions = new []
         {
@@ -55,5 +63,6 @@ namespace VidFilter
 
         public static IDatabase Database;
         public static readonly IEngine Engine = EngineFactory.GetEngine();
+        public static readonly Colorspaces Colorspaces = new Colorspaces();
     }
 }

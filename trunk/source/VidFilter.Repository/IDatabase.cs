@@ -23,16 +23,7 @@ namespace VidFilter.Repository
         /// <returns>Information about the execution of the method.</returns>
         OperationStatus CheckConnection();
 
-        /// <summary>
-        /// Inserts a colorspace record if it doesn't already exist (based on Id), or updates the existing record if it does.
-        /// </summary>
-        /// <param name="colorspace"></param>
-        /// <returns></returns>
-        OperationStatus InsertOrUpdateColorspace(Colorspace colorspace);
-
         IEnumerable<FriendlyName> QueryAllMovies(bool allowException = false);
-
-        IEnumerable<Colorspace> QueryAllColorspaces(bool allowException = false);
 
         DenormalizedMovie QueryMovie(string Id, bool allowException = false);
 
