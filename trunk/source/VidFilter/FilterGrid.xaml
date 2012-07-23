@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="VidFilter.FilterGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:VidFilter">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100*" MinWidth="100" Name="MovieSelectorColumn"/>
+            <ColumnDefinition Width="1" Name="MovieGridSplitterColumn"/>
+            <ColumnDefinition Width="450*" MinWidth="100" Name="MovieDataColumn"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Style="{StaticResource BorderStyle}">
+            <Grid Style="{StaticResource MovieSelectorStyle}" Name="MovieSelectorGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" HorizontalAlignment="Center" Foreground="White">Movie Selector</Label>
+                <ListBox Grid.Row="1" Name="MovieSelectorListBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0,10,0" SelectionChanged="MovieSelectorListBox_SelectionChanged" FontSize="14" ItemsSource="{Binding Movies}"/>
+                <Button Grid.Row="2" Name="ViewImageButton" Content="View Image" Margin="5,5,5,5" Click="ViewImageButton_Click" />
+            </Grid>
+        </Border>
+        <GridSplitter VerticalAlignment="Stretch" Grid.Column="1" Width="1" Background="Gray" ResizeBehavior="PreviousAndNext"/>
+        <Border Grid.Column="2" Style="{StaticResource BorderStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Name="MovieDataRow" Height="*" MinHeight="150"/>
+                    <RowDefinition Name="MovieProcessRow" Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid Name="MovieDataGrid" Grid.Row="0" Style="{StaticResource MoviePropertyGridStyle}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Name="MoviePropertyNameColumn" Width="Auto"/>
+                        <ColumnDefinition Name="MoviePropertyValueColumn" Width="Auto" MinWidth="100"/>
+                        <ColumnDefinition Name="MoviePropertyChangeColumn" Width="*" MinWidth="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- File Name -->
+                    <Label Grid.Row="0" Grid.Column="0">File Name</Label>
+                    <Label Grid.Row="0" Grid.Column="1" Name="MovieFileNameValue" Content="{Binding Path=SelectedMovie.FileName}"/>
+                    <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
+                        <TextBox Name="MovieFileNameChange" Margin="3,3,3,3" TabIndex="0" />
+                    </StackPanel>
+                    <!-- Full Path -->
+                    <Label Grid.Row="1" Grid.Column="0">Full Path</Label>
+                    <Label Grid.Row="1" Grid.Column="1" Name="MovieFullPathValue" />
+                    <TextBox Grid.Row="1" Grid.Column="2" Name="MovieFullPathChange" Margin="3,3,3,3" TabIndex="1" />
+
+                    <!-- Frame Rate -->
+                    <Label Grid.Row="2" Grid.Column="0">Frame Rate</Label>
+                    <Label Grid.Row="2" Grid.Column="1" Name="MovieFrameRateValue"/>
+                    <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal" Name="MovieFrameRateChange">
+                        <Slider Height="23" Width="200" Name="MovieFrameRateChangeSlider" Margin="3,3,0,3" ValueChanged="MovieFrameRateChangeSlider_ValueChanged" TabIndex="2" />
+                        <TextBox Height="23" Name="MovieFrameRateChangeText" Width="28" Margin="3,3,3,3" LostKeyboardFocus="MovieFrameRateChangeText_LostKeyboardFocus" GotKeyboardFocus="ValueTextBox_GotKeyboardFocus" TabIndex="3" />
+                    </StackPanel>
+
+                    <!-- Resolution -->
+                    <Label Grid.Row="3" Grid.Column="0">Resolution</Label>
+                    <Label Grid.Row="3" Grid.Column="1" Name="MovieResolutionValue"/>
+                    <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal" Name="MovieResolutionChange">
+                        <Slider Height="23" Width="200" Name="MovieResolutionChangeSlider" Margin="3,3,0,3" ValueChanged="MovieResolutionChangeSlider_ValueChanged" TabIndex="4" />
+                        <TextBox Height="23" Name="MovieResolutionWidthChangeText" Width="28" Margin="3,3,3,3" LostKeyboardFocus="MovieResolutionWidthChangeText_LostKeyboardFocus" GotKeyboardFocus="ValueTextBox_GotKeyboardFocus" TabIndex="5" />
+                        <TextBox Height="23" Name="MovieResolutionHeightChangeText" Width="28" Margin="3,3,3,3" LostKeyboardFocus="MovieResolutionHeightChangeText_LostKeyboardFocus" GotKeyboardFocus="ValueTextBox_GotKeyboardFocus" TabIndex="6" />
+                        <Label Height="0" Width="0" Visibility="Hidden" Name="MovieResolutionGCD"/>
+                    </StackPanel>
+
+                    <!-- Colorspace -->
+                    <Label Grid.Row="4" Grid.Column="0">Colorspace</Label>
+                    <Label Grid.Row="4" Grid.Column="1" Name="MovieColorspaceValue"/>
+                    <ComboBox Grid.Row="4" Grid.Column="2" Name="MovieColorspaceChange" Margin="3,3,3,3" MinWidth="100" ItemsSource="{Binding Colorspaces}" HorizontalAlignment="Left" VerticalAlignment="Top" TabIndex="7" />
+                </Grid>
+                <Button Name="ProcessButton" Content="Process" Click="ProcessButton_Click" TabIndex="8" HorizontalAlignment="Right" Grid.Row="1"/>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
