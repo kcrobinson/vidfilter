@@ -186,38 +186,6 @@ namespace VidFilter.Repository
             return opStatus;
         }
 
-        public OperationStatus InsertOrUpdateColorspace(Colorspace colorspace)
-        {
-            OperationStatus opStatus = new OperationStatus();
-
-            try
-            {
-                using (var session = DocumentStore.OpenSession())
-                {
-                    Colorspace loadedRecord = session.Load<Colorspace>(colorspace.Id);
-                    if (loadedRecord != null)
-                    {
-                        loadedRecord.CodeName = colorspace.CodeName;
-                        loadedRecord.BitsPerPixel = colorspace.BitsPerPixel;
-                        loadedRecord.NumChannels = colorspace.NumChannels;
-                    }
-                    else
-                    {
-                        session.Store(colorspace);
-                    }
-                    session.SaveChanges();
-                    opStatus.IsSuccess = true;
-                    opStatus.NumRecordsAffected++;
-                }
-            }
-            catch (Exception ex)
-            {
-                opStatus.HandleException("Failure updating colorspace", ex);
-                return opStatus;
-            }
-            return opStatus;
-        }
-    
         public IEnumerable<FriendlyName> QueryAllMovies(bool allowException = false)
         {
             try
@@ -264,23 +232,6 @@ namespace VidFilter.Repository
             catch (Exception ex)
             {
                 if (allowException) 
-                    throw ex;
-                return null;
-            }
-        }
-
-        public Colorspace QueryColorspace(string id, bool allowException = false)
-        {
-            try
-            {
-                using (var session = DocumentStore.OpenSession())
-                {
-                    return session.Load<Colorspace>(id);
-                }
-            }
-            catch (Exception ex)
-            {
-                if (allowException)
                     throw ex;
                 return null;
             }

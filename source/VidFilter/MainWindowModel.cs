@@ -17,7 +17,7 @@ namespace VidFilter
     {
         public ObservableCollection<FriendlyName> Movies { get; set; }
 
-        public ObservableCollection<Colorspace> Colorspaces { get; set; }
+        public ObservableCollection<string> Colorspaces { get; set; }
 
         private DenormalizedMovie selected;
         public DenormalizedMovie Selected 
@@ -69,7 +69,7 @@ namespace VidFilter
         public MainWindowModel()
         {
             Movies = new ObservableCollection<FriendlyName>();
-            Colorspaces = new ObservableCollection<Colorspace>();
+            Colorspaces = new ObservableCollection<string>();
             debugInformation = new StringBuilder();
             bool.TryParse(ConfigurationManager.AppSettings["Debug"], out IsDebug);
         }
@@ -93,7 +93,7 @@ namespace VidFilter
             }
 
             Colorspaces.Clear();
-            foreach (Colorspace colorspace in App.Database.QueryAllColorspaces(allowException: IsDebug))
+            foreach (string colorspace in App.Colorspaces.GetAllNames())
             {
                 Colorspaces.Add(colorspace);
             }
