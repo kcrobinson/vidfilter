@@ -39,6 +39,7 @@ namespace VidFilter
             movie.PlayLength = denormalizedMovie.PlayLength;
             movie.ResolutionHeight = denormalizedMovie.ResolutionHeight;
             movie.ResolutionWidth = denormalizedMovie.ResolutionWidth;
+            movie.ColorspaceName = denormalizedMovie.ColorspaceName;
 
             HelperMethods.InsertMovieToDatabase(movie);
             MainModel.RefreshFromDatabase();
@@ -69,20 +70,21 @@ namespace VidFilter
                 ResolutionWidth = result.ResolutionWidth,
                 ResolutionHeight = result.ResolutionHeight,
                 PlayLength = result.PlayLength,
-                // colorspace
+                ColorspaceName = result.Colorspace
             };
         }
 
         private void MovieSelectorListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            e.Handled = true;
         }
 
         private void RemoveMovieButton_Click(object sender, RoutedEventArgs e)
         {
             var friendlyName = MovieSelectorListBox.SelectedItem as FriendlyName;
             if (friendlyName == null) return;
-            App.Database.DeleteMovie(friendlyName.Id);
+            App.Database.DeleteMovieAndImage(friendlyName.Id);
+            MainModel.Selected = null;
             MainModel.RefreshFromDatabase();
         }
     }

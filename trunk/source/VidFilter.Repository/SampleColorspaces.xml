@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Colorspaces xmlns="http://www.vidfilter.com/colorspace">
-    <Colorspace Name="testname" CodeName="codename" NumChannels="3" BitsPerPixel="8"/>
+    <Colorspace Name="yuv420p" CodeName="yuv420p" NumChannels="3" BitsPerPixel="8"/>
+    <Colorspace Name="gray8" CodeName="gray" NumChannels="1" BitsPerPixel="8"/>
 </Colorspaces>

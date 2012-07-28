@@ -27,6 +27,6 @@ namespace VidFilter.Repository
 
         DenormalizedMovie QueryMovie(string Id, bool allowException = false);
 
-        OperationStatus DeleteMovie(string Id);
+        OperationStatus DeleteMovieAndImage(string movieId);
     }
 }

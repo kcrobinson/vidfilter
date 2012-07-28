@@ -64,13 +64,38 @@ namespace VidFilter
             AddDebugInfo(string.Join("\r\n", messageList));
         }
 
+        private ObservableCollection<string> debugMessages;
+        private int debugCapacity;
+        public ObservableCollection<string> DebugMessages
+        {
+            get
+            {
+                return debugMessages;
+            }
+        }
+        public void AddDebugMessage(string message = null)
+        {
+            if (debugMessages.Count > debugCapacity - 1)
+            {
+                debugMessages.RemoveAt(0);
+            }
+            debugMessages.Add(message);
+        }
+        public void AddDebugMessage(string message, Exception ex)
+        {
+            AddDebugMessage(message);
+            AddDebugMessage(ex.Message);
+            AddDebugMessage(ex.StackTrace);
+        }
+
         public bool IsDebug;
 
-        public MainWindowModel()
+        public MainWindowModel(int messageCapacity)
         {
             Movies = new ObservableCollection<FriendlyName>();
             Colorspaces = new ObservableCollection<string>();
             debugInformation = new StringBuilder();
+            debugMessages = new ObservableCollection<string>();
             bool.TryParse(ConfigurationManager.AppSettings["Debug"], out IsDebug);
         }
 

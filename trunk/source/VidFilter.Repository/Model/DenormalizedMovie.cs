@@ -100,7 +100,7 @@ namespace VidFilter.Repository.Model
             }
         }
 
-        public Colorspace Colorspace { get; set; }
+        public string ColorspaceName { get; set; }
 
         private decimal _PlayLength;
         public decimal PlayLength

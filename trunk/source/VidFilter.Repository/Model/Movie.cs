@@ -21,6 +21,6 @@ namespace VidFilter.Repository.Model
         public string SampleFrameId { get; set; }
         public int ResolutionWidth { get; set; }
         public int ResolutionHeight { get; set; }
-        public string ColorSpaceId { get; set; }
+        public string ColorspaceName { get; set; }
     }
 }

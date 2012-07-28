@@ -4,8 +4,12 @@
         xmlns:local="clr-namespace:VidFilter"
         Title="VidFilter Home" Height="Auto" Width="Auto" MinHeight="250" MinWidth="600" Name="HomeWindow"
         Closing="HomeWindow_Closing">
-    <StackPanel Orientation="Vertical" Height="Auto">
-        <TabControl>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TabControl SelectionChanged="TabControl_SelectionChanged" Grid.Row="0">
             <TabItem Header="Filter" Name="FilterTabItem">
                 <Border Style="{StaticResource BorderStyle}">
                     <local:FilterGrid/>
@@ -17,6 +21,6 @@
                 </Border>
             </TabItem>
         </TabControl>
-        <TextBox Name="DebugInformation" Text="{Binding Path=DebugInformation,Mode=OneWay}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" IsReadOnly="True" Height="122" />
-    </StackPanel>
+        <TextBox Name="DebugInformation" Text="{Binding Path=DebugInformation,Mode=OneWay}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" IsReadOnly="True" Grid.Row="1"/>
+    </Grid>
 </Window>
