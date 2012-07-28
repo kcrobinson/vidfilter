@@ -1,19 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using VidFilter.Engine;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Threading;
 
 namespace VidFilter
 {
@@ -34,7 +21,7 @@ namespace VidFilter
             }
             catch (Exception ex)
             {
-                MainModel.AddDebugInfo("Exception thrown while initializing data from database", ex);
+                MainModel.AddDebugMessage("Exception thrown while initializing data from database", ex);
             }
         }
 
@@ -44,7 +31,7 @@ namespace VidFilter
             get
             {
                 if (_Model == null)
-                    _Model = new MainWindowModel(App.DebugMessageLimit);
+                    _Model = new MainWindowModel();
                 return _Model;
             }
         }
@@ -59,7 +46,8 @@ namespace VidFilter
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MainModel.Selected = null;
+            if(e.OriginalSource.GetType() == typeof(TabControl))
+                MainModel.Selected = null;
         }
     }
 }

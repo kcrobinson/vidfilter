@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
-using System.Threading;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace VidFilter.Engine
 {
     class Engine : IEngine
     {
+        private static readonly string FfmpegDirectoryPath = ConfigurationManager.AppSettings["FfmpegDirectoryPath"];
         private const string inputVideoFormat = "-i {0}";
         private const string overwriteFlag = "-y";
         private const string framerateFormat = "-r {0}";
@@ -30,7 +30,7 @@ namespace VidFilter.Engine
                 OriginalRequest = request
             };
 
-            ProcessStartInfo startInfo = new ProcessStartInfo(@"C:\Users\krobins\VidFilter\trunk\source\VidFilter.Engine\ffmpeg\bin\ffmpeg.exe");
+            ProcessStartInfo startInfo = new ProcessStartInfo(Path.Combine(FfmpegDirectoryPath, "ffmpeg.exe"));
             startInfo.CreateNoWindow = true;
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardInput = true;
@@ -169,8 +169,8 @@ namespace VidFilter.Engine
             {
                 OriginalRequest = request
             };
-
-            ProcessStartInfo startInfo = new ProcessStartInfo(@"C:\Users\krobins\VidFilter\trunk\source\VidFilter.Engine\ffmpeg\bin\ffprobe.exe");
+            
+            ProcessStartInfo startInfo = new ProcessStartInfo(Path.Combine(FfmpegDirectoryPath, "ffprobe.exe"));
             startInfo.CreateNoWindow = true;
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardError = true;
@@ -220,7 +220,7 @@ namespace VidFilter.Engine
                 return result;
             }
             string[] parts = streamLine.Split(',').Select(l => l.Trim()).ToArray();
-            result.Colorspace = parts[1].Trim();
+            result.ColorspaceCodeName = parts[1].Trim();
             string[] resolution = parts[2].Trim().Split('x');
             result.ResolutionWidth = int.Parse(resolution[0]);
             result.ResolutionHeight = int.Parse(resolution[1]);
@@ -307,7 +307,7 @@ namespace VidFilter.Engine
                 OrigRequest = request
             };
 
-            ProcessStartInfo startInfo = new ProcessStartInfo(@"C:\Users\krobins\VidFilter\trunk\source\VidFilter.Engine\ffmpeg\bin\ffmpeg.exe");
+            ProcessStartInfo startInfo = new ProcessStartInfo(Path.Combine(FfmpegDirectoryPath, "ffmpeg.exe"));
             startInfo.CreateNoWindow = true;
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardError = true;

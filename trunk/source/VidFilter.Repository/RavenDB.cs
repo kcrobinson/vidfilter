@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Raven.Client.Document;
+using Raven.Abstractions.Commands;
 using Raven.Client;
-using Raven.Client.Linq;
-using Raven.Client.Indexes;
+using Raven.Client.Document;
 using Raven.Client.Embedded;
-using Raven.Storage.Esent;
+using Raven.Client.Indexes;
+using Raven.Client.Linq;
 using VidFilter.Repository.Indexes;
 using VidFilter.Repository.Model;
-using Raven.Abstractions.Commands;
 
 namespace VidFilter.Repository
 {

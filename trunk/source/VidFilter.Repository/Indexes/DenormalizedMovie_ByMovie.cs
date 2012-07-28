@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Raven.Client.Indexes;
 using VidFilter.Repository.Model;
 
@@ -24,7 +21,7 @@ namespace VidFilter.Repository.Indexes
                                           FrameRate = movie.FrameRate,
                                           ResolutionWidth = movie.ResolutionWidth,
                                           ResolutionHeight = movie.ResolutionHeight,
-                                          ColorspaceId = movie.ColorspaceName,
+                                          ColorspaceName = movie.ColorspaceName,
                                           PlayLength = movie.PlayLength,
                                           SampleImagePath = image.FullName
                                       };
