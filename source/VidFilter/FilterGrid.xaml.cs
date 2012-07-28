@@ -62,13 +62,7 @@ namespace VidFilter
             MovieFullPathValue.Content = MainModel.Selected.Directory;
             MovieFrameRateValue.Content = MainModel.Selected.FormattedFramerate;
             MovieResolutionValue.Content = MainModel.Selected.FormattedResolution;
-            Colorspace colorspace = MainModel.Selected.Colorspace;
-            MovieColorspaceValue.Content = colorspace != null ? colorspace.Name : null;
-
-            BitmapImage src = new BitmapImage();
-            src.BeginInit();
-            src.UriSource = new Uri(MainModel.Selected.SampleImagePath, UriKind.Absolute);
-            src.EndInit();
+            MovieColorspaceValue.Content = MainModel.Selected.ColorspaceName;
 
             string fullPath = MainModel.Selected.Directory;
             if (!string.IsNullOrWhiteSpace(fullPath))
@@ -108,12 +102,18 @@ namespace VidFilter
             foreach (var item in MovieColorspaceChange.Items)
             {
                 string colorspaceItem = item as string;
-                if (String.Equals(colorspace.Name, colorspaceItem, StringComparison.OrdinalIgnoreCase))
+                if (String.Equals(MainModel.Selected.ColorspaceName, colorspaceItem, StringComparison.OrdinalIgnoreCase))
                 {
                     MovieColorspaceChange.SelectedItem = item;
                     break;
                 }
             }
+
+            if (ImageWindow != null)
+            {
+                ImageWindow.SetImage(MainModel.Selected.SampleImagePath);
+            }
+            e.Handled = true;
         }
 
         private void ProcessButton_Click(object sender, RoutedEventArgs e)
@@ -145,7 +145,7 @@ namespace VidFilter
                 OutputWidth = IntTryParse(MovieResolutionWidthChangeText),
                 // OutputPath = string.IsNullOrWhiteSpace()
                 OutputCodec = "rawvideo",
-                OutputColorspace = MovieColorspaceChange.SelectedItem.ToString(),
+                OutputColorspace = MovieColorspaceChange.SelectedItem != null ? MovieColorspaceChange.SelectedItem.ToString() : null,
             };
             EngineResult engineResult = App.Engine.ProcessRequest(engineRequest);
             if (!engineResult.IsSuccess)
@@ -180,7 +180,7 @@ namespace VidFilter
             newMovie.FrameRate = probeResult.FrameRate;
             newMovie.ResolutionHeight = probeResult.ResolutionHeight;
             newMovie.ResolutionWidth = probeResult.ResolutionWidth;
-            // newMovie.ColorSpaceId = probeResult.Colorspace;
+            newMovie.ColorspaceName = probeResult.Colorspace;
             newMovie.BitRate = probeResult.BitRate;
             newMovie.PlayLength = probeResult.PlayLength;
             newMovie.ParentMovieId = movie.MovieId;
@@ -334,8 +334,15 @@ namespace VidFilter
             showImageWindow = !showImageWindow;
             if (showImageWindow)
             {
-                ImageWindow.Show();
-                SetImageWindow();
+                if (MainModel.Selected != null)
+                {
+                    ImageWindow.SetImage(MainModel.Selected.SampleImagePath);
+                    ImageWindow.Show();
+                }
+                else
+                {
+                    showImageWindow = false;
+                }
             }
             else
             {
@@ -358,30 +365,6 @@ namespace VidFilter
         }
 
         private bool showImageWindow = false;
-
-        private void SetImageWindow()
-        {
-            if (!ImageWindow.IsVisible)
-            {
-                return;
-            }
-
-            BitmapImage bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = new Uri(MainModel.Selected.SampleImagePath, UriKind.Absolute);
-            bitmap.EndInit();
-
-            ImageWindow.SampleVideoFrame = new System.Windows.Controls.Image()
-            {
-                Source = bitmap,
-                Width = MainModel.Selected.ResolutionWidth,
-                Height = MainModel.Selected.ResolutionHeight,
-                Focusable = true,
-                Visibility = Visibility.Visible
-            };
-            ImageWindow.UpdateLayout();
-            bool focus = ImageWindow.SampleVideoFrame.Focus();
-        }
 
         private void DisposeImageWindow()
         {

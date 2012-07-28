@@ -25,7 +25,7 @@ namespace VidFilter
             }
             Image image = new Image(imageResult.OutFile)
             {
-                ColorSpaceId = movie.ColorSpaceId,
+                ColorSpaceId = movie.ColorspaceName,
                 ResolutionHeight = movie.ResolutionHeight,
                 ResolutionWidth = movie.ResolutionWidth
             };

@@ -10,6 +10,7 @@ using Raven.Client.Embedded;
 using Raven.Storage.Esent;
 using VidFilter.Repository.Indexes;
 using VidFilter.Repository.Model;
+using Raven.Abstractions.Commands;
 
 namespace VidFilter.Repository
 {
@@ -237,15 +238,19 @@ namespace VidFilter.Repository
             }
         }
 
-        public OperationStatus DeleteMovie(string Id)
+        public OperationStatus DeleteMovieAndImage(string movieId)
         {
             OperationStatus status = new OperationStatus();
             try
             {
                 using (var session = DocumentStore.OpenSession())
                 {
-                    var movie = session.Load<Movie>(Id);
-                    session.Delete<Movie>(movie);
+                    var movie = session.Load<Movie>(movieId);
+                    if (movie != null)
+                    {
+                        session.Advanced.Defer(new DeleteCommandData { Key = movieId });
+                        session.Advanced.Defer(new DeleteCommandData { Key = movie.SampleFrameId });
+                    }
                     session.SaveChanges();
                 }
             }

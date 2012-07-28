@@ -44,7 +44,7 @@ namespace VidFilter
             get
             {
                 if (_Model == null)
-                    _Model = new MainWindowModel();
+                    _Model = new MainWindowModel(App.DebugMessageLimit);
                 return _Model;
             }
         }
@@ -55,6 +55,11 @@ namespace VidFilter
             {
                 App.Database.Dispose();
             }
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MainModel.Selected = null;
         }
     }
 }

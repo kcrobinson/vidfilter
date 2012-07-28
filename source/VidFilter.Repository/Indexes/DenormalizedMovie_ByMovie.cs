@@ -16,7 +16,6 @@ namespace VidFilter.Repository.Indexes
             TransformResults =
                 (database, movies) => from movie in movies
                                       let image = database.Load<Image>(movie.SampleFrameId)
-                                      let colorspace = database.Load<Colorspace>(movie.ColorSpaceId)
                                       select new
                                       { 
                                           MovieId = movie.Id,
@@ -25,7 +24,7 @@ namespace VidFilter.Repository.Indexes
                                           FrameRate = movie.FrameRate,
                                           ResolutionWidth = movie.ResolutionWidth,
                                           ResolutionHeight = movie.ResolutionHeight,
-                                          Colorspace = colorspace,
+                                          ColorspaceId = movie.ColorspaceName,
                                           PlayLength = movie.PlayLength,
                                           SampleImagePath = image.FullName
                                       };
