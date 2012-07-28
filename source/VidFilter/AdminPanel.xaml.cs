@@ -1,19 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.IO;
-using VidFilter.Engine;
-using System.Configuration;
 using VidFilter.Repository.Model;
 
 namespace VidFilter
@@ -34,6 +22,13 @@ namespace VidFilter
         private void InsertButton_Click(object sender, RoutedEventArgs e)
         {
             var denormalizedMovie = MainModel.Selected;
+            if (denormalizedMovie == null)
+            {
+                MainModel.AddDebugMessage("No movie selected");
+                return;
+            }
+            MainModel.AddDebugMessage("Inserting movie to database");
+
             Movie movie = new Movie(denormalizedMovie.FullPath);
             movie.FrameRate = denormalizedMovie.FrameRate;
             movie.PlayLength = denormalizedMovie.PlayLength;
@@ -41,26 +36,46 @@ namespace VidFilter
             movie.ResolutionWidth = denormalizedMovie.ResolutionWidth;
             movie.ColorspaceName = denormalizedMovie.ColorspaceName;
 
-            HelperMethods.InsertMovieToDatabase(movie);
+            string result = HelperMethods.InsertMovieToDatabase(movie);
+            MainModel.AddDebugMessage(result);
+
             MainModel.RefreshFromDatabase();
+            MainModel.AddDebugMessage("Insert Finished");
         }
 
         private void LoadMovieRowButton_Click(object sender, RoutedEventArgs e)
         {
-            LoadMovie(LoadMovieRowTextBox.Text);
-            LoadMovieRowTextBox.Text = String.Empty;
+            MainModel.AddDebugMessage("Loading movie");
+            bool success = LoadMovie(LoadMovieRowTextBox.Text);
+
+            if (success)
+            {
+                LoadMovieRowTextBox.Text = String.Empty;
+            }
+            MainModel.AddDebugMessage("Load finished");
         }
 
-        private void LoadMovie(string filePath)
+        private bool LoadMovie(string filePath)
         {
-            if (!File.Exists(filePath)) return;
-            
+            if (!File.Exists(filePath))
+            {
+                MainModel.AddDebugMessage("File does not exist");
+                return false;
+            }
+
+            MainModel.AddDebugMessage("Probing file for details");
             Engine.ProbeRequest request = new Engine.ProbeRequest();
             request.FilePath = filePath;
             Engine.ProbeResult result = App.Engine.ProbeVideoFile(request);
-            
-            if (!result.IsSuccess) return;
 
+            if (!result.IsSuccess)
+            {
+                MainModel.AddDebugMessage("Failure probing file");
+                MainModel.AddDebugMessage(result.ErrorMessage);
+                return false;
+            }
+
+            MainModel.AddDebugMessage("Loading details");
             FileInfo file = new FileInfo(filePath);
             MainModel.Selected = new DenormalizedMovie()
             {
@@ -70,8 +85,9 @@ namespace VidFilter
                 ResolutionWidth = result.ResolutionWidth,
                 ResolutionHeight = result.ResolutionHeight,
                 PlayLength = result.PlayLength,
-                ColorspaceName = result.Colorspace
+                ColorspaceName = App.Colorspaces.GetNameFromCodeName(result.ColorspaceCodeName)
             };
+            return true;
         }
 
         private void MovieSelectorListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -82,10 +98,32 @@ namespace VidFilter
         private void RemoveMovieButton_Click(object sender, RoutedEventArgs e)
         {
             var friendlyName = MovieSelectorListBox.SelectedItem as FriendlyName;
-            if (friendlyName == null) return;
-            App.Database.DeleteMovieAndImage(friendlyName.Id);
+            if (friendlyName == null)
+            {
+                MainModel.AddDebugMessage("No movie selected");
+                return;
+            };
+
+            MainModel.AddDebugMessage("Removing movie from database: " + friendlyName.Name);
+            
+            OperationStatus status = App.Database.DeleteMovieAndImage(friendlyName.Id);
+            if (!status.IsSuccess)
+            {
+                if (status.Exception != null)
+                {
+                    MainModel.AddDebugMessage("Exception thrown while removing records", status.Exception);
+                }
+                else
+                {
+                    MainModel.AddDebugMessage("Failure removing records");
+                    MainModel.AddDebugMessage(status.Message);
+                }
+                return;
+            }
+            
             MainModel.Selected = null;
             MainModel.RefreshFromDatabase();
+            MainModel.AddDebugMessage("Removal finished");
         }
     }
 }

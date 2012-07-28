@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using VidFilter.Engine;
-using System.IO;
-using System.Configuration;
-using Model = VidFilter.Repository.Model;
 using VidFilter.Repository.Model;
+using Model = VidFilter.Repository.Model;
 
 namespace VidFilter
 {
@@ -49,7 +39,7 @@ namespace VidFilter
             }
             catch (Exception ex)
             {
-                MainModel.AddDebugInfo("Failure getting movie from database", ex);
+                MainModel.AddDebugMessage("Failure getting movie from database", ex);
                 return;
             }
             if (MainModel.Selected == null)
@@ -99,13 +89,23 @@ namespace VidFilter
                 MovieResolutionChangeSlider.Value = MovieResolutionChangeSlider.Maximum;
             }
 
+            bool colorspaceFound = false;
             foreach (var item in MovieColorspaceChange.Items)
             {
                 string colorspaceItem = item as string;
                 if (String.Equals(MainModel.Selected.ColorspaceName, colorspaceItem, StringComparison.OrdinalIgnoreCase))
                 {
                     MovieColorspaceChange.SelectedItem = item;
+                    colorspaceFound = true;
                     break;
+                }
+            }
+            if (!colorspaceFound)
+            {
+                MovieColorspaceChange.SelectedItem = null;
+                if (MainModel.Selected.ColorspaceName != null)
+                {
+                    MainModel.AddDebugMessage("Failure setting colorspace value from record value: " + MainModel.Selected.ColorspaceName);
                 }
             }
 
@@ -121,18 +121,18 @@ namespace VidFilter
             FriendlyName movieItem = MovieSelectorListBox.SelectedItem as FriendlyName;
             if (movieItem == null)
             {
-                MainModel.AddDebugInfo("Not a valid movie selction");
+                MainModel.AddDebugMessage("Not a valid movie selction");
                 return;
             }
 
             DenormalizedMovie movie = MainModel.Selected;
             if (movie == null)
             {
-                MainModel.AddDebugInfo("No movie selected");
+                MainModel.AddDebugMessage("No movie selected");
                 return;
             }
 
-            MainModel.AddDebugInfo("Processing movie at " + movie.FullPath);
+            MainModel.AddDebugMessage("Processing movie at " + movie.FullPath);
             EngineRequest engineRequest = new EngineRequest()
             {
                 InputFileName = movie.FileName,
@@ -145,27 +145,27 @@ namespace VidFilter
                 OutputWidth = IntTryParse(MovieResolutionWidthChangeText),
                 // OutputPath = string.IsNullOrWhiteSpace()
                 OutputCodec = "rawvideo",
-                OutputColorspace = MovieColorspaceChange.SelectedItem != null ? MovieColorspaceChange.SelectedItem.ToString() : null,
+                OutputColorspace = GetColorspaceOperationCode(MovieColorspaceChange.SelectedItem as string),
             };
             EngineResult engineResult = App.Engine.ProcessRequest(engineRequest);
             if (!engineResult.IsSuccess)
             {
                 if (engineResult.Exception != null)
                 {
-                    MainModel.AddDebugInfo("Exception thrown", engineResult.Exception);
+                    MainModel.AddDebugMessage("Exception thrown", engineResult.Exception);
                 }
                 else
                 {
-                    MainModel.AddDebugInfo("Failure processing movie");
-                    MainModel.AddDebugInfo("Message: " + engineResult.Message);
-                    MainModel.AddDebugInfo("Std Out: " + engineResult.StdOutput);
-                    MainModel.AddDebugInfo("StdErr: " + engineResult.StdError);
+                    MainModel.AddDebugMessage("Failure processing movie");
+                    MainModel.AddDebugMessage("Message: " + engineResult.Message);
+                    MainModel.AddDebugMessage("Std Out: " + engineResult.StdOutput);
+                    MainModel.AddDebugMessage("StdErr: " + engineResult.StdError);
                 }
                 return;
             }
-            MainModel.AddDebugInfo("Process succeeded.");
+            MainModel.AddDebugMessage("Process succeeded.");
 
-            MainModel.AddDebugInfo("Probing process result");
+            MainModel.AddDebugMessage("Probing process result");
             ProbeRequest probeRequest = new ProbeRequest()
             {
                 FilePath = engineResult.OutFile.FullName
@@ -173,14 +173,14 @@ namespace VidFilter
             ProbeResult probeResult = App.Engine.ProbeVideoFile(probeRequest);
             if (!probeResult.IsSuccess)
             {
-                MainModel.AddDebugInfo("Failure: " + probeResult.ErrorMessage);
+                MainModel.AddDebugMessage("Failure: " + probeResult.ErrorMessage);
                 return;
             }
             Movie newMovie = new Movie(engineResult.OutFile);
             newMovie.FrameRate = probeResult.FrameRate;
             newMovie.ResolutionHeight = probeResult.ResolutionHeight;
             newMovie.ResolutionWidth = probeResult.ResolutionWidth;
-            newMovie.ColorspaceName = probeResult.Colorspace;
+            newMovie.ColorspaceName = App.Colorspaces.GetNameFromCodeName(probeResult.ColorspaceCodeName);
             newMovie.BitRate = probeResult.BitRate;
             newMovie.PlayLength = probeResult.PlayLength;
             newMovie.ParentMovieId = movie.MovieId;
@@ -193,19 +193,33 @@ namespace VidFilter
             ImageResult imageResult = App.Engine.CreateImage(imageRequest);
             if (!imageResult.IsSuccess)
             {
-                MainModel.AddDebugInfo(imageResult.ErrorMessage);
+                MainModel.AddDebugMessage(imageResult.ErrorMessage);
                 return;
             }
             Model.Image image = new Model.Image(imageResult.OutFile)
             {
-                //ColorSpaceId = 
+                ColorSpaceId = probeResult.ColorspaceCodeName,
                 ResolutionHeight = probeResult.ResolutionHeight,
                 ResolutionWidth = probeResult.ResolutionWidth
             };
-            MainModel.AddDebugInfo();
+            MainModel.AddDebugMessage();
             InsertImageToDatabase(image);
             newMovie.SampleFrameId = image.Id;
             InsertMovieToDatabase(newMovie);
+        }
+
+        private string GetColorspaceOperationCode(string colorspaceName)
+        {
+            if (String.IsNullOrWhiteSpace(colorspaceName))
+            {
+                return null;
+            }
+            Colorspace colorspace = App.Colorspaces.Get(colorspaceName);
+            if (colorspace == null)
+            {
+                return null;
+            }
+            return colorspace.CodeName;
         }
 
         private int IntTryParse(TextBox textBox)
@@ -281,43 +295,43 @@ namespace VidFilter
 
         private void InsertMovieToDatabase(Movie movie)
         {
-            MainModel.AddDebugInfo("Inserting movie in database");
+            MainModel.AddDebugMessage("Inserting movie in database");
             OperationStatus status = App.Database.InsertMovie(movie);
             if (!status.IsSuccess)
             {
                 if (status.Exception != null)
                 {
-                    MainModel.AddDebugInfo("Exception thrown while inserting movie", status.Exception);
+                    MainModel.AddDebugMessage("Exception thrown while inserting movie", status.Exception);
                 }
                 else
                 {
-                    MainModel.AddDebugInfo("Failure inserting movie");
-                    MainModel.AddDebugInfo("Message: " + status.Message);
+                    MainModel.AddDebugMessage("Failure inserting movie");
+                    MainModel.AddDebugMessage("Message: " + status.Message);
                 }
                 return;
             }
-            MainModel.AddDebugInfo("Success");
+            MainModel.AddDebugMessage("Success");
             MainModel.Movies.Add(status.ResultingFriendlyName);
         }
 
         private void InsertImageToDatabase(Model.Image image)
         {
-            MainModel.AddDebugInfo("Inserting image in database");
+            MainModel.AddDebugMessage("Inserting image in database");
             OperationStatus status = App.Database.InsertImage(image);
             if (!status.IsSuccess)
             {
                 if (status.Exception != null)
                 {
-                    MainModel.AddDebugInfo("Exception thrown while inserting image", status.Exception);
+                    MainModel.AddDebugMessage("Exception thrown while inserting image", status.Exception);
                 }
                 else
                 {
-                    MainModel.AddDebugInfo("Failure inserting image");
-                    MainModel.AddDebugInfo("Message: " + status.Message);
+                    MainModel.AddDebugMessage("Failure inserting image");
+                    MainModel.AddDebugMessage("Message: " + status.Message);
                 }
                 return;
             }
-            MainModel.AddDebugInfo("Success");
+            MainModel.AddDebugMessage("Success");
         }
 
         private void ValueTextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)

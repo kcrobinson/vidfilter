@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
 using System.Linq;
 using System.Windows;
-using VidFilter.Repository;
 using VidFilter.Engine;
+using VidFilter.Repository;
 
 namespace VidFilter
 {
@@ -48,15 +47,7 @@ namespace VidFilter
             new KeyValuePair<string, object>("ConnectionPath", ConfigurationManager.AppSettings["EmbeddedConnectionPath"]);
         
         private static readonly string ColorspaceFilePath = ConfigurationManager.AppSettings["ColorspaceFilePath"];
-        public static readonly int DebugMessageLimit = ParseInt(ConfigurationManager.AppSettings["DebugMessageLimit"]);
-
-        public static int ParseInt(string str)
-        {
-            int i;
-            int.TryParse(str, out i);
-            return i;
-        }
-
+        
         private static readonly KeyValuePair<string, object>[] HostedDatabaseOptions = new []
         {
             DatabaseTypeOption,

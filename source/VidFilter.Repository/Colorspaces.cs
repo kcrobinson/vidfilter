@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using VidFilter.Repository.Model;
 
@@ -31,6 +30,11 @@ namespace VidFilter.Repository
         public Colorspace Get(string name)
         {
             return _Colorspaces.Where(c => String.Equals(c.Name, name, StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
+        }
+
+        public string GetNameFromCodeName(string codeName)
+        {
+            return _Colorspaces.Where(c => String.Equals(c.CodeName, codeName, StringComparison.OrdinalIgnoreCase)).Select(c => c.Name).SingleOrDefault();
         }
 
         public struct SimplifiedColorspace

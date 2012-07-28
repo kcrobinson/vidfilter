@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Raven.Client.Indexes;
-
+﻿
 namespace VidFilter.Repository.Model
 {
     public class FriendlyName
