@@ -106,7 +106,6 @@
     <Compile Include="Model\FriendlyName.cs" />
     <Compile Include="Model\Image.cs" />
     <Compile Include="Model\Movie.cs" />
-    <Compile Include="Model\MovieAndImage.cs" />
     <Compile Include="Model\OperationStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DatabaseFactory.cs" />
