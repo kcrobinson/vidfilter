@@ -12,4 +12,3 @@ There is not much to say at this stage as it still is in the beginning stages of
 In order to build and run the code, you will need the following:
   * Visual Studio 2010 or Visual Studio C# Express 2010
   * NuGet package manager (imports Raven libraries)
-  * The latest build static Windows builds from ffmpeg
